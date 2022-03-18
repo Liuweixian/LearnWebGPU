@@ -1,0 +1,6 @@
+[submodule "BuildTools/emscripten"]
+	path = BuildTools/emscripten
+	url = https://github.com/emscripten-core/emscripten
+[submodule "BuildTools/emsdk"]
+	path = BuildTools/emsdk
+	url = git@github.com:emscripten-core/emsdk.git

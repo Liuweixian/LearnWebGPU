@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <webgpu/webgpu.h>
 
-void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const * message, void * userdata)
+typedef struct SurfaceDescriptorFromCanvasHTMLSelector
+{
+    struct WGPUChainedStruct const * next;
+    WGPUSType sType;
+    char const *selector;
+}SurfaceDescriptorFromCanvasHTMLSelector;
+
+void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
 {
     printf("DeviceSetUncapturedErrorCallback %d: %s\n", type, message);
 }
 
-void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice device, char const * message, void * userdata)
+void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice device, char const *message, void *userdata)
 {
     if (status != WGPURequestDeviceStatus_Success)
     {
@@ -16,21 +23,27 @@ void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice dev
     printf("wgpuDeviceSetUncapturedErrorCallback!\n");
     wgpuDeviceSetUncapturedErrorCallback(device, DeviceSetUncapturedErrorCallback, NULL);
 
+    SurfaceDescriptorFromCanvasHTMLSelector canvasDesc;
+    canvasDesc.sType = WGPUSType_SurfaceDescriptorFromCanvasHTMLSelector;
+    canvasDesc.selector = "#canvas";
+    WGPUSurfaceDescriptor surfaceDesc;
+    surfaceDesc.nextInChain = (WGPUChainedStruct *)&canvasDesc;
+    printf("wgpuInstanceCreateSurface!\n");
+    WGPUSurface surface = wgpuInstanceCreateSurface(NULL, &surfaceDesc);
+
     WGPUSwapChainDescriptor swapchainDesc;
     swapchainDesc.format = WGPUTextureFormat_BGRA8Unorm;
     swapchainDesc.width = 500;
     swapchainDesc.height = 500;
     swapchainDesc.presentMode = WGPUPresentMode_Fifo;
     printf("wgpuDeviceCreateSwapChain!\n");
-    wgpuDeviceCreateSwapChain(device, NULL, &swapchainDesc);
+    wgpuDeviceCreateSwapChain(device, surface, &swapchainDesc);
 
     printf("wgpuDeviceGetQueue!\n");
     WGPUQueue wgpuQueue = wgpuDeviceGetQueue(device);
-
-    
 }
 
-void InstanceRequestAdapterCallback(WGPURequestAdapterStatus status, WGPUAdapter adapter, char const * message, void * userdata)
+void InstanceRequestAdapterCallback(WGPURequestAdapterStatus status, WGPUAdapter adapter, char const *message, void *userdata)
 {
     if (status != WGPURequestAdapterStatus_Success)
     {

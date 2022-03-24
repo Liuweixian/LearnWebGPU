@@ -3,12 +3,12 @@
 
 typedef struct SurfaceDescriptorFromCanvasHTMLSelector
 {
-    struct WGPUChainedStruct const * next;
+    struct WGPUChainedStruct const *next;
     WGPUSType sType;
     char const *selector;
-}SurfaceDescriptorFromCanvasHTMLSelector;
+} SurfaceDescriptorFromCanvasHTMLSelector;
 
-void QueueWorkDoneCallback(WGPUQueueWorkDoneStatus status, void * userdata)
+void QueueWorkDoneCallback(WGPUQueueWorkDoneStatus status, void *userdata)
 {
     printf("QueueWorkDoneCallback %d\n", status);
 }
@@ -71,7 +71,7 @@ void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice dev
     WGPURenderPassColorAttachment colorAttachments[1];
     colorAttachments[0].view = colorBuffer;
     WGPUColor clearColor;
-    clearColor.r = 1.0f;
+    clearColor.r = 0.0f;
     clearColor.g = 0.0f;
     clearColor.b = 0.0f;
     clearColor.a = 1.0f;
@@ -88,6 +88,11 @@ void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice dev
     printf("wgpuCommandEncoderBeginRenderPass!\n");
     WGPURenderPassEncoder renderPassEncoder = wgpuCommandEncoderBeginRenderPass(commandEncoder, &renderPassDesc);
 
+    /*wgpuDeviceCreateBindGroupLayout
+    wgpuDeviceCreatePipelineLayout(device, )
+    WGPURenderPipelineDescriptor pipelineDesc;
+    printf("wgpuDeviceCreateRenderPipeline!\n");
+    WGPURenderPipeline pipeline = wgpuDeviceCreateRenderPipeline(device, &pipelineDesc);*/
 
     printf("wgpuRenderPassEncoderEnd!\n");
     wgpuRenderPassEncoderEnd(renderPassEncoder);

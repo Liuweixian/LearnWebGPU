@@ -88,9 +88,30 @@ void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice dev
     printf("wgpuCommandEncoderBeginRenderPass!\n");
     WGPURenderPassEncoder renderPassEncoder = wgpuCommandEncoderBeginRenderPass(commandEncoder, &renderPassDesc);
 
-    /*wgpuDeviceCreateBindGroupLayout
-    wgpuDeviceCreatePipelineLayout(device, )
+    /*WGPUBindGroupLayoutEntry bindGroupLayoutEntry[1];
+    bindGroupLayoutEntry[0].binding = 0;
+    bindGroupLayoutEntry[0].visibility = WGPUShaderStage_Vertex;
+    WGPUBindGroupLayoutDescriptor bindGroupLayoutDesc;
+    bindGroupLayoutDesc.entryCount = 1;
+    bindGroupLayoutDesc.entries = bindGroupLayoutEntry;
+    WGPUBindGroupLayout bindGroupLayouts[1];
+    printf("wgpuDeviceCreateBindGroupLayout!\n");
+    bindGroupLayouts[0] = wgpuDeviceCreateBindGroupLayout(device, &bindGroupLayoutDesc);
+
+    WGPUPipelineLayoutDescriptor pipelineLayoutDesc;
+    pipelineLayoutDesc.bindGroupLayoutCount = 1;
+    pipelineLayoutDesc.bindGroupLayouts = bindGroupLayouts;
+    printf("wgpuDeviceCreatePipelineLayout!\n");
+    WGPUPipelineLayout pipelineLayout = wgpuDeviceCreatePipelineLayout(device, &pipelineLayoutDesc);
+
     WGPURenderPipelineDescriptor pipelineDesc;
+    pipelineDesc.layout = pipelineLayout;
+    WGPUPrimitiveState primitiveState;
+    primitiveState.cullMode = WGPUCullMode_Back;
+    primitiveState.frontFace = WGPUFrontFace_CCW;
+    primitiveState.topology = WGPUPrimitiveTopology_TriangleList;
+    primitiveState.stripIndexFormat = WGPUIndexFormat_Uint16;
+    pipelineDesc.primitive = primitiveState;
     printf("wgpuDeviceCreateRenderPipeline!\n");
     WGPURenderPipeline pipeline = wgpuDeviceCreateRenderPipeline(device, &pipelineDesc);*/
 

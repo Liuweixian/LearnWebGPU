@@ -1,0 +1,1 @@
+../../BuildTools/emscripten/emcc EntryPoint.c -s USE_WEBGPU=1 -o hellowebgpu.js

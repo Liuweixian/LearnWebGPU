@@ -106,7 +106,7 @@ void BeginRender(wgpu::CommandEncoder& commandEncoder, wgpu::RenderPassEncoder& 
     wgpu::RenderPassColorAttachment colorAttachments[1];
     colorAttachments[0].view = ms_SwapChain.GetCurrentTextureView();
     colorAttachments[0].loadOp = wgpu::LoadOp::Undefined;
-    colorAttachments[0].clearColor = {1.0f, 0.0f, 0.0f, 1.0f}; //clear color loadop must be Undefiend
+    colorAttachments[0].clearColor = {1.0f, 0.0f, 0.0f, 1.0f}; //clear color, loadop must be Undefiend
 
     wgpu::RenderPassDepthStencilAttachment depthAttachment;
     depthAttachment.view = ms_DepthBuffer;

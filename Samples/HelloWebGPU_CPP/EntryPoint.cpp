@@ -16,7 +16,6 @@ enum RunningStatus
 static RunningStatus ms_Status = Invalid;
 static wgpu::Device ms_Device;
 static wgpu::SwapChain ms_SwapChain;
-static wgpu::TextureView ms_ColorBuffer;
 static wgpu::TextureView ms_DepthBuffer;
 
 void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
@@ -84,7 +83,6 @@ void InitSwapChain()
 void SetupFrameBuffer()
 {
     assert(ms_Status == SwapChainInitialized);
-    ms_ColorBuffer = ms_SwapChain.GetCurrentTextureView();
 
     wgpu::TextureDescriptor textureDesc;
     textureDesc.label = "DepthBuffer";
@@ -104,8 +102,9 @@ void SetupFrameBuffer()
 
 void BeginRender(wgpu::CommandEncoder& commandEncoder, wgpu::RenderPassEncoder& renderPassEncoder)
 {
+    assert(commandEncoder == nullptr && renderPassEncoder == nullptr);
     wgpu::RenderPassColorAttachment colorAttachments[1];
-    colorAttachments[0].view = ms_ColorBuffer;
+    colorAttachments[0].view = ms_SwapChain.GetCurrentTextureView();
     colorAttachments[0].resolveTarget = nullptr;
     colorAttachments[0].loadOp = wgpu::LoadOp::Clear;
     colorAttachments[0].storeOp = wgpu::StoreOp::Discard;
@@ -114,16 +113,15 @@ void BeginRender(wgpu::CommandEncoder& commandEncoder, wgpu::RenderPassEncoder& 
     wgpu::RenderPassDepthStencilAttachment depthAttachment;
     depthAttachment.view = ms_DepthBuffer;
     depthAttachment.depthLoadOp = wgpu::LoadOp::Clear;
-    depthAttachment.depthStoreOp = wgpu::StoreOp::Store;
+    depthAttachment.depthStoreOp = wgpu::StoreOp::Discard;
     depthAttachment.clearDepth = 0;
     depthAttachment.depthReadOnly = false;
     depthAttachment.stencilLoadOp = wgpu::LoadOp::Clear;
-    depthAttachment.stencilStoreOp = wgpu::StoreOp::Store;
+    depthAttachment.stencilStoreOp = wgpu::StoreOp::Discard;
     depthAttachment.clearStencil = 0;
     depthAttachment.stencilReadOnly = false;
 
     wgpu::RenderPassDescriptor renderPassDesc;
-    renderPassDesc.label = "ColorAttachment";
     renderPassDesc.colorAttachmentCount = 1;
     renderPassDesc.colorAttachments = colorAttachments;
     renderPassDesc.depthStencilAttachment = &depthAttachment;
@@ -141,6 +139,7 @@ void QueueWorkDoneCallback(WGPUQueueWorkDoneStatus status, void *userdata)
 
 void EndRender(wgpu::CommandEncoder& commandEncoder, wgpu::RenderPassEncoder& renderPassEncoder)
 {
+    assert(commandEncoder != nullptr && renderPassEncoder != nullptr);
     renderPassEncoder.End();
     wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
     wgpu::Queue queue = ms_Device.GetQueue();
@@ -181,7 +180,6 @@ int main(int argc, char **argv)
 {
     ms_Device = nullptr;
     ms_SwapChain = nullptr;
-    ms_ColorBuffer = nullptr;
     ms_DepthBuffer = nullptr;
     emscripten_set_main_loop(Loop, 0, false);
     return 0;

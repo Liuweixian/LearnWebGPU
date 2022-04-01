@@ -9,6 +9,7 @@ enum RunningStatus
     InitializingDevice,
     DeviceInitialized,
     SwapChainInitialized,
+    FrameBufferInitialized,
     Running,
     End
 };
@@ -17,6 +18,7 @@ static RunningStatus ms_Status = Invalid;
 static wgpu::Device ms_Device;
 static wgpu::SwapChain ms_SwapChain;
 static wgpu::TextureView ms_DepthBuffer;
+static wgpu::RenderPipeline ms_RenderPipeline;
 
 void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
 {
@@ -96,17 +98,95 @@ void SetupFrameBuffer()
     textureDesc.sampleCount = 1;
     wgpu::Texture depthTexture = ms_Device.CreateTexture(&textureDesc);
     ms_DepthBuffer = depthTexture.CreateView(nullptr);
-    ms_Status = Running;
+    ms_Status = FrameBufferInitialized;
     printf("SetupFrameBuffer\n");
 }
 
-void BeginRender(wgpu::CommandEncoder& commandEncoder, wgpu::RenderPassEncoder& renderPassEncoder)
+wgpu::PipelineLayout CreatePipelineLayout()
+{
+    wgpu::PipelineLayoutDescriptor layoutDesc;
+    wgpu::PipelineLayout layout = ms_Device.CreatePipelineLayout(&layoutDesc);
+    return layout;
+}
+
+wgpu::ShaderModule CreateVertexShaderModule()
+{
+    wgpu::ShaderModuleWGSLDescriptor wgslDesc;
+    wgslDesc.source = "";
+    wgpu::ShaderModuleDescriptor shaderModuleDesc;
+    shaderModuleDesc.nextInChain = &wgslDesc;
+    wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);
+    return shaderModule;
+}
+
+wgpu::VertexState CreateVertexState()
+{
+    wgpu::VertexState vertexState;
+    vertexState.module = CreateVertexShaderModule();
+    return vertexState;
+}
+
+wgpu::PrimitiveState CreatePrimitiveState()
+{
+    wgpu::PrimitiveState state;
+    state.topology = wgpu::PrimitiveTopology::TriangleStrip;
+    state.stripIndexFormat = wgpu::IndexFormat::Uint16;
+    state.frontFace = wgpu::FrontFace::CCW;
+    state.cullMode = wgpu::CullMode::None;
+    return state;
+}
+
+wgpu::DepthStencilState* CreateDepthStencilState()
+{
+    wgpu::DepthStencilState* state = new wgpu::DepthStencilState();
+    state->format = wgpu::TextureFormat::Depth24PlusStencil8;
+    return state;
+}
+
+wgpu::MultisampleState CreateMultisampleState()
+{
+    wgpu::MultisampleState state;
+    return state;
+}
+
+wgpu::ShaderModule CreateFragmentShaderModule()
+{
+    wgpu::ShaderModuleWGSLDescriptor wgslDesc;
+    wgslDesc.source = "";
+    wgpu::ShaderModuleDescriptor shaderModuleDesc;
+    shaderModuleDesc.nextInChain = &wgslDesc;
+    wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);
+    return shaderModule;
+}
+
+wgpu::FragmentState* CreateFragmentState()
+{
+    wgpu::FragmentState* fragmentState = new wgpu::FragmentState();
+    fragmentState->module = CreateFragmentShaderModule();
+    return fragmentState;
+}
+
+void SetupRenderPipeline()
+{
+    assert(ms_RenderPipeline == nullptr);
+    wgpu::RenderPipelineDescriptor renderPipelineDesc;
+    renderPipelineDesc.layout = CreatePipelineLayout();
+    renderPipelineDesc.vertex = CreateVertexState();
+    renderPipelineDesc.primitive = CreatePrimitiveState();
+    renderPipelineDesc.depthStencil = CreateDepthStencilState();
+    renderPipelineDesc.multisample = CreateMultisampleState();
+    renderPipelineDesc.fragment = CreateFragmentState();
+    ms_RenderPipeline = ms_Device.CreateRenderPipeline(&renderPipelineDesc);
+    ms_Status = Running;
+}
+
+void BeginRender(wgpu::CommandEncoder &commandEncoder, wgpu::RenderPassEncoder &renderPassEncoder)
 {
     assert(commandEncoder == nullptr && renderPassEncoder == nullptr);
     wgpu::RenderPassColorAttachment colorAttachments[1];
     colorAttachments[0].view = ms_SwapChain.GetCurrentTextureView();
     colorAttachments[0].loadOp = wgpu::LoadOp::Undefined;
-    colorAttachments[0].clearColor = {1.0f, 0.0f, 0.0f, 1.0f}; //clear color, loadop must be Undefiend
+    colorAttachments[0].clearColor = {1.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
 
     wgpu::RenderPassDepthStencilAttachment depthAttachment;
     depthAttachment.view = ms_DepthBuffer;
@@ -135,7 +215,7 @@ void QueueWorkDoneCallback(WGPUQueueWorkDoneStatus status, void *userdata)
     printf("QueueWorkDoneCallback %d\n", status);
 }
 
-void EndRender(wgpu::CommandEncoder& commandEncoder, wgpu::RenderPassEncoder& renderPassEncoder)
+void EndRender(wgpu::CommandEncoder &commandEncoder, wgpu::RenderPassEncoder &renderPassEncoder)
 {
     assert(commandEncoder != nullptr && renderPassEncoder != nullptr);
     renderPassEncoder.End();
@@ -150,6 +230,8 @@ void Render()
     wgpu::CommandEncoder commandEncoder = nullptr;
     wgpu::RenderPassEncoder renderPassEncoder = nullptr;
     BeginRender(commandEncoder, renderPassEncoder);
+    renderPassEncoder.SetPipeline(ms_RenderPipeline);
+    renderPassEncoder.Draw(5, 1, 0, 0);
     EndRender(commandEncoder, renderPassEncoder);
 }
 
@@ -165,6 +247,9 @@ void Loop()
         break;
     case SwapChainInitialized:
         SetupFrameBuffer();
+        break;
+    case FrameBufferInitialized:
+        SetupRenderPipeline();
         break;
     case Running:
         Render();

@@ -112,7 +112,25 @@ wgpu::PipelineLayout CreatePipelineLayout()
 wgpu::ShaderModule CreateVertexShaderModule()
 {
     wgpu::ShaderModuleWGSLDescriptor wgslDesc;
-    wgslDesc.source = "";
+    wgslDesc.source = R"(
+    struct VertexOutput{
+        @builtin(position) ClipPosition: vec4<f32>;
+        @location(0) Color: vec3<f32>;
+    };
+
+    @stage(vertex)
+    fn vs_main(
+        @builtin(vertex_index) inVertexIndex: u32,
+        @location(0) inPos: vec3<f32>,
+        @location(1) inColor: vec3<f32>
+        ) ->VertexOutput{
+        var out : VertexOutput;
+        let x = f32(1 - i32(inVertexIndex)) * 0.5;
+        let y = f32(i32(inVertexIndex & 1u) * 2 - 1) * 0.5;
+        out.ClipPosition = vec4<f32>(x + inPos[0], y + inPos[1], inPos[2], 1.0);
+        out.Color = inColor;
+        return out;
+    })";
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);
@@ -123,6 +141,7 @@ wgpu::VertexState CreateVertexState()
 {
     wgpu::VertexState vertexState;
     vertexState.module = CreateVertexShaderModule();
+    vertexState.entryPoint = "vs_main";
     return vertexState;
 }
 
@@ -136,9 +155,9 @@ wgpu::PrimitiveState CreatePrimitiveState()
     return state;
 }
 
-wgpu::DepthStencilState* CreateDepthStencilState()
+wgpu::DepthStencilState *CreateDepthStencilState()
 {
-    wgpu::DepthStencilState* state = new wgpu::DepthStencilState();
+    wgpu::DepthStencilState *state = new wgpu::DepthStencilState();
     state->format = wgpu::TextureFormat::Depth24PlusStencil8;
     return state;
 }
@@ -152,17 +171,31 @@ wgpu::MultisampleState CreateMultisampleState()
 wgpu::ShaderModule CreateFragmentShaderModule()
 {
     wgpu::ShaderModuleWGSLDescriptor wgslDesc;
-    wgslDesc.source = "";
+    wgslDesc.source = R"(
+    struct VertexOutput{
+        @builtin(position) ClipPosition: vec4<f32>;
+        @location(0) Color: vec3<f32>;
+    };
+
+    @stage(fragment)
+    fn fs_main(
+        in: VertexOutput
+        )
+        -> @location(0) vec4<f32>
+    {
+        return vec4<f32>(in.Color, 1.0f);
+    })";
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);
     return shaderModule;
 }
 
-wgpu::FragmentState* CreateFragmentState()
+wgpu::FragmentState *CreateFragmentState()
 {
-    wgpu::FragmentState* fragmentState = new wgpu::FragmentState();
+    wgpu::FragmentState *fragmentState = new wgpu::FragmentState();
     fragmentState->module = CreateFragmentShaderModule();
+    fragmentState->entryPoint = "fs_main";
     return fragmentState;
 }
 

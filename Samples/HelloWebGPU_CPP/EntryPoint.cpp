@@ -11,6 +11,7 @@ enum RunningStatus
     SwapChainInitialized,
     FrameBufferInitialized,
     Running,
+    Error,
     End
 };
 
@@ -22,7 +23,10 @@ static wgpu::RenderPipeline ms_RenderPipeline;
 
 void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
 {
+    if (type == WGPUErrorType_NoError)
+        return;
     printf("DeviceSetUncapturedErrorCallback %d: %s\n", type, message);
+    ms_Status = Error;
 }
 
 void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice device, char const *message, void *userdata)

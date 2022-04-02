@@ -125,14 +125,12 @@ wgpu::ShaderModule CreateVertexShaderModule()
     @stage(vertex)
     fn vs_main(
         @builtin(vertex_index) inVertexIndex: u32,
-        @location(0) inPos: vec3<f32>,
-        @location(1) inColor: vec3<f32>
         ) ->VertexOutput{
         var out : VertexOutput;
-        let x = f32(1 - i32(inVertexIndex)) * 0.5;
-        let y = f32(i32(inVertexIndex & 1u) * 2 - 1) * 0.5;
-        out.ClipPosition = vec4<f32>(x + inPos[0], y + inPos[1], inPos[2], 1.0);
-        out.Color = inColor;
+        let x = f32(1 - i32(inVertexIndex)) * 0.8;
+        let y = f32(i32(inVertexIndex & 1u) * 2 - 1) * 0.8;
+        out.ClipPosition = vec4<f32>(x, y, 0.0, 1.0);
+        out.Color = vec3<f32>(x, y, 0.0);
         return out;
     })";
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
@@ -152,8 +150,8 @@ wgpu::VertexState CreateVertexState()
 wgpu::PrimitiveState CreatePrimitiveState()
 {
     wgpu::PrimitiveState state;
-    state.topology = wgpu::PrimitiveTopology::TriangleStrip;
-    state.stripIndexFormat = wgpu::IndexFormat::Uint16;
+    state.topology = wgpu::PrimitiveTopology::TriangleList;
+    state.stripIndexFormat = wgpu::IndexFormat::Undefined;
     state.frontFace = wgpu::FrontFace::CCW;
     state.cullMode = wgpu::CullMode::None;
     return state;
@@ -187,7 +185,7 @@ wgpu::ShaderModule CreateFragmentShaderModule()
         )
         -> @location(0) vec4<f32>
     {
-        return vec4<f32>(in.Color, 1.0f);
+        return vec4<f32>(in.Color, 1.0);
     })";
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
     shaderModuleDesc.nextInChain = &wgslDesc;
@@ -200,6 +198,11 @@ wgpu::FragmentState *CreateFragmentState()
     wgpu::FragmentState *fragmentState = new wgpu::FragmentState();
     fragmentState->module = CreateFragmentShaderModule();
     fragmentState->entryPoint = "fs_main";
+
+    wgpu::ColorTargetState colorTargetState[1];
+    colorTargetState[0].format = wgpu::TextureFormat::BGRA8Unorm;
+    fragmentState->targetCount = 1;
+    fragmentState->targets = colorTargetState;
     return fragmentState;
 }
 
@@ -268,7 +271,7 @@ void Render()
     wgpu::RenderPassEncoder renderPassEncoder = nullptr;
     BeginRender(commandEncoder, renderPassEncoder);
     renderPassEncoder.SetPipeline(ms_RenderPipeline);
-    renderPassEncoder.Draw(5, 1, 0, 0);
+    renderPassEncoder.Draw(3, 1, 0, 0);
     EndRender(commandEncoder, renderPassEncoder);
 }
 

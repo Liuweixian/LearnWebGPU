@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <webgpu/webgpu_cpp.h>
 #include <emscripten/emscripten.h>
@@ -113,26 +114,24 @@ wgpu::PipelineLayout CreatePipelineLayout()
     return layout;
 }
 
+const char* ReadAllText(const char* filePath)
+{
+    FILE* handle = fopen(filePath, "r");
+    assert(handle != nullptr);
+    fseek(handle, 0, SEEK_END);
+    int fileSize = ftell(handle);
+    rewind (handle);
+    char* buffer = (char*)malloc(sizeof(char) * fileSize);
+    size_t read = fread(buffer, 1, fileSize, handle);
+    fclose(handle);
+    assert(read == fileSize);
+    return buffer;
+}
+
 wgpu::ShaderModule CreateVertexShaderModule()
 {
     wgpu::ShaderModuleWGSLDescriptor wgslDesc;
-    wgslDesc.source = R"(
-    struct VertexOutput{
-        @builtin(position) ClipPosition: vec4<f32>;
-        @location(0) Color: vec3<f32>;
-    };
-
-    @stage(vertex)
-    fn vs_main(
-        @builtin(vertex_index) inVertexIndex: u32,
-        ) ->VertexOutput{
-        var out : VertexOutput;
-        let x = f32(1 - i32(inVertexIndex)) * 0.8;
-        let y = f32(i32(inVertexIndex & 1u) * 2 - 1) * 0.8;
-        out.ClipPosition = vec4<f32>(x, y, 0.0, 1.0);
-        out.Color = vec3<f32>(x, y, 0.0);
-        return out;
-    })";
+    wgslDesc.source = ReadAllText("Shaders/VertexShader.wgsl");
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);
@@ -173,20 +172,7 @@ wgpu::MultisampleState CreateMultisampleState()
 wgpu::ShaderModule CreateFragmentShaderModule()
 {
     wgpu::ShaderModuleWGSLDescriptor wgslDesc;
-    wgslDesc.source = R"(
-    struct VertexOutput{
-        @builtin(position) ClipPosition: vec4<f32>;
-        @location(0) Color: vec3<f32>;
-    };
-
-    @stage(fragment)
-    fn fs_main(
-        in: VertexOutput
-        )
-        -> @location(0) vec4<f32>
-    {
-        return vec4<f32>(in.Color, 1.0);
-    })";
+    wgslDesc.source = ReadAllText("Shaders/FragShader.wgsl");
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);

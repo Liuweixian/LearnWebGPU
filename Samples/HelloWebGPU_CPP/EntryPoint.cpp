@@ -16,11 +16,20 @@ enum RunningStatus
     End
 };
 
+enum SampleCase
+{
+    NoBufferDrawTriangle,
+    UseBufferDrawQuad,
+};
+
 static RunningStatus ms_Status = Invalid;
-static wgpu::Device ms_Device;
-static wgpu::SwapChain ms_SwapChain;
-static wgpu::TextureView ms_DepthBuffer;
-static wgpu::RenderPipeline ms_RenderPipeline;
+static SampleCase ms_SampleCase = UseBufferDrawQuad;
+static wgpu::Device ms_Device = nullptr;
+static wgpu::SwapChain ms_SwapChain = nullptr;
+static wgpu::TextureView ms_DepthBuffer = nullptr;
+static wgpu::RenderPipeline ms_RenderPipeline = nullptr;
+static wgpu::Buffer ms_VertexBuffer = nullptr;
+static wgpu::Buffer ms_IndexBuffer = nullptr;
 
 void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
 {
@@ -114,14 +123,14 @@ wgpu::PipelineLayout CreatePipelineLayout()
     return layout;
 }
 
-const char* ReadAllText(const char* filePath)
+const char *ReadAllText(const char *filePath)
 {
-    FILE* handle = fopen(filePath, "r");
+    FILE *handle = fopen(filePath, "r");
     assert(handle != nullptr);
     fseek(handle, 0, SEEK_END);
     int fileSize = ftell(handle);
-    rewind (handle);
-    char* buffer = (char*)malloc(sizeof(char) * fileSize);
+    rewind(handle);
+    char *buffer = (char *)malloc(sizeof(char) * fileSize);
     size_t read = fread(buffer, 1, fileSize, handle);
     fclose(handle);
     assert(read == fileSize);
@@ -251,13 +260,62 @@ void EndRender(wgpu::CommandEncoder &commandEncoder, wgpu::RenderPassEncoder &re
     queue.Submit(1, &commandBuffer);
 }
 
+void BufferMappedCallback(WGPUBufferMapAsyncStatus status, void *userdata)
+{
+}
+
+void SetupVertexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
+{
+    int totalSize = 8 * sizeof(float);
+    if (ms_VertexBuffer == nullptr)
+    {
+        float verts[8] = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5};
+        wgpu::BufferDescriptor bufferDesc;
+        bufferDesc.usage = wgpu::BufferUsage::Vertex | wgpu::BufferUsage::CopyDst;
+        bufferDesc.size = totalSize;
+        ms_VertexBuffer = ms_Device.CreateBuffer(&bufferDesc);
+        wgpu::Queue queue = ms_Device.GetQueue();
+        queue.WriteBuffer(ms_VertexBuffer, 0, verts, totalSize);
+    }
+    renderPassEncoder.SetVertexBuffer(0, ms_VertexBuffer, 0, totalSize);
+}
+
+void SetupIndexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
+{
+    int totalSize = 8 * sizeof(uint16_t);
+    if (ms_IndexBuffer == nullptr)
+    {
+        uint16_t trianges[6] = {0, 1, 2, 0, 2, 3};
+        wgpu::BufferDescriptor bufferDesc;
+        bufferDesc.usage = wgpu::BufferUsage::Index | wgpu::BufferUsage::CopyDst;
+        bufferDesc.size = totalSize;
+        ms_IndexBuffer = ms_Device.CreateBuffer(&bufferDesc);
+        wgpu::Queue queue = ms_Device.GetQueue();
+        queue.WriteBuffer(ms_IndexBuffer, 0, trianges, totalSize);
+    }
+    renderPassEncoder.SetIndexBuffer(ms_IndexBuffer, wgpu::IndexFormat::Uint16, 0, totalSize);
+}
+
 void Render()
 {
     wgpu::CommandEncoder commandEncoder = nullptr;
     wgpu::RenderPassEncoder renderPassEncoder = nullptr;
     BeginRender(commandEncoder, renderPassEncoder);
-    renderPassEncoder.SetPipeline(ms_RenderPipeline);
-    renderPassEncoder.Draw(3, 1, 0, 0);
+    switch (ms_SampleCase)
+    {
+    case NoBufferDrawTriangle:
+        renderPassEncoder.SetPipeline(ms_RenderPipeline);
+        renderPassEncoder.Draw(3, 1, 0, 0);
+        break;
+    case UseBufferDrawQuad:
+        SetupVertexBuffer(renderPassEncoder);
+        SetupIndexBuffer(renderPassEncoder);
+        break;
+
+    default:
+        break;
+    }
+
     EndRender(commandEncoder, renderPassEncoder);
 }
 

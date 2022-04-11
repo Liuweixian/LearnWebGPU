@@ -1,7 +1,7 @@
 struct VertexOutput
 {
-    @builtin(position) ClipPosition: vec4<f32>;
-    @location(0) Color: vec3<f32>;
+    @builtin(position) ClipPosition: vec4<f32>,
+    @location(0) Color: vec3<f32>,
 };
 
 @stage(fragment)

@@ -140,7 +140,20 @@ const char *ReadAllText(const char *filePath)
 wgpu::ShaderModule CreateVertexShaderModule()
 {
     wgpu::ShaderModuleWGSLDescriptor wgslDesc;
-    wgslDesc.source = ReadAllText("Shaders/VertexShader.wgsl");
+    const char *shaderPath = nullptr;
+    switch (ms_SampleCase)
+    {
+    case NoBufferDrawTriangle:
+        shaderPath = "Shaders/NoBufferDrawTriangle_VertexShader.wgsl";
+        break;
+    case UseBufferDrawQuad:
+        shaderPath = "Shaders/UseBufferDrawQuad_VertexShader.wgsl";
+        break;
+
+    default:
+        break;
+    }
+    wgslDesc.source = ReadAllText(shaderPath);
     wgpu::ShaderModuleDescriptor shaderModuleDesc;
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgpu::ShaderModule shaderModule = ms_Device.CreateShaderModule(&shaderModuleDesc);
@@ -152,6 +165,29 @@ wgpu::VertexState CreateVertexState()
     wgpu::VertexState vertexState;
     vertexState.module = CreateVertexShaderModule();
     vertexState.entryPoint = "vs_main";
+    switch (ms_SampleCase)
+    {
+    case NoBufferDrawTriangle:
+        break;
+    case UseBufferDrawQuad:
+    {
+        wgpu::VertexBufferLayout* layout = new wgpu::VertexBufferLayout;
+        layout->arrayStride = 2 * sizeof(float);
+        layout->stepMode = wgpu::VertexStepMode::Vertex;
+        layout->attributeCount = 1;
+        wgpu::VertexAttribute* attributes = new wgpu::VertexAttribute[1];
+        attributes[0].format = wgpu::VertexFormat::Float32x2;
+        attributes[0].offset = 0;
+        attributes[0].shaderLocation = 0;
+        layout->attributes = attributes;
+        vertexState.bufferCount = 1;
+        vertexState.buffers = layout;
+        break;
+    }
+
+    default:
+        break;
+    }
     return vertexState;
 }
 
@@ -282,7 +318,7 @@ void SetupVertexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
 
 void SetupIndexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
 {
-    int totalSize = 8 * sizeof(uint16_t);
+    int totalSize = 6 * sizeof(uint16_t);
     if (ms_IndexBuffer == nullptr)
     {
         uint16_t trianges[6] = {0, 1, 2, 0, 2, 3};
@@ -310,6 +346,8 @@ void Render()
     case UseBufferDrawQuad:
         SetupVertexBuffer(renderPassEncoder);
         SetupIndexBuffer(renderPassEncoder);
+        renderPassEncoder.SetPipeline(ms_RenderPipeline);
+        renderPassEncoder.DrawIndexed(6, 1, 0, 0, 0);
         break;
 
     default:

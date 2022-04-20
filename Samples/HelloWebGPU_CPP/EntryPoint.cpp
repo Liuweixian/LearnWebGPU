@@ -19,16 +19,18 @@ enum RunningStatus
 enum SampleCase
 {
     NoBufferDrawTriangle,
-    UseBufferDrawQuad,
+    UseBufferDrawQuadWithOneVBO,
+    UseBufferDrawQuadWithTwoVBO,
 };
 
 static RunningStatus ms_Status = Invalid;
-static SampleCase ms_SampleCase = UseBufferDrawQuad;
+static SampleCase ms_SampleCase = UseBufferDrawQuadWithOneVBO;
 static wgpu::Device ms_Device = nullptr;
 static wgpu::SwapChain ms_SwapChain = nullptr;
 static wgpu::TextureView ms_DepthBuffer = nullptr;
 static wgpu::RenderPipeline ms_RenderPipeline = nullptr;
 static wgpu::Buffer ms_VertexBuffer = nullptr;
+static wgpu::Buffer ms_VertexColorBuffer = nullptr;
 static wgpu::Buffer ms_IndexBuffer = nullptr;
 
 void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
@@ -146,7 +148,8 @@ wgpu::ShaderModule CreateVertexShaderModule()
     case NoBufferDrawTriangle:
         shaderPath = "Shaders/NoBufferDrawTriangle_VertexShader.wgsl";
         break;
-    case UseBufferDrawQuad:
+    case UseBufferDrawQuadWithOneVBO:
+    case UseBufferDrawQuadWithTwoVBO:
         shaderPath = "Shaders/UseBufferDrawQuad_VertexShader.wgsl";
         break;
 
@@ -169,19 +172,49 @@ wgpu::VertexState CreateVertexState()
     {
     case NoBufferDrawTriangle:
         break;
-    case UseBufferDrawQuad:
+    case UseBufferDrawQuadWithOneVBO:
     {
-        wgpu::VertexBufferLayout* layout = new wgpu::VertexBufferLayout;
-        layout->arrayStride = 2 * sizeof(float);
-        layout->stepMode = wgpu::VertexStepMode::Vertex;
-        layout->attributeCount = 1;
+        wgpu::VertexBufferLayout* layout = new wgpu::VertexBufferLayout[1];
+        vertexState.bufferCount = 1;
+        vertexState.buffers = layout;
+
+        layout[0].arrayStride = 5 * sizeof(float);
+        layout[0].stepMode = wgpu::VertexStepMode::Vertex;
+        layout[0].attributeCount = 2;
+        wgpu::VertexAttribute* attributes = new wgpu::VertexAttribute[2];
+        layout[0].attributes = attributes;
+
+        attributes[0].format = wgpu::VertexFormat::Float32x2;
+        attributes[0].offset = 0;
+        attributes[0].shaderLocation = 0;
+        attributes[1].format = wgpu::VertexFormat::Float32x3;
+        attributes[1].offset = 2 * sizeof(float);
+        attributes[1].shaderLocation = 1;
+        break;
+    }
+    case UseBufferDrawQuadWithTwoVBO:
+    {
+        wgpu::VertexBufferLayout* layout = new wgpu::VertexBufferLayout[2];
+        vertexState.bufferCount = 2;
+        vertexState.buffers = layout;
+
+        layout[0].arrayStride = 2 * sizeof(float);
+        layout[0].stepMode = wgpu::VertexStepMode::Vertex;
+        layout[0].attributeCount = 1;
         wgpu::VertexAttribute* attributes = new wgpu::VertexAttribute[1];
         attributes[0].format = wgpu::VertexFormat::Float32x2;
         attributes[0].offset = 0;
         attributes[0].shaderLocation = 0;
-        layout->attributes = attributes;
-        vertexState.bufferCount = 1;
-        vertexState.buffers = layout;
+        layout[0].attributes = attributes;
+
+        layout[1].arrayStride = 3 * sizeof(float);
+        layout[1].stepMode = wgpu::VertexStepMode::Vertex;
+        layout[1].attributeCount = 1;
+        attributes = new wgpu::VertexAttribute[1];
+        attributes[0].format = wgpu::VertexFormat::Float32x3;
+        attributes[0].offset = 0;
+        attributes[0].shaderLocation = 1;
+        layout[1].attributes = attributes;
         break;
     }
 
@@ -302,6 +335,25 @@ void BufferMappedCallback(WGPUBufferMapAsyncStatus status, void *userdata)
 
 void SetupVertexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
 {
+    int totalSize = 20 * sizeof(float);
+    if (ms_VertexBuffer == nullptr)
+    {
+        float verts[20] = {-0.5, -0.5, 1, 0, 0,
+                        -0.5, 0.5, 0, 1, 0,
+                        0.5, 0.5, 0, 0, 1,
+                        0.5, -0.5, 0, 0, 0};
+        wgpu::BufferDescriptor bufferDesc;
+        bufferDesc.usage = wgpu::BufferUsage::Vertex | wgpu::BufferUsage::CopyDst;
+        bufferDesc.size = totalSize;
+        ms_VertexBuffer = ms_Device.CreateBuffer(&bufferDesc);
+        wgpu::Queue queue = ms_Device.GetQueue();
+        queue.WriteBuffer(ms_VertexBuffer, 0, verts, totalSize);
+    }
+    renderPassEncoder.SetVertexBuffer(0, ms_VertexBuffer, 0, totalSize);
+}
+
+void SetupVertexPosBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
+{
     int totalSize = 8 * sizeof(float);
     if (ms_VertexBuffer == nullptr)
     {
@@ -314,6 +366,22 @@ void SetupVertexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
         queue.WriteBuffer(ms_VertexBuffer, 0, verts, totalSize);
     }
     renderPassEncoder.SetVertexBuffer(0, ms_VertexBuffer, 0, totalSize);
+}
+
+void SetupVertexColorBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
+{
+    int totalSize = 12 * sizeof(float);
+    if (ms_VertexColorBuffer == nullptr)
+    {
+        float color[12] = {1,0,0,0,1,0,0,0,1,0,0,0};
+        wgpu::BufferDescriptor bufferDesc;
+        bufferDesc.usage = wgpu::BufferUsage::Vertex | wgpu::BufferUsage::CopyDst;
+        bufferDesc.size = totalSize;
+        ms_VertexColorBuffer = ms_Device.CreateBuffer(&bufferDesc);
+        wgpu::Queue queue = ms_Device.GetQueue();
+        queue.WriteBuffer(ms_VertexColorBuffer, 0, color, totalSize);
+    }
+    renderPassEncoder.SetVertexBuffer(1, ms_VertexColorBuffer, 0, totalSize);
 }
 
 void SetupIndexBuffer(wgpu::RenderPassEncoder &renderPassEncoder)
@@ -343,8 +411,15 @@ void Render()
         renderPassEncoder.SetPipeline(ms_RenderPipeline);
         renderPassEncoder.Draw(3, 1, 0, 0);
         break;
-    case UseBufferDrawQuad:
+    case UseBufferDrawQuadWithOneVBO:
         SetupVertexBuffer(renderPassEncoder);
+        SetupIndexBuffer(renderPassEncoder);
+        renderPassEncoder.SetPipeline(ms_RenderPipeline);
+        renderPassEncoder.DrawIndexed(6, 1, 0, 0, 0);
+        break;
+    case UseBufferDrawQuadWithTwoVBO:
+        SetupVertexPosBuffer(renderPassEncoder);
+        SetupVertexColorBuffer(renderPassEncoder);
         SetupIndexBuffer(renderPassEncoder);
         renderPassEncoder.SetPipeline(ms_RenderPipeline);
         renderPassEncoder.DrawIndexed(6, 1, 0, 0, 0);

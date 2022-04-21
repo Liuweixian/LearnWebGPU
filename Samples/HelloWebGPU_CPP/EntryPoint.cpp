@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <webgpu/webgpu_cpp.h>
 #include <emscripten/emscripten.h>
+#include <emscripten/html5.h>
 
 enum RunningStatus
 {
@@ -32,6 +33,8 @@ static wgpu::RenderPipeline ms_RenderPipeline = nullptr;
 static wgpu::Buffer ms_VertexBuffer = nullptr;
 static wgpu::Buffer ms_VertexColorBuffer = nullptr;
 static wgpu::Buffer ms_IndexBuffer = nullptr;
+static int ms_CanvasWidth = 0;
+static int ms_CanvasHeight = 0;
 
 void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
 {
@@ -89,8 +92,8 @@ void InitSwapChain()
     wgpu::SwapChainDescriptor swapchainDesc;
     swapchainDesc.usage = wgpu::TextureUsage::RenderAttachment;
     swapchainDesc.format = wgpu::TextureFormat::BGRA8Unorm;
-    swapchainDesc.width = 500;
-    swapchainDesc.height = 500;
+    swapchainDesc.width = ms_CanvasWidth;
+    swapchainDesc.height = ms_CanvasHeight;
     swapchainDesc.presentMode = wgpu::PresentMode::Fifo;
 
     ms_SwapChain = ms_Device.CreateSwapChain(surface, &swapchainDesc);
@@ -106,8 +109,8 @@ void SetupFrameBuffer()
     textureDesc.label = "DepthBuffer";
     textureDesc.usage = wgpu::TextureUsage::RenderAttachment;
     textureDesc.dimension = wgpu::TextureDimension::e2D;
-    textureDesc.size.width = 500;
-    textureDesc.size.height = 500;
+    textureDesc.size.width = ms_CanvasWidth;
+    textureDesc.size.height = ms_CanvasHeight;
     textureDesc.size.depthOrArrayLayers = 1;
     textureDesc.format = wgpu::TextureFormat::Depth24PlusStencil8;
     textureDesc.mipLevelCount = 1;
@@ -461,6 +464,7 @@ int main(int argc, char **argv)
     ms_Device = nullptr;
     ms_SwapChain = nullptr;
     ms_DepthBuffer = nullptr;
+    emscripten_get_canvas_element_size("#canvas", &ms_CanvasWidth, &ms_CanvasHeight);
     emscripten_set_main_loop(Loop, 0, false);
     return 0;
 }

@@ -1,3 +1,4 @@
 #!/bin/bash
 
-export EMCC=../../BuildTools/emsdk/upstream/emscripten/emcc
+export EMSCRIPTEN_ROOT=../../BuildTools/emsdk/upstream/emscripten
+export EMCC=$EMSCRIPTEN_ROOT/emcc

@@ -13,7 +13,6 @@ SimpleRenderGraph::~SimpleRenderGraph()
 
 bool SimpleRenderGraph::Execute()
 {
-    RenderGraph::Execute();
     return true;
 }
 

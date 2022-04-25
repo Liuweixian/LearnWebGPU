@@ -4,12 +4,14 @@
 RenderGraphPlayer::RenderGraphPlayer()
 {
     m_pCurRDG = nullptr;
+    m_pGfxDevice = nullptr;
     m_bInitialized = false;
 }
 
 void RenderGraphPlayer::Initialize()
 {
-    printf("RenderGraphPlayer Initialize Complete\n");
+    printf("RenderGraphPlayer::Initialize\n");
+    m_pGfxDevice = new GfxDevice();
 }
 
 bool RenderGraphPlayer::RenderLoop()
@@ -19,6 +21,9 @@ bool RenderGraphPlayer::RenderLoop()
         Initialize();
         m_bInitialized = true;
     }
+
+    if (!m_pGfxDevice->IsInitialized())
+        return true;
 
     if (m_pCurRDG != nullptr)
         return m_pCurRDG->Execute();

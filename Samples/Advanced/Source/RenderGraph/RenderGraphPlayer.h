@@ -12,6 +12,8 @@ public:
     template <typename T>
     void RunGraph()
     {
+        static_assert(std::is_base_of<RenderGraph, T>::value, "T must be a descendant of RenderGraph");
+        
         if (m_pCurRDG != nullptr)
         {
             delete m_pCurRDG;

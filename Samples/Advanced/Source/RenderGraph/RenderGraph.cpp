@@ -23,6 +23,15 @@ bool RenderGraph::Execute()
         Initialize();
         m_eStatus = Initialized;
         InitializeComplete();
+        return true;
+    }
+
+    for (auto pass = m_Passes.begin(); pass != m_Passes.end(); pass++)
+    {
+        for (auto obj = m_RenderObjects.begin(); obj != m_RenderObjects.end(); obj++)
+        {
+            printf("RenderObject -> %s", (*obj)->GetName().c_str());
+        }
     }
     return true;
 }

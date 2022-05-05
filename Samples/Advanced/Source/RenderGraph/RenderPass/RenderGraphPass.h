@@ -1,9 +1,11 @@
 #pragma once
+#include "RenderPassIdx.h"
 
 class RenderGraphPass
 {
 public:
     RenderGraphPass();
     virtual ~RenderGraphPass();
-private:
+protected:
+    RenderPassIdx m_eIdx;
 };

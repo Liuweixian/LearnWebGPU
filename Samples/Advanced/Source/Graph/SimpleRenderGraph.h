@@ -8,4 +8,7 @@ public:
     SimpleRenderGraph();
     ~SimpleRenderGraph();
     virtual void InitializeComplete() override;
+private:
+    void InitializeRenderObjects();
+    void InitializeRenderGraph();
 };

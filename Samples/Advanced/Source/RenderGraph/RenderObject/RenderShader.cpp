@@ -1,8 +1,12 @@
 #include "RenderShader.h"
 
-RenderShader::RenderShader(char* entryPoint, char* filePath)
+RenderShader::RenderShader(RenderPassIdx passIdx)
 {
-    m_chEntryPoint = entryPoint;
-    m_chFilePath = filePath;
+    m_ePassIdx = passIdx;
+}
+
+RenderShader::~RenderShader()
+{
+    
 }
 

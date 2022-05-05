@@ -30,7 +30,7 @@ bool RenderGraph::Execute()
     {
         for (auto obj = m_RenderObjects.begin(); obj != m_RenderObjects.end(); obj++)
         {
-            printf("RenderObject -> %s", (*obj)->GetName().c_str());
+            printf("RenderObject -> %s\n", (*obj)->GetName().c_str());
         }
     }
     return true;

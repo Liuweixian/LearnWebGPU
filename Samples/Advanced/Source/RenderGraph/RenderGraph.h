@@ -19,10 +19,12 @@ public:
     bool Execute();
 
     template <typename T>
-    void AddRenderPass()
+    T* AddRenderPass()
     {
         static_assert(std::is_base_of<RenderGraphPass, T>::value, "T must be a descendant of RenderGraphPass");
-        m_Passes.push_back(new T());
+        T* pRenderPass = new T();
+        m_Passes.push_back(pRenderPass);
+        return pRenderPass;
     }
 
     template <typename T>

@@ -1,5 +1,5 @@
 #pragma once
-#include "RenderGraphPass.h"
+#include "../RenderGraph/RenderPass/RenderGraphPass.h"
 
 class DrawObjectPass : public RenderGraphPass
 {

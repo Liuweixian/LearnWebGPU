@@ -2,7 +2,7 @@
 #include <string>
 #include <list>
 #include <unordered_map>
-#include "RenderShader.h"
+#include "RenderMaterial.h"
 #include "RenderVertexBuffer.h"
 #include "../RenderPass/RenderPassIdx.h"
 
@@ -28,14 +28,14 @@ public:
     template <typename T>
     T *Create(RenderPassIdx passIdx)
     {
-        static_assert(std::is_base_of<RenderShader, T>::value, "T must be a descendant of RenderShader");
-        T *pShader = new T(passIdx);
-        m_Shaders.insert(std::make_pair(passIdx, pShader));
-        return pShader;
+        static_assert(std::is_base_of<RenderMaterial, T>::value, "T must be a descendant of RenderMaterial");
+        T *pMaterial = new T(passIdx);
+        m_Materials.insert(std::make_pair(passIdx, pMaterial));
+        return pMaterial;
     }
 
 private:
     std::string m_szName;
     std::list<RenderVertexBuffer *> m_VertexBuffers;
-    std::unordered_map<RenderPassIdx, RenderShader *> m_Shaders;
+    std::unordered_map<RenderPassIdx, RenderMaterial *> m_Materials;
 };

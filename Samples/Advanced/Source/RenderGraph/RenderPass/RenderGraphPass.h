@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderPassIdx.h"
+#include "../RenderObject/RenderShader.h"
 
 class RenderGraphPass
 {
@@ -8,4 +9,5 @@ public:
     virtual ~RenderGraphPass();
 protected:
     RenderPassIdx m_eIdx;
+    RenderShader* m_pShader;
 };

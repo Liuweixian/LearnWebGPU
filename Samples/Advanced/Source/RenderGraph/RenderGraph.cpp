@@ -26,11 +26,21 @@ bool RenderGraph::Execute()
         return true;
     }
 
-    for (auto pass = m_Passes.begin(); pass != m_Passes.end(); pass++)
+    for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
     {
-        for (auto obj = m_RenderObjects.begin(); obj != m_RenderObjects.end(); obj++)
+        RenderGraphPass* pPass = *passIt;
+        bool bRet = pPass->EnsureSetupFinish();
+        if (!bRet)
+            continue;
+
+        pPass->SetRenderTarget();
+        for (auto objIt = m_RenderObjects.begin(); objIt != m_RenderObjects.end(); objIt++)
         {
-            printf("RenderObject -> %s\n", (*obj)->GetName().c_str());
+            RenderObject* pObj = *objIt;
+            RenderMaterial* pMaterial = pObj->GetMaterial(pPass->GetIdx());
+            if (pMaterial == nullptr)
+                continue;
+            printf("RenderObject -> %s\n", pObj->GetName().c_str());
         }
     }
     return true;

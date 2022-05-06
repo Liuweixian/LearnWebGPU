@@ -9,7 +9,7 @@
 class RenderShader
 {
 public:
-    RenderShader(RenderPassIdx passIdx);
+    RenderShader();
     virtual ~RenderShader();
 
     template <typename T>
@@ -28,6 +28,5 @@ public:
         return pProgram;
     }
 private:
-    RenderPassIdx m_ePassIdx;
     std::unordered_map<RenderShaderProgram::Type, RenderShaderProgram*> m_Programs;
 };

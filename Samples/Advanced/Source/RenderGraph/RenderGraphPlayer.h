@@ -23,9 +23,6 @@ public:
     }
 
 private:
-    void Initialize();
-
     RenderGraph *m_pCurRDG;
     GfxDevice *m_pGfxDevice;
-    bool m_bInitialized;
 };

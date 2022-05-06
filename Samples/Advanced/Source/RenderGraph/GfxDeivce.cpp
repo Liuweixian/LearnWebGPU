@@ -3,8 +3,8 @@
 
 GfxDevice::GfxDevice()
 {
-    m_oDevice = nullptr;
-    m_oSwapChain = nullptr;
+    m_Device = nullptr;
+    m_SwapChain = nullptr;
     m_bInitialized = false;
     InitWGPUDevice();
 }
@@ -13,36 +13,38 @@ GfxDevice::~GfxDevice()
 {
 }
 
-void GfxDevice::DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata)
+void GfxDevice::DeviceSetUncapturedErrorCallback(WGPUErrorType eType, char const *chMessage, void *pUserdata)
 {
-    if (type == WGPUErrorType_NoError)
+    if (eType == WGPUErrorType_NoError)
         return;
-    printf("GfxDevice Error Happened %d: %s\n", type, message);
+    printf("GfxDevice Error Happened %d: %s\n", eType, chMessage);
 }
 
-void GfxDevice::AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice device, char const *message, void *userdata)
+void GfxDevice::AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus, WGPUDevice pDevice, char const *chMessage, void *pUserdata)
 {
-    if (status != WGPURequestDeviceStatus_Success)
+    if (eStatus != WGPURequestDeviceStatus_Success)
     {
-        printf("GfxDevice::InitWGPUDevice Failed! wgpuAdapterRequestDevice return %d \n", status);
+        printf("GfxDevice::InitWGPUDevice Failed! wgpuAdapterRequestDevice return %d \n", eStatus);
         return;
     }
 
-    GfxDevice *pGfxDevice = (GfxDevice *)userdata;
-    pGfxDevice->m_oDevice = wgpu::Device::Acquire(device);
-    pGfxDevice->m_oDevice.SetUncapturedErrorCallback(DeviceSetUncapturedErrorCallback, nullptr);
+    GfxDevice *pGfxDevice = (GfxDevice *)pUserdata;
+    pGfxDevice->m_Device = wgpu::Device::Acquire(pDevice);
+    pGfxDevice->m_Device.SetUncapturedErrorCallback(DeviceSetUncapturedErrorCallback, nullptr);
     pGfxDevice->InitWGPUSwapChain();
     printf("GfxDevice::InitWGPUDevice Success\n");
 }
 
-void GfxDevice::InstanceRequestAdapterCallback(WGPURequestAdapterStatus status, WGPUAdapter adapter, char const *message, void *userdata)
+void GfxDevice::InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus, WGPUAdapter pAdapter, char const *chMessage, void *pUserdata)
 {
-    if (status != WGPURequestAdapterStatus_Success)
+    if (eStatus != WGPURequestAdapterStatus_Success)
     {
-        printf("GfxDevice::InitWGPUDevice Failed! wgpuInstanceRequestAdapter return %d \n", status);
+        printf("GfxDevice::InitWGPUDevice Failed! wgpuInstanceRequestAdapter return %d \n", eStatus);
         return;
     }
-    wgpuAdapterRequestDevice(adapter, NULL, AdapterRequestDeviceCallback, userdata);
+    GfxDevice *pGfxDevice = (GfxDevice *)pUserdata;
+    pGfxDevice->m_pAdapter = pAdapter;
+    wgpuAdapterRequestDevice(pGfxDevice->m_pAdapter, NULL, AdapterRequestDeviceCallback, pUserdata);
 }
 
 void GfxDevice::InitWGPUDevice()
@@ -54,9 +56,9 @@ void GfxDevice::InitWGPUDevice()
 
 void GfxDevice::InitWGPUSwapChain()
 {
-    int canvasWidth = 0;
-    int canvasHeight = 0;
-    emscripten_get_canvas_element_size("#canvas", &canvasWidth, &canvasHeight);
+    int nCanvasWidth = 0;
+    int nCanvasHeight = 0;
+    emscripten_get_canvas_element_size("#canvas", &nCanvasWidth, &nCanvasHeight);
 
     wgpu::SurfaceDescriptorFromCanvasHTMLSelector canvasHTMLSelectorDesc;
     canvasHTMLSelectorDesc.selector = "#canvas";
@@ -69,11 +71,11 @@ void GfxDevice::InitWGPUSwapChain()
     wgpu::SwapChainDescriptor swapchainDesc;
     swapchainDesc.usage = wgpu::TextureUsage::RenderAttachment;
     swapchainDesc.format = wgpu::TextureFormat::BGRA8Unorm;
-    swapchainDesc.width = canvasWidth;
-    swapchainDesc.height = canvasHeight;
+    swapchainDesc.width = nCanvasWidth;
+    swapchainDesc.height = nCanvasHeight;
     swapchainDesc.presentMode = wgpu::PresentMode::Fifo;
 
-    m_oSwapChain = m_oDevice.CreateSwapChain(surface, &swapchainDesc);
+    m_SwapChain = m_Device.CreateSwapChain(surface, &swapchainDesc);
     printf("GfxDevice::InitWGPUSwapChain Success\n");
     m_bInitialized = true;
 }

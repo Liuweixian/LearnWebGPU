@@ -8,9 +8,10 @@ class GfxDevice
 private:
     void InitWGPUDevice();
     void InitWGPUSwapChain();
-    static void DeviceSetUncapturedErrorCallback(WGPUErrorType type, char const *message, void *userdata);
-    static void AdapterRequestDeviceCallback(WGPURequestDeviceStatus status, WGPUDevice device, char const *message, void *userdata);
-    static void InstanceRequestAdapterCallback(WGPURequestAdapterStatus status, WGPUAdapter adapter, char const *message, void *userdata);
+    static void DeviceSetUncapturedErrorCallback(WGPUErrorType eType, char const *chMessage, void *pUserdata);
+    static void AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus, WGPUDevice pDevice, char const *chMessage, void *pUserdata);
+    static void InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus, WGPUAdapter pAdapter, char const *chMessage, void *pUserdata);
+
 public:
     GfxDevice();
     ~GfxDevice();
@@ -20,7 +21,8 @@ public:
     }
 
 private:
-    wgpu::Device m_oDevice;
-    wgpu::SwapChain m_oSwapChain;
+    wgpu::Device m_Device;
+    wgpu::SwapChain m_SwapChain;
+    WGPUAdapter m_pAdapter;
     bool m_bInitialized;
 };

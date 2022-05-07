@@ -10,15 +10,16 @@ DrawObjectPass::~DrawObjectPass()
 
 }
 
-void DrawObjectPass::Setup()
+void DrawObjectPass::SetupShader()
 {
     m_pShader = new RenderShader();
     m_pShader->Create<RenderShaderProgram>(RenderShaderProgram::Type::Vertex, "vs_main", "Shaders/DrawObjectPassVS.wgsl");
     m_pShader->Create<RenderShaderProgram>(RenderShaderProgram::Type::Fragment, "fs_main", "Shaders/DrawObjectPassFS.wgsl");
-    printf("DrawObjectPass::Setup\n");
+    printf("DrawObjectPass::SetupShader\n");
 }
 
-void DrawObjectPass::SetRenderTarget()
+void DrawObjectPass::SetupRenderTarget()
 {
-    
+    RenderGraphPass::SetBackBufferAsRenderTarget();
+    printf("DrawObjectPass::SetupRenderTarget\n");
 }

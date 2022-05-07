@@ -6,8 +6,8 @@ class DrawObjectPass : public RenderGraphPass
 public:
     DrawObjectPass();
     virtual ~DrawObjectPass();
-    virtual void SetRenderTarget() override;
 protected:
-    virtual void Setup() override;
+    virtual void SetupShader() override;
+    virtual void SetupRenderTarget() override;
 
 };

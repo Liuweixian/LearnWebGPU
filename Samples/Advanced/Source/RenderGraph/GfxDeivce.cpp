@@ -5,6 +5,7 @@ GfxDevice::GfxDevice()
 {
     m_Device = nullptr;
     m_SwapChain = nullptr;
+    m_pSupportedLimits = nullptr;
     m_bInitialized = false;
     InitWGPUDevice();
 }
@@ -43,8 +44,9 @@ void GfxDevice::InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus,
         return;
     }
     GfxDevice *pGfxDevice = (GfxDevice *)pUserdata;
-    pGfxDevice->m_pAdapter = pAdapter;
-    wgpuAdapterRequestDevice(pGfxDevice->m_pAdapter, NULL, AdapterRequestDeviceCallback, pUserdata);
+    pGfxDevice->m_Adapter = wgpu::Adapter::Acquire(pAdapter);
+    pGfxDevice->GetAdapterLimits();
+    wgpuAdapterRequestDevice(pAdapter, NULL, AdapterRequestDeviceCallback, pUserdata);
 }
 
 void GfxDevice::InitWGPUDevice()
@@ -78,4 +80,87 @@ void GfxDevice::InitWGPUSwapChain()
     m_SwapChain = m_Device.CreateSwapChain(surface, &swapchainDesc);
     printf("GfxDevice::InitWGPUSwapChain Success\n");
     m_bInitialized = true;
+}
+
+void GfxDevice::GetAdapterLimits()
+{
+    wgpu::AdapterProperties properties;
+    m_Adapter.GetProperties(&properties);
+    printf("GfxDevice vendorID:%d, deviceID:%d, name:%s, driverDescription:%s, adapterType:%d, backendType:%d\n",
+           properties.vendorID, properties.deviceID, properties.name, properties.driverDescription, properties.adapterType, properties.backendType);
+
+    /*m_pSupportedLimits = new wgpu::SupportedLimits();
+    m_Adapter.GetLimits(m_pSupportedLimits);
+
+    printf("GfxDevice Limits:\n");
+    printf("maxTextureDimension1D:%d\n", m_pSupportedLimits->limits.maxTextureDimension1D);
+    printf("maxTextureDimension2D:%d\n", m_pSupportedLimits->limits.maxTextureDimension2D);
+    printf("maxTextureDimension3D:%d\n", m_pSupportedLimits->limits.maxTextureDimension3D);
+    printf("maxTextureArrayLayers:%d\n", m_pSupportedLimits->limits.maxTextureArrayLayers);
+    printf("maxBindGroups:%d\n", m_pSupportedLimits->limits.maxBindGroups);
+    printf("maxDynamicUniformBuffersPerPipelineLayout:%d\n", m_pSupportedLimits->limits.maxDynamicUniformBuffersPerPipelineLayout);
+    printf("maxDynamicStorageBuffersPerPipelineLayout:%d\n", m_pSupportedLimits->limits.maxDynamicStorageBuffersPerPipelineLayout);
+    printf("maxSampledTexturesPerShaderStage:%d\n", m_pSupportedLimits->limits.maxSampledTexturesPerShaderStage);
+    printf("maxSamplersPerShaderStage:%d\n", m_pSupportedLimits->limits.maxSamplersPerShaderStage);
+    printf("maxStorageBuffersPerShaderStage:%d\n", m_pSupportedLimits->limits.maxStorageBuffersPerShaderStage);
+    printf("maxStorageTexturesPerShaderStage:%d\n", m_pSupportedLimits->limits.maxStorageTexturesPerShaderStage);
+    printf("maxUniformBuffersPerShaderStage:%d\n", m_pSupportedLimits->limits.maxUniformBuffersPerShaderStage);
+    printf("maxUniformBufferBindingSize:%llu\n", m_pSupportedLimits->limits.maxUniformBufferBindingSize);
+    printf("maxStorageBufferBindingSize:%llu\n", m_pSupportedLimits->limits.maxStorageBufferBindingSize);
+    printf("minUniformBufferOffsetAlignment:%d\n", m_pSupportedLimits->limits.minUniformBufferOffsetAlignment);
+    printf("minStorageBufferOffsetAlignment:%d\n", m_pSupportedLimits->limits.minStorageBufferOffsetAlignment);
+    printf("maxVertexBuffers:%d\n", m_pSupportedLimits->limits.maxVertexBuffers);
+    printf("maxVertexAttributes:%d\n", m_pSupportedLimits->limits.maxVertexAttributes);
+    printf("maxVertexBufferArrayStride:%d\n", m_pSupportedLimits->limits.maxVertexBufferArrayStride);
+    printf("maxInterStageShaderComponents:%d\n", m_pSupportedLimits->limits.maxInterStageShaderComponents);
+    printf("maxComputeWorkgroupStorageSize:%d\n", m_pSupportedLimits->limits.maxComputeWorkgroupStorageSize);
+    printf("maxComputeInvocationsPerWorkgroup:%d\n", m_pSupportedLimits->limits.maxComputeInvocationsPerWorkgroup);
+    printf("maxComputeWorkgroupSizeX:%d\n", m_pSupportedLimits->limits.maxComputeWorkgroupSizeX);
+    printf("maxComputeWorkgroupSizeY:%d\n", m_pSupportedLimits->limits.maxComputeWorkgroupSizeY);
+    printf("maxComputeWorkgroupSizeZ:%d\n", m_pSupportedLimits->limits.maxComputeWorkgroupSizeZ);
+    printf("maxComputeWorkgroupsPerDimension:%d\n", m_pSupportedLimits->limits.maxComputeWorkgroupsPerDimension);*/
+}
+
+void GfxDevice::BeginCommandEncode()
+{
+    if (!m_bInitialized)
+        return;
+    m_CommandEncoder = m_Device.CreateCommandEncoder(nullptr);
+}
+
+void GfxDevice::QueueWorkDoneCallback(WGPUQueueWorkDoneStatus eStatus, void *pUserdata)
+{
+    if (eStatus != WGPUQueueWorkDoneStatus_Success)
+    {
+        printf("GfxDevice::QueueWorkDoneCallback Failed! return %d \n", eStatus);
+        return;
+    }
+}
+
+void GfxDevice::EndCommandEncode()
+{
+    if (!m_bInitialized)
+        return;
+    wgpu::CommandBuffer commandBuffer = m_CommandEncoder.Finish();
+    wgpu::Queue queue = m_Device.GetQueue();
+    queue.OnSubmittedWorkDone(0, QueueWorkDoneCallback, this);
+    queue.Submit(1, &commandBuffer);
+}
+
+void GfxDevice::BeginPassEncode()
+{
+
+}
+
+void GfxDevice::EndPassEncode()
+{
+    
+}
+
+static GfxDevice *g_pGfxDevice = nullptr;
+GfxDevice *GetGfxDevice()
+{
+    if (g_pGfxDevice == nullptr)
+        g_pGfxDevice = new GfxDevice();
+    return g_pGfxDevice;
 }

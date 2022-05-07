@@ -8,9 +8,11 @@ class GfxDevice
 private:
     void InitWGPUDevice();
     void InitWGPUSwapChain();
+    void GetAdapterLimits();
     static void DeviceSetUncapturedErrorCallback(WGPUErrorType eType, char const *chMessage, void *pUserdata);
     static void AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus, WGPUDevice pDevice, char const *chMessage, void *pUserdata);
     static void InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus, WGPUAdapter pAdapter, char const *chMessage, void *pUserdata);
+    static void QueueWorkDoneCallback(WGPUQueueWorkDoneStatus eStatus, void *pUserdata);
 
 public:
     GfxDevice();
@@ -19,10 +21,18 @@ public:
     {
         return m_bInitialized;
     }
+    void BeginCommandEncode();
+    void EndCommandEncode();
+    void BeginPassEncode();
+    void EndPassEncode();
 
 private:
     wgpu::Device m_Device;
     wgpu::SwapChain m_SwapChain;
-    WGPUAdapter m_pAdapter;
+    wgpu::Adapter m_Adapter;
+    wgpu::SupportedLimits* m_pSupportedLimits;
+    wgpu::CommandEncoder m_CommandEncoder;
     bool m_bInitialized;
 };
+
+GfxDevice* GetGfxDevice();

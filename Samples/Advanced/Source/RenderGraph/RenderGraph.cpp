@@ -1,5 +1,6 @@
-#include "RenderGraph.h"
 #include <stdio.h>
+#include "RenderGraph.h"
+#include "GfxDevice.h"
 
 RenderGraph::RenderGraph()
 {
@@ -8,40 +9,65 @@ RenderGraph::RenderGraph()
 
 RenderGraph::~RenderGraph()
 {
-
 }
 
 void RenderGraph::Initialize()
 {
-
 }
 
 bool RenderGraph::Execute()
 {
-    if (m_eStatus == Invalid)
+    switch (m_eStatus)
+    {
+    case Invalid:
     {
         Initialize();
         m_eStatus = Initialized;
         InitializeComplete();
         return true;
     }
-
-    for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
+    case Initialized:
     {
-        RenderGraphPass* pPass = *passIt;
-        bool bRet = pPass->EnsureSetupFinish();
-        if (!bRet)
-            continue;
-
-        pPass->SetRenderTarget();
-        for (auto objIt = m_RenderObjects.begin(); objIt != m_RenderObjects.end(); objIt++)
+        bool bSetupFinish = true;
+        for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
-            RenderObject* pObj = *objIt;
-            RenderMaterial* pMaterial = pObj->GetMaterial(pPass->GetIdx());
-            if (pMaterial == nullptr)
+            RenderGraphPass *pPass = *passIt;
+            bool bRet = pPass->EnsureSetupFinish();
+            if (!bRet)
+            {
+                bSetupFinish = false;
                 continue;
-            printf("RenderObject -> %s\n", pObj->GetName().c_str());
+            }
         }
+
+        if (bSetupFinish)
+        {
+            m_eStatus = Compiled;
+        }
+        return true;
     }
+    case Compiled:
+    {
+        GfxDevice* pGfxDevice = GetGfxDevice();
+        pGfxDevice->BeginCommandEncode();
+        for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
+        {
+            RenderGraphPass *pPass = *passIt;
+            pGfxDevice->BeginPassEncode();
+            for (auto objIt = m_RenderObjects.begin(); objIt != m_RenderObjects.end(); objIt++)
+            {
+                RenderObject *pObj = *objIt;
+                RenderMaterial *pMaterial = pObj->GetMaterial(pPass->GetIdx());
+                if (pMaterial == nullptr)
+                    continue;
+                printf("RenderObject -> %s\n", pObj->GetName().c_str());
+            }
+            pGfxDevice->EndPassEncode();
+        }
+        pGfxDevice->EndCommandEncode();
+        return true;
+    }
+    }
+
     return true;
 }

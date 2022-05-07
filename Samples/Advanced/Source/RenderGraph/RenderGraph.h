@@ -11,6 +11,7 @@ public:
     {
         Invalid,
         Initialized,
+        Compiled,
     };
 
     RenderGraph();
@@ -40,7 +41,7 @@ protected:
     virtual void InitializeComplete() = 0;
 
 private:
-    bool m_eStatus;
+    Status m_eStatus;
     std::list<RenderGraphPass *> m_Passes;
     std::list<RenderObject *> m_RenderObjects;
 };

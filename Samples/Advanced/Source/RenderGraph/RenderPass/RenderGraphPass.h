@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 #include "RenderPassIdx.h"
 #include "../RenderObject/RenderShader.h"
 
@@ -8,15 +9,18 @@ public:
     RenderGraphPass();
     virtual ~RenderGraphPass();
     bool EnsureSetupFinish();
-    virtual void SetRenderTarget() = 0;
     RenderPassIdx GetIdx()
     {
         return m_eIdx;
     }
 protected:
-    virtual void Setup() = 0;
+    virtual void SetupShader() = 0;
+    virtual void SetupRenderTarget() = 0;
+    void SetBackBufferAsRenderTarget();
 
 protected:
     RenderPassIdx m_eIdx;
     RenderShader* m_pShader;
+    std::list<wgpu::TextureDescriptor *> m_ColorBuffers;
+    wgpu::TextureDescriptor * m_pDepthBuffer;
 };

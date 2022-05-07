@@ -15,7 +15,12 @@ void RenderGraph::Initialize()
 {
 }
 
-bool RenderGraph::Execute()
+void RenderGraph::Compile()
+{
+
+}
+
+bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
 {
     switch (m_eStatus)
     {
@@ -42,6 +47,7 @@ bool RenderGraph::Execute()
 
         if (bSetupFinish)
         {
+            Compile();
             m_eStatus = Compiled;
         }
         return true;
@@ -53,16 +59,13 @@ bool RenderGraph::Execute()
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
             RenderGraphPass *pPass = *passIt;
-            pGfxDevice->BeginPassEncode();
-            for (auto objIt = m_RenderObjects.begin(); objIt != m_RenderObjects.end(); objIt++)
+            for (auto objIt = renderObjects.begin(); objIt != renderObjects.end(); objIt++)
             {
                 RenderObject *pObj = *objIt;
-                RenderMaterial *pMaterial = pObj->GetMaterial(pPass->GetIdx());
-                if (pMaterial == nullptr)
-                    continue;
-                printf("RenderObject -> %s\n", pObj->GetName().c_str());
+                //RenderMaterial *pMaterial = pObj->GetMaterial(pPass->GetIdx());
+                //if (pMaterial == nullptr)
+                    //continue;
             }
-            pGfxDevice->EndPassEncode();
         }
         pGfxDevice->EndCommandEncode();
         return true;

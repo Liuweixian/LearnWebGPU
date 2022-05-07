@@ -51,9 +51,9 @@ void GfxDevice::InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus,
 
 void GfxDevice::InitWGPUDevice()
 {
-    WGPURequestAdapterOptions adapterOptinons;
-    adapterOptinons.powerPreference = WGPUPowerPreference_HighPerformance;
-    wgpuInstanceRequestAdapter(NULL, &adapterOptinons, InstanceRequestAdapterCallback, this);
+    WGPURequestAdapterOptions* adapterOptinons = new WGPURequestAdapterOptions();
+    adapterOptinons->powerPreference = WGPUPowerPreference_HighPerformance;
+    wgpuInstanceRequestAdapter(NULL, adapterOptinons, InstanceRequestAdapterCallback, this);
 }
 
 void GfxDevice::InitWGPUSwapChain()
@@ -147,14 +147,43 @@ void GfxDevice::EndCommandEncode()
     queue.Submit(1, &commandBuffer);
 }
 
-void GfxDevice::BeginPassEncode()
+void GfxDevice::BeginPassEncode(std::list<wgpu::TextureDescriptor *> targetColorBuffers, wgpu::TextureDescriptor *pTargetDepthBuffer)
 {
+    int nColorAttachmentCount = targetColorBuffers.size();
+    wgpu::RenderPassColorAttachment colorAttachments[nColorAttachmentCount];
+    for (int i = 0; i < nColorAttachmentCount; i++)
+    {
+        colorAttachments[0].view = m_SwapChain.GetCurrentTextureView();
+        colorAttachments[0].loadOp = wgpu::LoadOp::Undefined;
+        colorAttachments[0].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
+    }
 
+    wgpu::RenderPassDepthStencilAttachment *pDepthAttachment = nullptr;
+    if (pTargetDepthBuffer != nullptr)
+    {
+        /*wgpu::RenderPassDepthStencilAttachment depthAttachment;
+        depthAttachment.view = ms_DepthBuffer;
+        depthAttachment.depthLoadOp = wgpu::LoadOp::Clear;
+        depthAttachment.depthStoreOp = wgpu::StoreOp::Discard;
+        depthAttachment.clearDepth = 0;
+        depthAttachment.depthReadOnly = false;
+        depthAttachment.stencilLoadOp = wgpu::LoadOp::Clear;
+        depthAttachment.stencilStoreOp = wgpu::StoreOp::Discard;
+        depthAttachment.clearStencil = 0;
+        depthAttachment.stencilReadOnly = false;*/
+    }
+
+    wgpu::RenderPassDescriptor renderPassDesc;
+    renderPassDesc.colorAttachmentCount = nColorAttachmentCount;
+    renderPassDesc.colorAttachments = colorAttachments;
+    renderPassDesc.depthStencilAttachment = pDepthAttachment;
+    renderPassDesc.occlusionQuerySet = nullptr;
+    m_RenderPassEncoder = m_CommandEncoder.BeginRenderPass(&renderPassDesc);
 }
 
 void GfxDevice::EndPassEncode()
 {
-    
+    m_RenderPassEncoder.End();
 }
 
 static GfxDevice *g_pGfxDevice = nullptr;

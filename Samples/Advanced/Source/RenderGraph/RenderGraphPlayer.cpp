@@ -13,5 +13,13 @@ bool RenderGraphPlayer::RenderLoop()
     if (!GetGfxDevice()->IsInitialized())
         return true;
 
-    return m_pCurRDG->Execute();
+    return m_pCurRDG->Execute(m_RenderObjects);
+}
+
+static RenderGraphPlayer* g_pRenderGraphPlayer = nullptr;
+RenderGraphPlayer* GetRDGPlayer()
+{
+    if (g_pRenderGraphPlayer == nullptr)
+        g_pRenderGraphPlayer = new RenderGraphPlayer();
+    return g_pRenderGraphPlayer;
 }

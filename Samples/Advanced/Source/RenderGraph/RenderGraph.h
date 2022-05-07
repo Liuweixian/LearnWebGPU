@@ -17,7 +17,7 @@ public:
     RenderGraph();
     virtual ~RenderGraph();
     void Initialize();
-    bool Execute();
+    bool Execute(const std::list<RenderObject *> renderObjects);
 
     template <typename T>
     T* AddRenderPass()
@@ -28,14 +28,8 @@ public:
         return pRenderPass;
     }
 
-    template <typename T>
-    T* AddRenderObject(std::string szName)
-    {
-        static_assert(std::is_base_of<RenderObject, T>::value, "T must be a descendant of RenderObject");
-        T* pRenderObject = new T(szName);
-        m_RenderObjects.push_back(pRenderObject);
-        return pRenderObject;
-    }
+private:
+    void Compile();
 
 protected:
     virtual void InitializeComplete() = 0;
@@ -43,5 +37,4 @@ protected:
 private:
     Status m_eStatus;
     std::list<RenderGraphPass *> m_Passes;
-    std::list<RenderObject *> m_RenderObjects;
 };

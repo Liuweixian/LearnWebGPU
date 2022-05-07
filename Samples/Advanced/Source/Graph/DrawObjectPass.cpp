@@ -17,9 +17,3 @@ void DrawObjectPass::SetupShader()
     m_pShader->Create<RenderShaderProgram>(RenderShaderProgram::Type::Fragment, "fs_main", "Shaders/DrawObjectPassFS.wgsl");
     printf("DrawObjectPass::SetupShader\n");
 }
-
-void DrawObjectPass::SetupRenderTarget()
-{
-    RenderGraphPass::SetBackBufferAsRenderTarget();
-    printf("DrawObjectPass::SetupRenderTarget\n");
-}

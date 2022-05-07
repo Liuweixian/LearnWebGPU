@@ -2,6 +2,7 @@
 #include <webgpu/webgpu_cpp.h>
 #include <emscripten/emscripten.h>
 #include <emscripten/html5.h>
+#include <list>
 
 class GfxDevice
 {
@@ -23,7 +24,7 @@ public:
     }
     void BeginCommandEncode();
     void EndCommandEncode();
-    void BeginPassEncode();
+    void BeginPassEncode(std::list<wgpu::TextureDescriptor *> targetColorBuffer, wgpu::TextureDescriptor * pTargetDepthBuffer);
     void EndPassEncode();
 
 private:
@@ -32,6 +33,7 @@ private:
     wgpu::Adapter m_Adapter;
     wgpu::SupportedLimits* m_pSupportedLimits;
     wgpu::CommandEncoder m_CommandEncoder;
+    wgpu::RenderPassEncoder m_RenderPassEncoder;
     bool m_bInitialized;
 };
 

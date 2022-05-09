@@ -1,6 +1,6 @@
 #pragma once
 #include "RenderGraphPass.h"
-#include "RenderPassDefine.h"
+#include "RenderGraphDefine.h"
 
 class RenderGraphComputePass : public RenderGraphPass
 {

@@ -3,7 +3,7 @@
 
 RenderGraphPass::RenderGraphPass()
 {
-    m_eType = RenderPassType::Invalid;
+    m_eType = GraphPassType::Invalid;
 }
 
 RenderGraphPass::~RenderGraphPass()

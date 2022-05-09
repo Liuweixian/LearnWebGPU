@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-#include "RenderPassDefine.h"
+#include "RenderGraphDefine.h"
 #include "../RenderObject/RenderShader.h"
 
 class RenderGraphPass
@@ -8,12 +8,12 @@ class RenderGraphPass
 public:
     RenderGraphPass();
     virtual ~RenderGraphPass();
-    bool EnsureSetupFinish();
+    virtual bool EnsureSetupFinish();
 
 protected:
     virtual void SetupShader() = 0;
 
 protected:
     RenderShader *m_pShader;
-    RenderPassType m_eType;
+    GraphPassType m_eType;
 };

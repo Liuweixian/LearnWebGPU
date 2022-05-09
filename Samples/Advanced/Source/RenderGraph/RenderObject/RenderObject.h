@@ -5,7 +5,7 @@
 #include "RenderMaterial.h"
 #include "RenderVertexBuffer.h"
 #include "RenderIndexBuffer.h"
-#include "../RenderPass/RenderPassDefine.h"
+#include "../RenderPass/RenderGraphDefine.h"
 
 class RenderObject
 {

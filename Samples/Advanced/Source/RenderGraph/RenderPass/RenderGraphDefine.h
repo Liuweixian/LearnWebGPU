@@ -7,7 +7,7 @@ enum class RenderPassIdx : uint16_t
     DrawObjectPass,
 };
 
-enum class RenderPassType : uint8_t
+enum class GraphPassType : uint8_t
 {
     Invalid,
     Draw,

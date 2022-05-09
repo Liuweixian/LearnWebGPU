@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include "webgpu/webgpu_cpp.h"
-#include "../RenderPass/RenderPassDefine.h"
+#include "../RenderPass/RenderGraphDefine.h"
 
 class RenderMaterial
 {

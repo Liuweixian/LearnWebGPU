@@ -8,3 +8,13 @@ RenderGraphComputePass::~RenderGraphComputePass()
 {
 
 }
+
+void RenderGraphComputePass::Execute()
+{
+
+}
+
+void RenderGraphComputePass::Compile()
+{
+    
+}

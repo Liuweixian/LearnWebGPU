@@ -7,4 +7,6 @@ class RenderGraphComputePass : public RenderGraphPass
 public:
     RenderGraphComputePass();
     virtual ~RenderGraphComputePass();
+    void Execute();
+    virtual void Compile() override;
 };

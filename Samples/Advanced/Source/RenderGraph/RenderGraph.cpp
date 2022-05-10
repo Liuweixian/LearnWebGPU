@@ -17,7 +17,11 @@ void RenderGraph::Initialize()
 
 void RenderGraph::Compile()
 {
-
+    for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
+    {
+        RenderGraphPass *pPass = *passIt;
+        pPass->Compile();
+    }
 }
 
 bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
@@ -54,17 +58,21 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
     }
     case Compiled:
     {
-        GfxDevice* pGfxDevice = GetGfxDevice();
+        GfxDevice *pGfxDevice = GetGfxDevice();
         pGfxDevice->BeginCommandEncode();
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
             RenderGraphPass *pPass = *passIt;
-            for (auto objIt = renderObjects.begin(); objIt != renderObjects.end(); objIt++)
+            GraphPassType eType = pPass->GetPassType();
+            if (eType == GraphPassType::Draw)
             {
-                RenderObject *pObj = *objIt;
-                //RenderMaterial *pMaterial = pObj->GetMaterial(pPass->GetIdx());
-                //if (pMaterial == nullptr)
-                    //continue;
+                RenderGraphDrawPass *pDrawPass = reinterpret_cast<RenderGraphDrawPass *>(pPass);
+                pDrawPass->Execute(renderObjects);
+            }
+            else if (eType == GraphPassType::Compute)
+            {
+                RenderGraphComputePass *pComputePass = reinterpret_cast<RenderGraphComputePass *>(pPass);
+                pComputePass->Execute();
             }
         }
         pGfxDevice->EndCommandEncode();

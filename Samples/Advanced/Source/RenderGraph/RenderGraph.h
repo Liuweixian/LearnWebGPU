@@ -2,6 +2,8 @@
 #include <list>
 #include <string>
 #include "RenderPass/RenderGraphPass.h"
+#include "RenderPass/RenderGraphDrawPass.h"
+#include "RenderPass/RenderGraphComputePass.h"
 #include "RenderObject/RenderObject.h"
 
 class RenderGraph

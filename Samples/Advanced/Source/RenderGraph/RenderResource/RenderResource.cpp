@@ -11,6 +11,14 @@ RenderResource::~RenderResource()
 {
 }
 
+wgpu::TextureDescriptor* RenderResource::GetTextureDesc(RenderResourceHandle* pHandle)
+{
+    auto found = m_AllTextureDescs.find(pHandle->m_unDescIdx);
+    if (found == m_AllTextureDescs.end())
+        return nullptr;
+    return found->second;
+}
+
 RenderResourceHandle *RenderResource::CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
 {
     auto it = m_AllResourceHandles.find(szName);

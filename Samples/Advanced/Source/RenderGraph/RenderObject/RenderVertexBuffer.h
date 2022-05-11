@@ -10,13 +10,9 @@ public:
     RenderVertexBuffer();
     virtual ~RenderVertexBuffer();
     template <typename T>
-    void SetData(size_t ulDataLength, T *pData, int nAttributeCount, ...);
-
-protected:
-    wgpu::VertexFormat GetVertexFormat(const std::type_info& typeInfo, int nStride);
+    void SetData(size_t ulDataLength, T *pData);
 
 protected:
     size_t m_ulDataSize;
     void *m_pData;
-    wgpu::VertexBufferLayout *m_pLayout;
 };

@@ -25,6 +25,8 @@ public:
         m_Programs.insert(std::make_pair(eType, pProgram));
         return pProgram;
     }
-private:
-    std::unordered_map<RenderShaderProgram::Type, RenderShaderProgram*> m_Programs;
+
+protected:
+    std::unordered_map<RenderShaderProgram::Type, RenderShaderProgram *> m_Programs;
+    
 };

@@ -3,8 +3,7 @@
 #include <list>
 #include <unordered_map>
 #include "RenderMaterial.h"
-#include "RenderVertexBuffer.h"
-#include "RenderIndexBuffer.h"
+#include "RenderMeshBuffer.h"
 #include "../RenderPass/RenderGraphDefine.h"
 
 class RenderObject
@@ -20,7 +19,7 @@ public:
     template <typename T>
     T *CreateVertexBuffer()
     {
-        static_assert(std::is_base_of<RenderVertexBuffer, T>::value, "T must be a descendant of RenderVertexBuffer");
+        static_assert(std::is_base_of<RenderMeshBuffer, T>::value, "T must be a descendant of RenderMeshBuffer");
         T *pVertexBuffer = new T();
         m_VertexBuffers.push_back(pVertexBuffer);
         return pVertexBuffer;
@@ -29,7 +28,7 @@ public:
     template <typename T>
     T *CreateIndexBuffer()
     {
-        static_assert(std::is_base_of<RenderIndexBuffer, T>::value, "T must be a descendant of RenderIndexBuffer");
+        static_assert(std::is_base_of<RenderMeshBuffer, T>::value, "T must be a descendant of RenderMeshBuffer");
         if (m_pRenderIndexBuffer != nullptr)
         {
             delete m_pRenderIndexBuffer;
@@ -59,7 +58,7 @@ public:
 
 private:
     std::string m_szName;
-    std::list<RenderVertexBuffer *> m_VertexBuffers;
-    RenderIndexBuffer *m_pRenderIndexBuffer;
+    std::list<RenderMeshBuffer *> m_VertexBuffers;
+    RenderMeshBuffer *m_pRenderIndexBuffer;
     std::unordered_map<RenderPassIdx, RenderMaterial *> m_Materials;
 };

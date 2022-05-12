@@ -2,13 +2,12 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <typeinfo>
-#include "webgpu/webgpu_cpp.h"
 
-class RenderVertexBuffer
+class RenderMeshBuffer
 {
 public:
-    RenderVertexBuffer();
-    virtual ~RenderVertexBuffer();
+    RenderMeshBuffer();
+    virtual ~RenderMeshBuffer();
     template <typename T>
     void SetData(size_t ulDataLength, T *pData);
 

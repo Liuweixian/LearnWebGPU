@@ -37,6 +37,10 @@ public:
     {
         return m_pFrameBufferHandle;
     }
+    bool IsFrameBuffer(RenderResourceHandle *pHandle)
+    {
+        return pHandle->m_unDescIdx == m_pFrameBufferHandle->m_unDescIdx;
+    }
 
 private:
     uint32_t GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount);

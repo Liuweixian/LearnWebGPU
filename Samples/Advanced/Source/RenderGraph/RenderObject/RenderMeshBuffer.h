@@ -9,9 +9,10 @@ public:
     RenderMeshBuffer();
     virtual ~RenderMeshBuffer();
     template <typename T>
-    void SetData(size_t ulDataLength, T *pData);
+    void SetData(size_t ulDataCount, T *pData);
 
 protected:
-    size_t m_ulDataSize;
+    size_t m_ulDataCount;
+    size_t m_ulDataLength;
     void *m_pData;
 };

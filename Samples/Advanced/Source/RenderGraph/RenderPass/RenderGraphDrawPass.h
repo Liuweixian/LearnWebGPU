@@ -19,6 +19,4 @@ protected:
     RenderPassIdx m_eIdx;
     std::list<RenderResourceHandle *> m_TargetColorBuffers;
     RenderResourceHandle *m_pTargetDepthBuffer;
-    std::list<wgpu::TextureDescriptor *> m_CompiledTargetColorBuffers;
-    wgpu::TextureDescriptor *m_pCompiledTargetDepthBuffer;
 };

@@ -59,7 +59,7 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
     case Compiled:
     {
         GfxDevice *pGfxDevice = GetGfxDevice();
-        pGfxDevice->BeginCommandEncode();
+        pGfxDevice->BeginFrame();
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
             RenderGraphPass *pPass = *passIt;
@@ -75,7 +75,7 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
                 pComputePass->Execute();
             }
         }
-        pGfxDevice->EndCommandEncode();
+        pGfxDevice->EndFrame();
         return true;
     }
     }

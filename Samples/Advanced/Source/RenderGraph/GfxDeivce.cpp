@@ -1,12 +1,17 @@
 #include "GfxDevice.h"
 #include <stdio.h>
+#include <cassert>
 
 GfxDevice::GfxDevice()
 {
     m_Device = nullptr;
     m_SwapChain = nullptr;
+    m_Adapter = nullptr;
     m_pSupportedLimits = nullptr;
+    m_CommandEncoder = nullptr;
+    m_RenderPassEncoders.clear();
     m_bInitialized = false;
+
     InitWGPUDevice();
 }
 
@@ -51,7 +56,7 @@ void GfxDevice::InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus,
 
 void GfxDevice::InitWGPUDevice()
 {
-    WGPURequestAdapterOptions* adapterOptinons = new WGPURequestAdapterOptions();
+    WGPURequestAdapterOptions *adapterOptinons = new WGPURequestAdapterOptions();
     adapterOptinons->powerPreference = WGPUPowerPreference_HighPerformance;
     wgpuInstanceRequestAdapter(NULL, adapterOptinons, InstanceRequestAdapterCallback, this);
 }
@@ -121,10 +126,12 @@ void GfxDevice::GetAdapterLimits()
     printf("maxComputeWorkgroupsPerDimension:%d\n", m_pSupportedLimits->limits.maxComputeWorkgroupsPerDimension);*/
 }
 
-void GfxDevice::BeginCommandEncode()
+void GfxDevice::BeginFrame()
 {
     if (!m_bInitialized)
         return;
+    assert(m_CommandEncoder == nullptr);
+    assert(m_RenderPassEncoders.size() == 0);
     m_CommandEncoder = m_Device.CreateCommandEncoder(nullptr);
 }
 
@@ -137,7 +144,7 @@ void GfxDevice::QueueWorkDoneCallback(WGPUQueueWorkDoneStatus eStatus, void *pUs
     }
 }
 
-void GfxDevice::EndCommandEncode()
+void GfxDevice::EndFrame()
 {
     if (!m_bInitialized)
         return;
@@ -145,17 +152,19 @@ void GfxDevice::EndCommandEncode()
     wgpu::Queue queue = m_Device.GetQueue();
     queue.OnSubmittedWorkDone(0, QueueWorkDoneCallback, this);
     queue.Submit(1, &commandBuffer);
+    m_CommandEncoder = nullptr;
 }
 
-void GfxDevice::BeginPassEncode(std::list<wgpu::TextureDescriptor *> targetColorBuffers, wgpu::TextureDescriptor *pTargetDepthBuffer)
+void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
 {
+    uint32_t unEncoderIdx = 0;
     int nColorAttachmentCount = targetColorBuffers.size();
     wgpu::RenderPassColorAttachment colorAttachments[nColorAttachmentCount];
     for (int i = 0; i < nColorAttachmentCount; i++)
     {
-        colorAttachments[0].view = m_SwapChain.GetCurrentTextureView();
-        colorAttachments[0].loadOp = wgpu::LoadOp::Undefined;
-        colorAttachments[0].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
+        //colorAttachments[0].view = m_SwapChain.GetCurrentTextureView();
+        //colorAttachments[0].loadOp = wgpu::LoadOp::Undefined;
+        //colorAttachments[0].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
     }
 
     wgpu::RenderPassDepthStencilAttachment *pDepthAttachment = nullptr;
@@ -173,17 +182,14 @@ void GfxDevice::BeginPassEncode(std::list<wgpu::TextureDescriptor *> targetColor
         depthAttachment.stencilReadOnly = false;*/
     }
 
-    wgpu::RenderPassDescriptor renderPassDesc;
-    renderPassDesc.colorAttachmentCount = nColorAttachmentCount;
-    renderPassDesc.colorAttachments = colorAttachments;
-    renderPassDesc.depthStencilAttachment = pDepthAttachment;
-    renderPassDesc.occlusionQuerySet = nullptr;
-    m_RenderPassEncoder = m_CommandEncoder.BeginRenderPass(&renderPassDesc);
 }
 
-void GfxDevice::EndPassEncode()
+void GfxDevice::SetRenderState()
 {
-    m_RenderPassEncoder.End();
+}
+
+void GfxDevice::DrawBuffer()
+{
 }
 
 static GfxDevice *g_pGfxDevice = nullptr;

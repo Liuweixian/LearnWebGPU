@@ -3,7 +3,6 @@
 #include <emscripten/emscripten.h>
 #include <emscripten/html5.h>
 #include <list>
-#include <unordered_map>
 #include "RenderResource/RenderResource.h"
 
 class GfxDevice
@@ -16,6 +15,7 @@ private:
     static void AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus, WGPUDevice pDevice, char const *chMessage, void *pUserdata);
     static void InstanceRequestAdapterCallback(WGPURequestAdapterStatus eStatus, WGPUAdapter pAdapter, char const *chMessage, void *pUserdata);
     static void QueueWorkDoneCallback(WGPUQueueWorkDoneStatus eStatus, void *pUserdata);
+    void FinishCurrentRenderPassEncoder();
 
 public:
     GfxDevice();
@@ -37,7 +37,8 @@ private:
     wgpu::Adapter m_Adapter;
     wgpu::SupportedLimits *m_pSupportedLimits;
     wgpu::CommandEncoder m_CommandEncoder;
-    std::unordered_map<uint32_t, wgpu::RenderPassEncoder> m_RenderPassEncoders;
+    uint32_t m_unCurrentRenderEncoderIdx;
+    wgpu::RenderPassEncoder m_CurrentRenderPassEncoder;
     bool m_bInitialized;
 };
 

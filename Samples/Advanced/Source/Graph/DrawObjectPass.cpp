@@ -1,6 +1,6 @@
 #include "DrawObjectPass.h"
-#include "../RenderGraph/RenderObject/RenderObjectShader.h"
-#include "../RenderGraph/RenderObject/RenderVertexState.h"
+#include "../RenderGraph/RenderResource/RenderObjectShader.h"
+#include "../RenderGraph/RenderResource/RenderVertexState.h"
 
 DrawObjectPass::DrawObjectPass()
 {

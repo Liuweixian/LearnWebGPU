@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include "RenderGraphDefine.h"
-#include "../RenderObject/RenderShader.h"
+#include "../RenderResource/RenderShader.h"
 
 class RenderGraphPass
 {

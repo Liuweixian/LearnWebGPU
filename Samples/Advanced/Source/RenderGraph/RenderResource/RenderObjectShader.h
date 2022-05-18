@@ -24,7 +24,18 @@ public:
         }
         va_end(ap);
         RenderVertexState *pVertexState = new RenderVertexState(nAttributeCount, vertexFormats);
+        m_VertexStates.push_back(pVertexState);
         return pVertexState;
+    }
+
+    size_t GetVertexStatesCount()
+    {
+        return m_VertexStates.size();
+    }
+
+    std::list<RenderVertexState *> GetVertexStates()
+    {
+        return m_VertexStates;
     }
 
 protected:

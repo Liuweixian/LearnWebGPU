@@ -14,6 +14,11 @@ public:
     };
     RenderShaderProgram(Type eType, std::string szEntryPoint, std::string szFilePath);
     virtual ~RenderShaderProgram();
+    const char *LoadSource();
+    const char *EntryPoint()
+    {
+        return m_szEntryPoint.c_str();
+    }
 
 private:
     std::string m_szEntryPoint;

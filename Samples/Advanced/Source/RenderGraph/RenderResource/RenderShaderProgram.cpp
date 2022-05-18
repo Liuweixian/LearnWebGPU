@@ -9,5 +9,9 @@ RenderShaderProgram::RenderShaderProgram(Type eType, std::string szEntryPoint, s
 
 RenderShaderProgram::~RenderShaderProgram()
 {
+}
 
+const char *RenderShaderProgram::LoadSource()
+{
+    return nullptr;
 }

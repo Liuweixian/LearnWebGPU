@@ -4,7 +4,7 @@ RenderResource::RenderResource()
 {
     m_AllTextureDescs.clear();
     m_AllResourceHandles.clear();
-    m_pFrameBufferHandle = CreateTexture("FrameBuffer", wgpu::TextureFormat::Undefined, 0, 0, 0, 0, 0);
+    m_pFrameBufferHandle = CreateTexture("FrameBuffer", wgpu::TextureFormat::BGRA8Unorm, 0, 0, 0, 0, 0);
 }
 
 RenderResource::~RenderResource()

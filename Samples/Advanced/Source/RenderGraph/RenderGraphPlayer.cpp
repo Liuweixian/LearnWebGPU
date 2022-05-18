@@ -13,6 +13,9 @@ bool RenderGraphPlayer::RenderLoop()
     if (!GetGfxDevice()->IsInitialized())
         return true;
 
+    if (GetGfxDevice()->ErrorHappened())
+        return false;
+
     return m_pCurRDG->Execute(m_RenderObjects);
 }
 

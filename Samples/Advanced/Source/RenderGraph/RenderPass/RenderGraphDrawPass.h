@@ -3,6 +3,7 @@
 #include "RenderGraphPass.h"
 #include "RenderGraphDefine.h"
 #include "../RenderResource/RenderResource.h"
+#include "../RenderResource/RenderState.h"
 #include "../RenderObject/RenderObject.h"
 
 class RenderGraphDrawPass : public RenderGraphPass
@@ -19,4 +20,5 @@ protected:
     RenderPassIdx m_eIdx;
     std::list<RenderResourceHandle *> m_TargetColorBuffers;
     RenderResourceHandle *m_pTargetDepthBuffer;
+    RenderState *m_pRenderState;
 };

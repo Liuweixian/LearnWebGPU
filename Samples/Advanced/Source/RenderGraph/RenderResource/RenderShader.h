@@ -26,7 +26,8 @@ public:
         return pProgram;
     }
 
+    RenderShaderProgram *GetProgram(RenderShaderProgram::Type eType);
+
 protected:
     std::unordered_map<RenderShaderProgram::Type, RenderShaderProgram *> m_Programs;
-    
 };

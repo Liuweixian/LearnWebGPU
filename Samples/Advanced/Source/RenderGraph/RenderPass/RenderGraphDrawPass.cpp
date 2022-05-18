@@ -8,6 +8,7 @@ RenderGraphDrawPass::RenderGraphDrawPass()
     m_eType = GraphPassType::Draw;
     m_TargetColorBuffers.clear();
     m_pTargetDepthBuffer = nullptr;
+    m_pRenderState = nullptr;
 }
 
 RenderGraphDrawPass::~RenderGraphDrawPass()
@@ -37,16 +38,19 @@ void RenderGraphDrawPass::SetRenderTarget(RenderResourceHandle *pTargetColorBuff
 
 void RenderGraphDrawPass::Compile()
 {
+    assert(m_pRenderState == nullptr);
+    m_pRenderState = new RenderState();
+    m_pRenderState->Initialize((RenderObjectShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
 }
 
 void RenderGraphDrawPass::Execute(const std::list<RenderObject *> renderObjects)
 {
-    GfxDevice* pGfxDevice = GetGfxDevice();
+    GfxDevice *pGfxDevice = GetGfxDevice();
     pGfxDevice->SetRenderTarget(m_TargetColorBuffers, m_pTargetDepthBuffer);
-    pGfxDevice->SetRenderState();
+    pGfxDevice->SetRenderState(m_pRenderState);
     for (auto objIt = renderObjects.begin(); objIt != renderObjects.end(); objIt++)
     {
-        RenderObject* pObj = *objIt;
+        RenderObject *pObj = *objIt;
         RenderMaterial *pMaterial = pObj->GetMaterial(m_eIdx);
         if (pMaterial == nullptr)
             continue;

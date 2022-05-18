@@ -4,6 +4,7 @@
 #include <emscripten/html5.h>
 #include <list>
 #include "RenderResource/RenderResource.h"
+#include "RenderResource/RenderState.h"
 
 class GfxDevice
 {
@@ -28,8 +29,12 @@ public:
     void BeginFrame();
     void EndFrame();
     void SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer);
-    void SetRenderState();
+    void SetRenderState(RenderState *pRenderState);
     void DrawBuffer();
+    bool ErrorHappened()
+    {
+        return m_bErrorHappened;
+    }
 
 private:
     wgpu::Device m_Device;
@@ -40,6 +45,7 @@ private:
     uint32_t m_unCurrentRenderEncoderIdx;
     wgpu::RenderPassEncoder m_CurrentRenderPassEncoder;
     bool m_bInitialized;
+    bool m_bErrorHappened;
 };
 
 GfxDevice *GetGfxDevice();

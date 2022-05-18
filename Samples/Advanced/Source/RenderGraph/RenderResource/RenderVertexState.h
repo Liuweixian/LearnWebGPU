@@ -7,6 +7,11 @@ class RenderVertexState
 public:
     RenderVertexState(int nAttributeCount, wgpu::VertexFormat *pVertexFormats);
     virtual ~RenderVertexState();
+    wgpu::VertexBufferLayout GetLayout()
+    {
+        return *m_pLayout;
+    }
+
 private:
     uint32_t GetVertexFormatSize(wgpu::VertexFormat);
 

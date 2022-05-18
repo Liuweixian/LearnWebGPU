@@ -12,6 +12,7 @@ GfxDevice::GfxDevice()
     m_unCurrentRenderEncoderIdx = 0;
     m_CurrentRenderPassEncoder = nullptr;
     m_bInitialized = false;
+    m_bErrorHappened = false;
 
     InitWGPUDevice();
 }
@@ -25,6 +26,8 @@ void GfxDevice::DeviceSetUncapturedErrorCallback(WGPUErrorType eType, char const
     if (eType == WGPUErrorType_NoError)
         return;
     printf("GfxDevice Error Happened %d: %s\n", eType, chMessage);
+    GfxDevice *pGfxDevice = (GfxDevice *)pUserdata;
+    pGfxDevice->m_bErrorHappened = true;
 }
 
 void GfxDevice::AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus, WGPUDevice pDevice, char const *chMessage, void *pUserdata)
@@ -37,7 +40,7 @@ void GfxDevice::AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus, WG
 
     GfxDevice *pGfxDevice = (GfxDevice *)pUserdata;
     pGfxDevice->m_Device = wgpu::Device::Acquire(pDevice);
-    pGfxDevice->m_Device.SetUncapturedErrorCallback(DeviceSetUncapturedErrorCallback, nullptr);
+    pGfxDevice->m_Device.SetUncapturedErrorCallback(DeviceSetUncapturedErrorCallback, pUserdata);
     pGfxDevice->InitWGPUSwapChain();
     printf("GfxDevice::InitWGPUDevice Success\n");
 }
@@ -204,6 +207,7 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
     if (unEncoderHash != m_unCurrentRenderEncoderIdx)
     {
         FinishCurrentRenderPassEncoder();
+        printf("GfxDevice BeginRenderPass last:%d current:%d\n", m_unCurrentRenderEncoderIdx, unEncoderHash);
         wgpu::RenderPassDescriptor renderPassDesc;
         renderPassDesc.colorAttachmentCount = nColorAttachmentCount;
         renderPassDesc.colorAttachments = colorAttachments;
@@ -211,7 +215,7 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         renderPassDesc.occlusionQuerySet = nullptr;
         m_CurrentRenderPassEncoder = m_CommandEncoder.BeginRenderPass(&renderPassDesc);
         m_unCurrentRenderEncoderIdx = unEncoderHash;
-        printf("GfxDevice BeginRenderPass %d\n", unEncoderHash);
+        
     }
 }
 
@@ -219,13 +223,38 @@ void GfxDevice::FinishCurrentRenderPassEncoder()
 {
     if (m_CurrentRenderPassEncoder == nullptr)
         return;
+    printf("GfxDevice EndRenderPass %d\n", m_unCurrentRenderEncoderIdx);
     m_CurrentRenderPassEncoder.End();
     m_CurrentRenderPassEncoder = nullptr;
     m_unCurrentRenderEncoderIdx = 0;
 }
 
-void GfxDevice::SetRenderState()
+void GfxDevice::SetRenderState(RenderState *pRenderState)
 {
+    if (pRenderState->m_RenderPipeline == nullptr)
+    {
+        assert(pRenderState->m_pLayoutDesc);
+        wgpu::RenderPipelineDescriptor renderPipelineDesc;
+        renderPipelineDesc.layout = m_Device.CreatePipelineLayout(pRenderState->m_pLayoutDesc);
+        wgpu::ShaderModuleDescriptor vertexShaderModuleDesc;
+        assert(pRenderState->m_pVertexShaderDesc != nullptr);
+        vertexShaderModuleDesc.nextInChain = pRenderState->m_pVertexShaderDesc;
+        pRenderState->m_pVertexState->module = m_Device.CreateShaderModule(&vertexShaderModuleDesc);
+        renderPipelineDesc.vertex = *(pRenderState->m_pVertexState);
+        renderPipelineDesc.primitive = *(pRenderState->m_pPrimitiveState);
+        renderPipelineDesc.depthStencil = pRenderState->m_pDepthStencilState;
+        renderPipelineDesc.multisample = *(pRenderState->m_pMultisampleState);
+        wgpu::ShaderModuleDescriptor fragShaderModuleDesc;
+        assert(pRenderState->m_pFragmentShaderDesc != nullptr);
+        fragShaderModuleDesc.nextInChain = pRenderState->m_pFragmentShaderDesc;
+        pRenderState->m_pFragmentState->module = m_Device.CreateShaderModule(&fragShaderModuleDesc);
+        pRenderState->m_RenderPipeline = m_Device.CreateRenderPipeline(&renderPipelineDesc);
+    }
+    else
+    {
+        pRenderState->Cleanup();
+    }
+    m_CurrentRenderPassEncoder.SetPipeline(pRenderState->m_RenderPipeline);
 }
 
 void GfxDevice::DrawBuffer()

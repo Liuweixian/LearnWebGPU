@@ -3,6 +3,7 @@
 RenderGraphPlayer::RenderGraphPlayer()
 {
     m_pCurRDG = nullptr;
+    m_RenderObjects.empty();
 }
 
 bool RenderGraphPlayer::RenderLoop()

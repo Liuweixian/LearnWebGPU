@@ -1,4 +1,5 @@
 #include "RenderShaderProgram.h"
+#include "../../FileSystem/Resources.h"
 
 RenderShaderProgram::RenderShaderProgram(Type eType, std::string szEntryPoint, std::string szFilePath)
 {
@@ -13,5 +14,5 @@ RenderShaderProgram::~RenderShaderProgram()
 
 const char *RenderShaderProgram::LoadSource()
 {
-    return nullptr;
+    return GetResources()->Load(m_szFilePath);
 }

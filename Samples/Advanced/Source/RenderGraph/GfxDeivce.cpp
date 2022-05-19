@@ -215,8 +215,7 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         renderPassDesc.occlusionQuerySet = nullptr;
         m_CurrentRenderPassEncoder = m_CommandEncoder.BeginRenderPass(&renderPassDesc);
         m_unCurrentRenderEncoderIdx = unEncoderHash;
-        
-    }
+        }
 }
 
 void GfxDevice::FinishCurrentRenderPassEncoder()
@@ -248,6 +247,8 @@ void GfxDevice::SetRenderState(RenderState *pRenderState)
         assert(pRenderState->m_pFragmentShaderDesc != nullptr);
         fragShaderModuleDesc.nextInChain = pRenderState->m_pFragmentShaderDesc;
         pRenderState->m_pFragmentState->module = m_Device.CreateShaderModule(&fragShaderModuleDesc);
+        printf("%d\n", pRenderState->m_pFragmentState->targets[0].format);
+        renderPipelineDesc.fragment = pRenderState->m_pFragmentState;
         pRenderState->m_RenderPipeline = m_Device.CreateRenderPipeline(&renderPipelineDesc);
     }
     else

@@ -33,10 +33,7 @@ public:
     ~RenderResource();
     wgpu::TextureDescriptor *GetTextureDesc(RenderResourceHandle *pHandle);
     RenderResourceHandle *CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers = 0, uint32_t unMipLevelCount = 1, uint32_t unSampleCount = 1);
-    RenderResourceHandle *GetFrameBuffer()
-    {
-        return m_pFrameBufferHandle;
-    }
+    RenderResourceHandle *GetFrameBuffer();
     bool IsFrameBuffer(RenderResourceHandle *pHandle)
     {
         return pHandle->m_unDescIdx == m_pFrameBufferHandle->m_unDescIdx;

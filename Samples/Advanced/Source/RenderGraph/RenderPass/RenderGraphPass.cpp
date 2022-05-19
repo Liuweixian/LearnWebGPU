@@ -4,6 +4,7 @@
 RenderGraphPass::RenderGraphPass()
 {
     m_eType = GraphPassType::Invalid;
+    m_pShader = nullptr;
 }
 
 RenderGraphPass::~RenderGraphPass()

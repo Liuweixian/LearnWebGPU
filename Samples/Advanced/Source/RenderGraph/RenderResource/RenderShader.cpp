@@ -2,6 +2,7 @@
 
 RenderShader::RenderShader()
 {
+    m_Programs.empty();
 }
 
 RenderShader::~RenderShader()

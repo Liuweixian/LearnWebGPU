@@ -4,6 +4,13 @@
 RenderState::RenderState()
 {
     m_pLayoutDesc = nullptr;
+    m_pVertexShaderDesc = nullptr;
+    m_pVertexState = nullptr;
+    m_pFragmentShaderDesc = nullptr;
+    m_pFragmentState = nullptr;
+    m_pPrimitiveState = nullptr;
+    m_pDepthStencilState = nullptr;
+    m_pMultisampleState = nullptr;
     m_RenderPipeline = nullptr;
 }
 
@@ -58,15 +65,16 @@ void RenderState::InitFragmentState(RenderObjectShader *pRenderObjectShader, std
     m_pFragmentShaderDesc = new wgpu::ShaderModuleWGSLDescriptor();
     m_pFragmentShaderDesc->source = pFragProgram->LoadSource();
     m_pFragmentState->targetCount = targetColorBuffers.size();
-    wgpu::ColorTargetState colorTargetStates[m_pFragmentState->targetCount];
+    wgpu::ColorTargetState *pColorTargetStates = new wgpu::ColorTargetState[m_pFragmentState->targetCount];
     int nIndex = 0;
     for (auto it = targetColorBuffers.begin(); it != targetColorBuffers.end(); it++)
     {
         wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(*it);
-        colorTargetStates[nIndex].format = pTextureDesc->format;
+        pColorTargetStates[nIndex].format = pTextureDesc->format;
+        printf("--->%d\n", (*it)->m_unDescIdx);
         nIndex++;
     }
-    m_pFragmentState->targets = colorTargetStates;
+    m_pFragmentState->targets = pColorTargetStates;
 }
 
 void RenderState::InitPrimitiveState()
@@ -90,7 +98,6 @@ void RenderState::InitDepthStencilState(RenderResourceHandle *pTargetDepthBuffer
         wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(pTargetDepthBuffer);
         m_pDepthStencilState->format = pTextureDesc->format;
     }
-        
 }
 
 void RenderState::InitMultisampleState()

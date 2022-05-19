@@ -5,6 +5,7 @@
 RenderGraph::RenderGraph()
 {
     m_eStatus = Invalid;
+    m_Passes.empty();
 }
 
 RenderGraph::~RenderGraph()

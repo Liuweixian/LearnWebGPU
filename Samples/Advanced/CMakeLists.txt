@@ -9,4 +9,4 @@ file(GLOB_RECURSE SRC_CPP Source/*.cpp)
 set(CMAKE_EXE_LINKER_FLAGS "-s LLD_REPORT_UNDEFINED")
 
 add_executable(entrypoint ${SRC_CPP} ${SRC_HEADER})
-set_target_properties(entrypoint PROPERTIES LINK_FLAGS "-g4 -s USE_WEBGPU=1 --preload-file ../Resources@Resources --source-map-base http://localhost:8080/Advanced/")
+set_target_properties(entrypoint PROPERTIES LINK_FLAGS "-s USE_WEBGPU=1 --preload-file ../Resources@Resources -gsource-map --source-map-base http://localhost:8080/Advanced/")

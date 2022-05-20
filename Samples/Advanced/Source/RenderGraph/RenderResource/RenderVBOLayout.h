@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include "webgpu/webgpu_cpp.h"
 
-class RenderVertexState
+class RenderVBOLayout
 {
 public:
-    RenderVertexState(int nAttributeCount, wgpu::VertexFormat *pVertexFormats);
-    virtual ~RenderVertexState();
+    RenderVBOLayout(int nAttributeCount, wgpu::VertexFormat *pVertexFormats);
+    virtual ~RenderVBOLayout();
     wgpu::VertexBufferLayout GetLayout()
     {
         return *m_pLayout;

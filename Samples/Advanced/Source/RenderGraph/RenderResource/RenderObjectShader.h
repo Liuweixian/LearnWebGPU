@@ -3,7 +3,7 @@
 #include <list>
 #include <stdarg.h>
 #include "RenderShader.h"
-#include "RenderVertexState.h"
+#include "RenderVBOLayout.h"
 #include "webgpu/webgpu_cpp.h"
 
 class RenderObjectShader : public RenderShader
@@ -12,7 +12,7 @@ public:
     RenderObjectShader();
     virtual ~RenderObjectShader();
 
-    RenderVertexState *CreateVertexState(int nAttributeCount, ...)
+    RenderVBOLayout *CreateVBOLayout(int nAttributeCount, ...)
     {
         wgpu::VertexFormat vertexFormats[nAttributeCount];
         va_list ap;
@@ -23,21 +23,21 @@ public:
             vertexFormats[i] = eVertexFormat;
         }
         va_end(ap);
-        RenderVertexState *pVertexState = new RenderVertexState(nAttributeCount, vertexFormats);
-        m_VertexStates.push_back(pVertexState);
-        return pVertexState;
+        RenderVBOLayout *pVBOLayout = new RenderVBOLayout(nAttributeCount, vertexFormats);
+        m_VBOLayouts.push_back(pVBOLayout);
+        return pVBOLayout;
     }
 
-    size_t GetVertexStatesCount()
+    size_t GetVBOLayoutsCount()
     {
-        return m_VertexStates.size();
+        return m_VBOLayouts.size();
     }
 
-    std::list<RenderVertexState *> GetVertexStates()
+    std::list<RenderVBOLayout *> GetVBOLayouts()
     {
-        return m_VertexStates;
+        return m_VBOLayouts;
     }
 
 protected:
-    std::list<RenderVertexState *> m_VertexStates;
+    std::list<RenderVBOLayout *> m_VBOLayouts;
 };

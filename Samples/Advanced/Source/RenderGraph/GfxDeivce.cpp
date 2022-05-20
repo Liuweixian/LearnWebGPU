@@ -179,6 +179,10 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         {
             colorAttachments[nIndex].view = m_SwapChain.GetCurrentTextureView();
         }
+        else
+        {
+            //todo: render into texture
+        }
         colorAttachments[nIndex].loadOp = wgpu::LoadOp::Undefined;
         colorAttachments[nIndex].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
         nIndex++;

@@ -207,7 +207,7 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
     if (unEncoderHash != m_unCurrentRenderEncoderIdx)
     {
         FinishCurrentRenderPassEncoder();
-        printf("GfxDevice BeginRenderPass last:%d current:%d\n", m_unCurrentRenderEncoderIdx, unEncoderHash);
+        //printf("GfxDevice BeginRenderPass last:%d current:%d\n", m_unCurrentRenderEncoderIdx, unEncoderHash);
         wgpu::RenderPassDescriptor renderPassDesc;
         renderPassDesc.colorAttachmentCount = nColorAttachmentCount;
         renderPassDesc.colorAttachments = colorAttachments;
@@ -215,14 +215,14 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         renderPassDesc.occlusionQuerySet = nullptr;
         m_CurrentRenderPassEncoder = m_CommandEncoder.BeginRenderPass(&renderPassDesc);
         m_unCurrentRenderEncoderIdx = unEncoderHash;
-        }
+    }
 }
 
 void GfxDevice::FinishCurrentRenderPassEncoder()
 {
     if (m_CurrentRenderPassEncoder == nullptr)
         return;
-    printf("GfxDevice EndRenderPass %d\n", m_unCurrentRenderEncoderIdx);
+    //printf("GfxDevice EndRenderPass %d\n", m_unCurrentRenderEncoderIdx);
     m_CurrentRenderPassEncoder.End();
     m_CurrentRenderPassEncoder = nullptr;
     m_unCurrentRenderEncoderIdx = 0;
@@ -247,7 +247,6 @@ void GfxDevice::SetRenderState(RenderState *pRenderState)
         assert(pRenderState->m_pFragmentShaderDesc != nullptr);
         fragShaderModuleDesc.nextInChain = pRenderState->m_pFragmentShaderDesc;
         pRenderState->m_pFragmentState->module = m_Device.CreateShaderModule(&fragShaderModuleDesc);
-        printf("%d\n", pRenderState->m_pFragmentState->targets[0].format);
         renderPipelineDesc.fragment = pRenderState->m_pFragmentState;
         pRenderState->m_RenderPipeline = m_Device.CreateRenderPipeline(&renderPipelineDesc);
     }

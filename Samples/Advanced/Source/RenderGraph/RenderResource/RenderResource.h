@@ -17,7 +17,7 @@ public:
     RenderResourceHandle()
     {
         m_eType = Type::Invalid;
-        m_szName = nullptr;
+        m_szName = "";
         m_unDescIdx = 0;
     }
 

@@ -71,7 +71,6 @@ void RenderState::InitFragmentState(RenderObjectShader *pRenderObjectShader, std
     {
         wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(*it);
         pColorTargetStates[nIndex].format = pTextureDesc->format;
-        printf("--->%d\n", (*it)->m_unDescIdx);
         nIndex++;
     }
     m_pFragmentState->targets = pColorTargetStates;
@@ -90,11 +89,11 @@ void RenderState::InitPrimitiveState()
 void RenderState::InitDepthStencilState(RenderResourceHandle *pTargetDepthBuffer)
 {
     assert(m_pDepthStencilState == nullptr);
-    m_pDepthStencilState = new wgpu::DepthStencilState();
     if (pTargetDepthBuffer == nullptr)
-        m_pDepthStencilState->format = wgpu::TextureFormat::Depth24PlusStencil8;
+        m_pDepthStencilState = nullptr;
     else
     {
+        m_pDepthStencilState = new wgpu::DepthStencilState();
         wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(pTargetDepthBuffer);
         m_pDepthStencilState->format = pTextureDesc->format;
     }

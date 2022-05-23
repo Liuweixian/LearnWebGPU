@@ -5,6 +5,7 @@
 #include <list>
 #include "RenderResource/RenderResource.h"
 #include "RenderResource/RenderState.h"
+#include "RenderResource/RenderBuffer.h"
 
 class GfxDevice
 {
@@ -30,7 +31,7 @@ public:
     void EndFrame();
     void SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer);
     void SetRenderState(RenderState *pRenderState);
-    void DrawBuffer();
+    void DrawBuffer(std::list<RenderBuffer *> vertexBuffers, RenderBuffer *pIndexBuffer);
     bool ErrorHappened()
     {
         return m_bErrorHappened;

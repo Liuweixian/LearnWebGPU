@@ -54,6 +54,9 @@ void RenderGraphDrawPass::Execute(const std::list<RenderObject *> renderObjects)
         RenderMaterial *pMaterial = pObj->GetMaterial(m_eIdx);
         if (pMaterial == nullptr)
             continue;
-        pGfxDevice->DrawBuffer();
+        RenderMesh *pMesh = pObj->GetMesh();
+        if (pMesh == nullptr)
+            continue;
+        pGfxDevice->DrawBuffer(pMesh->GetVertexBuffers(), pMesh->GetIndexBuffer());
     }
 }

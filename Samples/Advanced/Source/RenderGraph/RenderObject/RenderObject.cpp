@@ -3,21 +3,16 @@
 RenderObject::RenderObject(std::string szName)
 {
     m_szName = szName;
-    m_pRenderIndexBuffer = nullptr;
+    m_pRenderMesh = nullptr;
+    m_Materials.clear();
 }
 
 RenderObject::~RenderObject()
 {
-    for (auto it = m_VertexBuffers.begin(); it != m_VertexBuffers.end(); it++)
+    if (m_pRenderMesh != nullptr)
     {
-        delete *it;
-    }
-    m_VertexBuffers.clear();
-
-    if (m_pRenderIndexBuffer != nullptr)
-    {
-        delete m_pRenderIndexBuffer;
-        m_pRenderIndexBuffer = nullptr;
+        delete m_pRenderMesh;
+        m_pRenderMesh = nullptr;
     }
 
     for (auto it = m_Materials.begin(); it != m_Materials.end(); it++)

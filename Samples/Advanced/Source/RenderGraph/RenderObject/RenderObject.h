@@ -3,7 +3,7 @@
 #include <list>
 #include <unordered_map>
 #include "RenderMaterial.h"
-#include "RenderMeshBuffer.h"
+#include "RenderMesh.h"
 #include "../RenderPass/RenderGraphDefine.h"
 
 class RenderObject
@@ -14,28 +14,6 @@ public:
     std::string GetName()
     {
         return m_szName;
-    }
-
-    template <typename T>
-    T *CreateVertexBuffer()
-    {
-        static_assert(std::is_base_of<RenderMeshBuffer, T>::value, "T must be a descendant of RenderMeshBuffer");
-        T *pVertexBuffer = new T();
-        m_VertexBuffers.push_back(pVertexBuffer);
-        return pVertexBuffer;
-    }
-
-    template <typename T>
-    T *CreateIndexBuffer()
-    {
-        static_assert(std::is_base_of<RenderMeshBuffer, T>::value, "T must be a descendant of RenderMeshBuffer");
-        if (m_pRenderIndexBuffer != nullptr)
-        {
-            delete m_pRenderIndexBuffer;
-            m_pRenderIndexBuffer = nullptr;
-        }
-        m_pRenderIndexBuffer = new T();
-        return m_pRenderIndexBuffer;
     }
 
     template <typename T>
@@ -56,9 +34,26 @@ public:
 
     RenderMaterial *GetMaterial(RenderPassIdx ePassIdx);
 
+    template <typename T>
+    T *CreateMesh()
+    {
+        static_assert(std::is_base_of<RenderMesh, T>::value, "T must be a descendant of RenderMesh");
+        if (m_pRenderMesh != nullptr)
+        {
+            delete m_pRenderMesh;
+            m_pRenderMesh = nullptr;
+        }
+        m_pRenderMesh = new T();
+        return m_pRenderMesh;
+    }
+
+    RenderMesh *GetMesh()
+    {
+        return m_pRenderMesh;
+    }
+
 private:
     std::string m_szName;
-    std::list<RenderMeshBuffer *> m_VertexBuffers;
-    RenderMeshBuffer *m_pRenderIndexBuffer;
+    RenderMesh *m_pRenderMesh;
     std::unordered_map<RenderPassIdx, RenderMaterial *> m_Materials;
 };

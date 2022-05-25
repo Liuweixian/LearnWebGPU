@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		250CBFBF283DCA4600D30A51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFBB283DCA4600D30A51 /* Assets.xcassets */; };
 		250CBFC0283DCA4600D30A51 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFBD283DCA4600D30A51 /* MainMenu.xib */; };
-		250CC017283DCC3C00D30A51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC015283DCC3C00D30A51 /* main.m */; };
-		250CC018283DCC3C00D30A51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC016283DCC3C00D30A51 /* AppDelegate.m */; };
+		250CC049283DCF7100D30A51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC01B283DCF7000D30A51 /* main.m */; };
+		250CC051283DCF7100D30A51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC048283DCF7100D30A51 /* AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,9 +18,9 @@
 		250CBFBB283DCA4600D30A51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		250CBFBC283DCA4600D30A51 /* WebGPURenderGraph.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WebGPURenderGraph.entitlements; sourceTree = "<group>"; };
 		250CBFBE283DCA4600D30A51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		250CC014283DCC3C00D30A51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		250CC015283DCC3C00D30A51 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		250CC016283DCC3C00D30A51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		250CC01A283DCF7000D30A51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		250CC01B283DCF7000D30A51 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		250CC048283DCF7100D30A51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 		250CBF9E283CECFA00D30A51 = {
 			isa = PBXGroup;
 			children = (
-				250CC013283DCC3C00D30A51 /* MacOS */,
+				250CC019283DCF7000D30A51 /* MacOS */,
 				250CBFBA283DCA4600D30A51 /* Resources */,
 				250CBFA8283CECFA00D30A51 /* Products */,
 			);
@@ -61,12 +61,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		250CC013283DCC3C00D30A51 /* MacOS */ = {
+		250CC019283DCF7000D30A51 /* MacOS */ = {
 			isa = PBXGroup;
 			children = (
-				250CC014283DCC3C00D30A51 /* AppDelegate.h */,
-				250CC015283DCC3C00D30A51 /* main.m */,
-				250CC016283DCC3C00D30A51 /* AppDelegate.m */,
+				250CC01A283DCF7000D30A51 /* AppDelegate.h */,
+				250CC01B283DCF7000D30A51 /* main.m */,
+				250CC048283DCF7100D30A51 /* AppDelegate.m */,
 			);
 			name = MacOS;
 			path = ../Source/Platform/MacOS;
@@ -141,8 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				250CC018283DCC3C00D30A51 /* AppDelegate.m in Sources */,
-				250CC017283DCC3C00D30A51 /* main.m in Sources */,
+				250CC051283DCF7100D30A51 /* AppDelegate.m in Sources */,
+				250CC049283DCF7100D30A51 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +283,7 @@
 				DEVELOPMENT_TEAM = L77G6XC8M7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "../Source/Platform/MacOS/lib/dawn/inc/**";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -290,6 +291,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "../Source/Platform/MacOS/lib/dawn/bin/mac/Debug/**";
+				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rayliu.WebGPURenderGraph;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -309,6 +312,7 @@
 				DEVELOPMENT_TEAM = L77G6XC8M7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "../Source/Platform/MacOS/lib/dawn/inc/**";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -316,6 +320,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "../Source/Platform/MacOS/lib/dawn/bin/mac/Release/**";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rayliu.WebGPURenderGraph;
 				PRODUCT_NAME = "$(TARGET_NAME)";

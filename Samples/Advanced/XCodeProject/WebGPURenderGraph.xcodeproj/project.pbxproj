@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		250CBFAC283CECFA00D30A51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CBFAB283CECFA00D30A51 /* AppDelegate.m */; };
-		250CBFAE283CECFF00D30A51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFAD283CECFF00D30A51 /* Assets.xcassets */; };
-		250CBFB1283CECFF00D30A51 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFAF283CECFF00D30A51 /* MainMenu.xib */; };
-		250CBFB3283CECFF00D30A51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CBFB2283CECFF00D30A51 /* main.m */; };
+		250CBFBF283DCA4600D30A51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFBB283DCA4600D30A51 /* Assets.xcassets */; };
+		250CBFC0283DCA4600D30A51 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFBD283DCA4600D30A51 /* MainMenu.xib */; };
+		250CC017283DCC3C00D30A51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC015283DCC3C00D30A51 /* main.m */; };
+		250CC018283DCC3C00D30A51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC016283DCC3C00D30A51 /* AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		250CBFA7283CECFA00D30A51 /* WebGPURenderGraph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebGPURenderGraph.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		250CBFAA283CECFA00D30A51 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		250CBFAB283CECFA00D30A51 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		250CBFAD283CECFF00D30A51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		250CBFB0283CECFF00D30A51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		250CBFB2283CECFF00D30A51 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		250CBFB4283CECFF00D30A51 /* WebGPURenderGraph.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WebGPURenderGraph.entitlements; sourceTree = "<group>"; };
+		250CBFBB283DCA4600D30A51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		250CBFBC283DCA4600D30A51 /* WebGPURenderGraph.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WebGPURenderGraph.entitlements; sourceTree = "<group>"; };
+		250CBFBE283DCA4600D30A51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		250CC014283DCC3C00D30A51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		250CC015283DCC3C00D30A51 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		250CC016283DCC3C00D30A51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,8 @@
 		250CBF9E283CECFA00D30A51 = {
 			isa = PBXGroup;
 			children = (
-				250CBFA9283CECFA00D30A51 /* WebGPURenderGraph */,
+				250CC013283DCC3C00D30A51 /* MacOS */,
+				250CBFBA283DCA4600D30A51 /* Resources */,
 				250CBFA8283CECFA00D30A51 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,17 +51,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		250CBFA9283CECFA00D30A51 /* WebGPURenderGraph */ = {
+		250CBFBA283DCA4600D30A51 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				250CBFAA283CECFA00D30A51 /* AppDelegate.h */,
-				250CBFAB283CECFA00D30A51 /* AppDelegate.m */,
-				250CBFAD283CECFF00D30A51 /* Assets.xcassets */,
-				250CBFAF283CECFF00D30A51 /* MainMenu.xib */,
-				250CBFB2283CECFF00D30A51 /* main.m */,
-				250CBFB4283CECFF00D30A51 /* WebGPURenderGraph.entitlements */,
+				250CBFBB283DCA4600D30A51 /* Assets.xcassets */,
+				250CBFBC283DCA4600D30A51 /* WebGPURenderGraph.entitlements */,
+				250CBFBD283DCA4600D30A51 /* MainMenu.xib */,
 			);
-			path = WebGPURenderGraph;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		250CC013283DCC3C00D30A51 /* MacOS */ = {
+			isa = PBXGroup;
+			children = (
+				250CC014283DCC3C00D30A51 /* AppDelegate.h */,
+				250CC015283DCC3C00D30A51 /* main.m */,
+				250CC016283DCC3C00D30A51 /* AppDelegate.m */,
+			);
+			name = MacOS;
+			path = ../Source/Platform/MacOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,8 +129,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				250CBFAE283CECFF00D30A51 /* Assets.xcassets in Resources */,
-				250CBFB1283CECFF00D30A51 /* MainMenu.xib in Resources */,
+				250CBFBF283DCA4600D30A51 /* Assets.xcassets in Resources */,
+				250CBFC0283DCA4600D30A51 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,18 +141,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				250CBFB3283CECFF00D30A51 /* main.m in Sources */,
-				250CBFAC283CECFA00D30A51 /* AppDelegate.m in Sources */,
+				250CC018283DCC3C00D30A51 /* AppDelegate.m in Sources */,
+				250CC017283DCC3C00D30A51 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		250CBFAF283CECFF00D30A51 /* MainMenu.xib */ = {
+		250CBFBD283DCA4600D30A51 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				250CBFB0283CECFF00D30A51 /* Base */,
+				250CBFBE283DCA4600D30A51 /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -267,7 +276,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = WebGPURenderGraph/WebGPURenderGraph.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Resources/WebGPURenderGraph.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -293,7 +302,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = WebGPURenderGraph/WebGPURenderGraph.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Resources/WebGPURenderGraph.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

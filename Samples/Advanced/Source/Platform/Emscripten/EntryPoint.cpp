@@ -1,6 +1,6 @@
 #include <emscripten/emscripten.h>
-#include "RenderGraph/RenderGraphPlayer.h"
-#include "Graph/SimpleRenderGraph.h"
+#include "../../RenderGraph/RenderGraphPlayer.h"
+#include "../../Graph/SimpleRenderGraph.h"
 
 void main_loop()
 {

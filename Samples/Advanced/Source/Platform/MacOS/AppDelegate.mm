@@ -12,9 +12,11 @@
 @interface AppDelegate ()
 
 @property (strong) IBOutlet NSWindow *window;
+
 @end
 
 CVDisplayLinkRef _displayLinkRef;
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

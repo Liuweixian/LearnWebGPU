@@ -6,6 +6,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include "webgpu.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -14,3 +15,6 @@
 
 static CVReturn displayLinkRepaint(CVDisplayLinkRef dispLink, const CVTimeStamp* inNow, const CVTimeStamp* inOutputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext);
 
+static void createPipelineAndBuffers();
+static WGPUShaderModule createShader(const char* const code);
+static void redraw();

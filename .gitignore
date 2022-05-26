@@ -2,3 +2,7 @@
 .DS_Store
 Samples/Advanced/Build
 .vscode
+Samples/Advanced/XCodeProject/WebGPURenderGraph.xcodeproj/project.xcworkspace
+Samples/Advanced/XCodeProject/WebGPURenderGraph.xcodeproj/xcshareddata
+Samples/Advanced/XCodeProject/WebGPURenderGraph.xcodeproj/project.xcworkspace
+Samples/Advanced/XCodeProject/WebGPURenderGraph.xcodeproj/xcuserdata

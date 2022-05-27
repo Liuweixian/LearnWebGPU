@@ -1,13 +1,8 @@
-//
-//  AppDelegate.m
-//  WebGPURenderGraph
-//
-//  Created by 刘伟贤 on 2022/5/24.
-//
-
+#import <CoreVideo/CoreVideo.h>
 #import "AppDelegate.h"
 #include <stdio.h>
-#import <CoreVideo/CoreVideo.h>
+#include "MacDawnGfxDevice.h"
+#include "../../RenderGraph/GfxDevice.h"
 
 @implementation AppDelegate
 
@@ -16,6 +11,12 @@
     CVDisplayLinkCreateWithActiveCGDisplays(&self->displayLinkRef);
     CVDisplayLinkSetOutputCallback(self->displayLinkRef, &displayLinkRepaint, nullptr);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:NSWindowWillCloseNotification object:nil];
+    
+    CreateGfxDevice([](GfxDevice*& pDevice){
+        pDevice = new MacDawnGfxDevice();
+    });
+    
+    GetGfxDevice()->Initialize();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

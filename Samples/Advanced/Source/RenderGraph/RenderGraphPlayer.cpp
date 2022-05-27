@@ -12,7 +12,10 @@ bool RenderGraphPlayer::RenderLoop()
         return true;
     
     if (!GetGfxDevice()->IsInitialized())
+    {
+        GetGfxDevice()->Initialize();
         return true;
+    }
 
     if (GetGfxDevice()->ErrorHappened())
         return false;

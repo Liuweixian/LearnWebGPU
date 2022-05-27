@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		250CBFBF283DCA4600D30A51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFBB283DCA4600D30A51 /* Assets.xcassets */; };
 		250CBFC0283DCA4600D30A51 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250CBFBD283DCA4600D30A51 /* MainMenu.xib */; };
-		250CC0CD283F3C0100D30A51 /* webgpu.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC09C283F3C0100D30A51 /* webgpu.mm */; };
 		250CC0CF283F3C0100D30A51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC09E283F3C0100D30A51 /* main.m */; };
 		250CC0D0283F3C0100D30A51 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC09F283F3C0100D30A51 /* AppDelegate.mm */; };
 		250CC0D1283F3C0100D30A51 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 250CC0C1283F3C0100D30A51 /* LICENSE */; };
@@ -27,7 +26,6 @@
 		250CBFBC283DCA4600D30A51 /* WebGPURenderGraph.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WebGPURenderGraph.entitlements; sourceTree = "<group>"; };
 		250CBFBE283DCA4600D30A51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		250CC09A283F3C0100D30A51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		250CC09C283F3C0100D30A51 /* webgpu.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = webgpu.mm; sourceTree = "<group>"; };
 		250CC09E283F3C0100D30A51 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		250CC09F283F3C0100D30A51 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		250CC0A4283F3C0100D30A51 /* tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tint.h; sourceTree = "<group>"; };
@@ -61,8 +59,6 @@
 		250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_native.dylib; sourceTree = "<group>"; };
 		250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_proc.dylib; sourceTree = "<group>"; };
 		250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_platform.dylib; sourceTree = "<group>"; };
-		250CC0CC283F3C0100D30A51 /* webgpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webgpu.h; sourceTree = "<group>"; };
-		250CC0D8283F3C4100D30A51 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,13 +108,10 @@
 		250CC099283F3C0100D30A51 /* MacOS */ = {
 			isa = PBXGroup;
 			children = (
-				250CC0D8283F3C4100D30A51 /* defines.h */,
 				250CC09A283F3C0100D30A51 /* AppDelegate.h */,
-				250CC09C283F3C0100D30A51 /* webgpu.mm */,
 				250CC09E283F3C0100D30A51 /* main.m */,
 				250CC09F283F3C0100D30A51 /* AppDelegate.mm */,
 				250CC0A0283F3C0100D30A51 /* lib */,
-				250CC0CC283F3C0100D30A51 /* webgpu.h */,
 			);
 			name = MacOS;
 			path = ../Source/Platform/MacOS;
@@ -349,7 +342,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				250CC0CD283F3C0100D30A51 /* webgpu.mm in Sources */,
 				250CC0CF283F3C0100D30A51 /* main.m in Sources */,
 				250CC0D0283F3C0100D30A51 /* AppDelegate.mm in Sources */,
 			);

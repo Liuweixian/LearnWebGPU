@@ -68,6 +68,7 @@ static char const triangle_frag_wgsl[] = R"(
     // Insert code here to initialize your application
     CVDisplayLinkCreateWithActiveCGDisplays(&_displayLinkRef);
     CVDisplayLinkSetOutputCallback(_displayLinkRef, &displayLinkRepaint, nullptr);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:NSWindowWillCloseNotification object:nil];
     
     ms_gpuDevice = webgpu::create(self.window, WGPUBackendType_Metal);
     ms_gpuQueue = wgpuDeviceGetQueue(ms_gpuDevice);
@@ -99,7 +100,11 @@ static char const triangle_frag_wgsl[] = R"(
 }
 
 - (void)applicationDidResignActive:(NSNotification *)notification {
+}
+
+- (void)closeWindow {
     CVDisplayLinkStop(_displayLinkRef);
+    [NSApp terminate:self];
 }
 
 @end

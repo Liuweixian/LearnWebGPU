@@ -212,7 +212,7 @@ GfxDevice *GetGfxDevice()
     return g_pGfxDevice;
 }
 
-void CreateGfxDevice(CreateCallback callback)
+void CreateGfxDevice(std::function<void(GfxDevice *&)> callback)
 {
     if (g_pGfxDevice == nullptr)
     {

@@ -3,12 +3,18 @@
 #include <stdio.h>
 #include "../../RenderGraph/GfxDevice.h"
 #include "lib/dawn/inc/dawn/native/DawnNative.h"
+#include "lib/dawn/inc/dawn/dawn_proc.h"
+#include "MetalDawnSwapChain.h"
 
 class MacDawnGfxDevice : public GfxDevice
 {
 public:
-    MacDawnGfxDevice();
+    MacDawnGfxDevice(NSWindow *pWindow);
     ~MacDawnGfxDevice();
+
+private:
+    void CreateDawnSwapChainImplementation(NSWindow *pWindow);
+    MetalDawnSwapChain *GetMetalDawnSwapChain();
 
 protected:
     void InitWebGPU() override;
@@ -21,4 +27,5 @@ protected:
 private:
     dawn_native::Instance m_Instance;
     dawn_native::Adapter m_Adapter;
+    DawnSwapChainImplementation *m_pDawnSwapChainImpl;
 };

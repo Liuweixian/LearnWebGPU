@@ -48,5 +48,4 @@ protected:
 
 GfxDevice *GetGfxDevice();
 
-typedef void (*CreateCallback)(GfxDevice *&pGfxDevice);
-void CreateGfxDevice(CreateCallback callback);
+void CreateGfxDevice(std::function<void(GfxDevice *&)> callback);

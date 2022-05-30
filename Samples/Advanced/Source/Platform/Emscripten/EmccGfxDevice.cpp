@@ -63,6 +63,7 @@ void EmccGfxDevice::AdapterRequestDeviceCallback(WGPURequestDeviceStatus eStatus
     EmccGfxDevice *pGfxDevice = (EmccGfxDevice *)pUserdata;
     pGfxDevice->m_Device = wgpu::Device::Acquire(pDevice);
     pGfxDevice->m_Device.SetUncapturedErrorCallback(DeviceSetUncapturedErrorCallback, pGfxDevice);
+    pGfxDevice->CreateSwapChain();
 }
 
 void EmccGfxDevice::DeviceSetUncapturedErrorCallback(WGPUErrorType eType, char const *chMessage, void *pUserdata)

@@ -12,8 +12,8 @@
     CVDisplayLinkSetOutputCallback(self->displayLinkRef, &displayLinkRepaint, nullptr);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:NSWindowWillCloseNotification object:nil];
     
-    CreateGfxDevice([](GfxDevice*& pDevice){
-        pDevice = new MacDawnGfxDevice();
+    CreateGfxDevice([&](GfxDevice*& pDevice){
+        pDevice = new MacDawnGfxDevice(self.window);
     });
     
     GetGfxDevice()->Initialize();

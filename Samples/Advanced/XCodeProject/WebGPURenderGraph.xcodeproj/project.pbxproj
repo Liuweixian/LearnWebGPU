@@ -18,6 +18,9 @@
 		250CC0D5283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */; };
 		250CC0D6283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */; };
 		250CC0D7283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */; };
+		250CC11B2840702700D30A51 /* MacDawnGfxDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC1192840702700D30A51 /* MacDawnGfxDevice.mm */; };
+		250CC11D284070AD00D30A51 /* GfxDeivce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC11C284070AD00D30A51 /* GfxDeivce.cpp */; };
+		250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +62,12 @@
 		250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_native.dylib; sourceTree = "<group>"; };
 		250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_proc.dylib; sourceTree = "<group>"; };
 		250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_platform.dylib; sourceTree = "<group>"; };
+		250CC0E228406CFD00D30A51 /* GfxDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfxDevice.h; sourceTree = "<group>"; };
+		250CC1192840702700D30A51 /* MacDawnGfxDevice.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MacDawnGfxDevice.mm; sourceTree = "<group>"; };
+		250CC11A2840702700D30A51 /* MacDawnGfxDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacDawnGfxDevice.h; sourceTree = "<group>"; };
+		250CC11C284070AD00D30A51 /* GfxDeivce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GfxDeivce.cpp; sourceTree = "<group>"; };
+		250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalDawnSwapChain.mm; sourceTree = "<group>"; };
+		250CC11F2840BC3700D30A51 /* MetalDawnSwapChain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalDawnSwapChain.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +90,7 @@
 		250CBF9E283CECFA00D30A51 = {
 			isa = PBXGroup;
 			children = (
+				250CC0E128406CFD00D30A51 /* RenderGraph */,
 				250CC099283F3C0100D30A51 /* MacOS */,
 				250CBFBA283DCA4600D30A51 /* Resources */,
 				250CBFA8283CECFA00D30A51 /* Products */,
@@ -112,6 +122,10 @@
 				250CC09E283F3C0100D30A51 /* main.m */,
 				250CC09F283F3C0100D30A51 /* AppDelegate.mm */,
 				250CC0A0283F3C0100D30A51 /* lib */,
+				250CC1192840702700D30A51 /* MacDawnGfxDevice.mm */,
+				250CC11A2840702700D30A51 /* MacDawnGfxDevice.h */,
+				250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */,
+				250CC11F2840BC3700D30A51 /* MetalDawnSwapChain.h */,
 			);
 			name = MacOS;
 			path = ../Source/Platform/MacOS;
@@ -251,6 +265,16 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		250CC0E128406CFD00D30A51 /* RenderGraph */ = {
+			isa = PBXGroup;
+			children = (
+				250CC11C284070AD00D30A51 /* GfxDeivce.cpp */,
+				250CC0E228406CFD00D30A51 /* GfxDevice.h */,
+			);
+			name = RenderGraph;
+			path = ../Source/RenderGraph;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -344,6 +368,9 @@
 			files = (
 				250CC0CF283F3C0100D30A51 /* main.m in Sources */,
 				250CC0D0283F3C0100D30A51 /* AppDelegate.mm in Sources */,
+				250CC11B2840702700D30A51 /* MacDawnGfxDevice.mm in Sources */,
+				250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */,
+				250CC11D284070AD00D30A51 /* GfxDeivce.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

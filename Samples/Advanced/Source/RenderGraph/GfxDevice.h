@@ -22,7 +22,7 @@ public:
     void Initialize();
     bool IsInitialized()
     {
-        return m_bInitialized;
+        return m_bInitialized && m_SwapChain != nullptr;
     }
     bool ErrorHappened()
     {
@@ -39,9 +39,9 @@ protected:
     wgpu::Device m_Device;
     wgpu::SwapChain m_SwapChain;
     wgpu::SupportedLimits *m_pSupportedLimits;
-    // wgpu::CommandEncoder m_CommandEncoder;
+    wgpu::CommandEncoder m_CommandEncoder;
     uint32_t m_unCurrentRenderEncoderIdx;
-    // wgpu::RenderPassEncoder m_CurrentRenderPassEncoder;
+    wgpu::RenderPassEncoder m_CurrentRenderPassEncoder;
     bool m_bInitialized;
     bool m_bErrorHappened;
 };

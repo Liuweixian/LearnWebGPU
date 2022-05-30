@@ -1,10 +1,5 @@
-struct VertexOutput
-{
-    @location(0) Color: vec3<f32>,
-};
-
 @stage(fragment)
-fn fs_main(in: VertexOutput) -> @location(0) vec4<f32>
+fn fs_main(@location(0) vCol : vec3<f32>) -> @location(0) vec4<f32> 
 {
-    return vec4<f32>(in.Color, 1.0);
+    return vec4<f32>(vCol, 1.0);
 }

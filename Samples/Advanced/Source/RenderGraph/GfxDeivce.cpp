@@ -3,6 +3,8 @@
 #include <cassert>
 void GfxDevice::Initialize()
 {
+    if (m_bInitialized && m_SwapChain == nullptr)
+        return;
     m_pSupportedLimits = new wgpu::SupportedLimits();
     InitWebGPU();
     m_bInitialized = true;
@@ -44,8 +46,8 @@ void GfxDevice::BeginFrame()
 {
     if (!m_bInitialized)
         return;
-    /*assert(m_CommandEncoder == nullptr);
-    m_CommandEncoder = m_Device.CreateCommandEncoder(nullptr);*/
+    assert(m_CommandEncoder == nullptr);
+    m_CommandEncoder = m_Device.CreateCommandEncoder(nullptr);
 }
 
 void GfxDevice::QueueWorkDoneCallback(WGPUQueueWorkDoneStatus eStatus, void *pUserdata)
@@ -62,19 +64,19 @@ void GfxDevice::EndFrame()
     if (!m_bInitialized)
         return;
 
-    /*FinishCurrentRenderPassEncoder();
+    FinishCurrentRenderPassEncoder();
     wgpu::CommandBuffer commandBuffer = m_CommandEncoder.Finish();
     wgpu::Queue queue = m_Device.GetQueue();
     queue.OnSubmittedWorkDone(0, QueueWorkDoneCallback, this);
     queue.Submit(1, &commandBuffer);
-    m_CommandEncoder = nullptr;*/
+    m_CommandEncoder = nullptr;
 }
 
 void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
 {
     uint32_t unEncoderHash = 0;
 
-    /*int nColorAttachmentCount = targetColorBuffers.size();
+    int nColorAttachmentCount = targetColorBuffers.size();
     unEncoderHash = unEncoderHash * 31 + (uint32_t)nColorAttachmentCount;
 
     RenderResourceHandle *pFrameBufferHandle = GetRenderResource()->GetFrameBuffer();
@@ -96,16 +98,16 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         colorAttachments[nIndex].loadOp = wgpu::LoadOp::Undefined;
         colorAttachments[nIndex].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
         nIndex++;
-    }*/
+    }
 
-    // wgpu::RenderPassDepthStencilAttachment *pDepthAttachment = nullptr;
+    wgpu::RenderPassDepthStencilAttachment *pDepthAttachment = nullptr;
     if (pTargetDepthBuffer == nullptr)
     {
         unEncoderHash = unEncoderHash * 31;
     }
     else
     {
-        // unEncoderHash = unEncoderHash * 31 + pTargetDepthBuffer->m_unDescIdx;
+        unEncoderHash = unEncoderHash * 31 + pTargetDepthBuffer->m_unDescIdx;
         /*wgpu::RenderPassDepthStencilAttachment depthAttachment;
         depthAttachment.view = ms_DepthBuffer;
         depthAttachment.depthLoadOp = wgpu::LoadOp::Clear;
@@ -118,7 +120,7 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         depthAttachment.stencilReadOnly = false;*/
     }
 
-    /*if (unEncoderHash != m_unCurrentRenderEncoderIdx)
+    if (unEncoderHash != m_unCurrentRenderEncoderIdx)
     {
         FinishCurrentRenderPassEncoder();
         // printf("GfxDevice BeginRenderPass last:%d current:%d\n", m_unCurrentRenderEncoderIdx, unEncoderHash);
@@ -129,22 +131,22 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         renderPassDesc.occlusionQuerySet = nullptr;
         m_CurrentRenderPassEncoder = m_CommandEncoder.BeginRenderPass(&renderPassDesc);
         m_unCurrentRenderEncoderIdx = unEncoderHash;
-    }*/
+    }
 }
 
 void GfxDevice::FinishCurrentRenderPassEncoder()
 {
-    /*if (m_CurrentRenderPassEncoder == nullptr)
+    if (m_CurrentRenderPassEncoder == nullptr)
         return;
     // printf("GfxDevice EndRenderPass %d\n", m_unCurrentRenderEncoderIdx);
     m_CurrentRenderPassEncoder.End();
     m_CurrentRenderPassEncoder = nullptr;
-    m_unCurrentRenderEncoderIdx = 0;*/
+    m_unCurrentRenderEncoderIdx = 0;
 }
 
 void GfxDevice::SetRenderState(RenderState *pRenderState)
 {
-    /*if (pRenderState->m_RenderPipeline == nullptr)
+    if (pRenderState->m_RenderPipeline == nullptr)
     {
         assert(pRenderState->m_pLayoutDesc);
         wgpu::RenderPipelineDescriptor renderPipelineDesc;
@@ -168,12 +170,12 @@ void GfxDevice::SetRenderState(RenderState *pRenderState)
     {
         pRenderState->Cleanup();
     }
-    m_CurrentRenderPassEncoder.SetPipeline(pRenderState->m_RenderPipeline);*/
+    m_CurrentRenderPassEncoder.SetPipeline(pRenderState->m_RenderPipeline);
 }
 
 void GfxDevice::DrawBuffer(std::list<RenderBuffer *> vertexBuffers, RenderBuffer *pIndexBuffer)
 {
-    /*for (auto it = vertexBuffers.begin(); it != vertexBuffers.end(); it++)
+    for (auto it = vertexBuffers.begin(); it != vertexBuffers.end(); it++)
     {
         RenderBuffer *pRenderBuffer = *it;
         wgpu::Buffer &gpuBuffer = pRenderBuffer->GetGPUBuffer();
@@ -203,7 +205,7 @@ void GfxDevice::DrawBuffer(std::list<RenderBuffer *> vertexBuffers, RenderBuffer
         queue.WriteBuffer(gpuBuffer, 0, pIndexBuffer->GetData(), ulBufferSize);
     }
     m_CurrentRenderPassEncoder.SetIndexBuffer(gpuBuffer, wgpu::IndexFormat::Uint16, 0, ulBufferSize);
-    m_CurrentRenderPassEncoder.DrawIndexed(pIndexBuffer->GetDataCount(), 1, 0, 0, 0);*/
+    m_CurrentRenderPassEncoder.DrawIndexed(pIndexBuffer->GetDataCount(), 1, 0, 0, 0);
 }
 
 static GfxDevice *g_pGfxDevice = nullptr;

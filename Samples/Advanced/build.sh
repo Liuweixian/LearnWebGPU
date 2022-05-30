@@ -6,7 +6,7 @@
 #       <path/to/CMakeLists.txt> # Note, pass in here ONLY the path to the file, not the filename 'CMakeLists.txt' itself.
 
 source ../../BuildTools/sh_export.sh
-if [ $1 == "-f" ] 
+if [[ $1 = "-f" ]]
 then 
 rm -rf Build
 fi

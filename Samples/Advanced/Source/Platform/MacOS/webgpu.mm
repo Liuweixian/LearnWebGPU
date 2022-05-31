@@ -162,7 +162,8 @@ DawnSwapChainImplementation createMetalSwapChain(NSWindow* window) {
  */
 static dawn_native::Adapter requestAdapter(WGPUBackendType type1st, WGPUBackendType type2nd = WGPUBackendType_Null) {
 	static dawn_native::Instance instance;
-	instance.DiscoverDefaultAdapters();
+    dawn::native::metal::AdapterDiscoveryOptions options;
+	instance.DiscoverAdapters(&options);
 	wgpu::AdapterProperties properties;
 	std::vector<dawn_native::Adapter> adapters = instance.GetAdapters();
 	for (auto it = adapters.begin(); it != adapters.end(); ++it) {

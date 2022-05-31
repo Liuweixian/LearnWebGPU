@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include "MacDawnGfxDevice.h"
 #include "../../RenderGraph/GfxDevice.h"
+#include "../../RenderGraph/RenderGraphPlayer.h"
+#include "../../Graph/SimpleRenderGraph.h"
+#include "../../FileSystem/Resources.h"
 
 @implementation AppDelegate
 
@@ -16,7 +19,29 @@
         pDevice = new MacDawnGfxDevice(self.window);
     });
     
-    GetGfxDevice()->Initialize();
+    GetResources()->SetRootDirectory([[[NSBundle mainBundle] resourcePath] UTF8String]);
+    
+    RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
+    // Create RenderObject into RenderGraphPlayer
+    RenderObject *pRenderObject = pRDGPlayer->AddRenderObject<RenderObject>("Triganle");
+    // Create Material for RenderObject
+    pRenderObject->CreateMaterial<RenderMaterial>(RenderPassIdx::DrawObjectPass);
+    RenderMesh *pMesh = pRenderObject->CreateMesh<RenderMesh>();
+    // Create VBO for RenderObject
+    RenderBuffer *pRenderVertexBuffer = pMesh->CreateVertexBuffer<RenderBuffer>();
+    //(x,y,r,g,b)
+    float vertexData[15] = {
+        -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
+         0.8f, -0.8f, 0.0f, 1.0f, 0.0f, // BR
+        -0.0f,  0.8f, 1.0f, 0.0f, 0.0f, // top
+    };
+    pRenderVertexBuffer->SetData<float>(15, vertexData);
+    // Create IBO for RenderObject
+    RenderBuffer *pRenderIndexBuffer = pMesh->CreateIndexBuffer<RenderBuffer>();
+    uint16_t indexData[4] = {0, 1, 2, 0};
+    pRenderIndexBuffer->SetData<uint16_t>(4, indexData);
+
+    pRDGPlayer->RunGraph<SimpleRenderGraph>();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -44,5 +69,8 @@
 
 static CVReturn displayLinkRepaint(CVDisplayLinkRef dispLink, const CVTimeStamp* inNow, const CVTimeStamp* inOutputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    return kCVReturnSuccess;
+    bool looping = GetRDGPlayer()->RenderLoop();
+    if (looping)
+        return kCVReturnSuccess;
+    return kCVReturnError;
 }

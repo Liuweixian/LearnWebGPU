@@ -76,8 +76,8 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
 {
     uint32_t unEncoderHash = 0;
 
-    int nColorAttachmentCount = targetColorBuffers.size();
-    unEncoderHash = unEncoderHash * 31 + (uint32_t)nColorAttachmentCount;
+    uint32_t nColorAttachmentCount = (uint32_t)targetColorBuffers.size();
+    unEncoderHash = unEncoderHash * 31 + nColorAttachmentCount;
 
     RenderResourceHandle *pFrameBufferHandle = GetRenderResource()->GetFrameBuffer();
     wgpu::RenderPassColorAttachment colorAttachments[nColorAttachmentCount];
@@ -95,7 +95,12 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
         {
             // todo: render into texture
         }
+#ifdef __EMSCRIPTEN__
         colorAttachments[nIndex].loadOp = wgpu::LoadOp::Undefined;
+#else
+        colorAttachments[nIndex].storeOp = wgpu::StoreOp::Discard;
+        colorAttachments[nIndex].loadOp = wgpu::LoadOp::Clear;
+#endif
         colorAttachments[nIndex].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
         nIndex++;
     }
@@ -205,7 +210,7 @@ void GfxDevice::DrawBuffer(std::list<RenderBuffer *> vertexBuffers, RenderBuffer
         queue.WriteBuffer(gpuBuffer, 0, pIndexBuffer->GetData(), ulBufferSize);
     }
     m_CurrentRenderPassEncoder.SetIndexBuffer(gpuBuffer, wgpu::IndexFormat::Uint16, 0, ulBufferSize);
-    m_CurrentRenderPassEncoder.DrawIndexed(pIndexBuffer->GetDataCount(), 1, 0, 0, 0);
+    m_CurrentRenderPassEncoder.DrawIndexed((uint32_t)pIndexBuffer->GetDataCount(), 1, 0, 0, 0);
 }
 
 static GfxDevice *g_pGfxDevice = nullptr;

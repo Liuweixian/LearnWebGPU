@@ -3,15 +3,21 @@
 
 Resources::Resources()
 {
+    m_szRootDirPath = "";
 }
 
 Resources::~Resources()
 {
 }
 
+void Resources::SetRootDirectory(std::string szRootDirPath)
+{
+    m_szRootDirPath = szRootDirPath;
+}
+
 const char *Resources::Load(std::string szFilePath)
 {
-    std::string szFullPath = "Resources/" + szFilePath;
+    std::string szFullPath = m_szRootDirPath + "/Resources/" + szFilePath;
     FILE *pFileHandle = fopen(szFullPath.c_str(), "r");
     if (pFileHandle == nullptr)
     {

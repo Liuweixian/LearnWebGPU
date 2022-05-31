@@ -9,7 +9,8 @@ struct VertexOut
     @builtin(position) Position : vec4<f32>,
 };
 @stage(vertex)
-fn vs_main(input : VertexIn) -> VertexOut {
+fn vs_main(input : VertexIn) -> VertexOut
+{
     var output : VertexOut;
     output.Position = vec4<f32>(vec3<f32>(input.aPos, 1.0), 1.0);
     output.vCol = input.aCol;

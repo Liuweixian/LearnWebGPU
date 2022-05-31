@@ -38,6 +38,7 @@
 		250CC191284495B400D30A51 /* RenderGraphComputePass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC17B284495B400D30A51 /* RenderGraphComputePass.cpp */; };
 		251F65252845E6CA00B5C570 /* webgpu_cpp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251F65242845E6CA00B5C570 /* webgpu_cpp.mm */; };
 		251F65272845E9E200B5C570 /* libc++_chrome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251F65262845E9E200B5C570 /* libc++_chrome.dylib */; };
+		251F65502846069400B5C570 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 251F654F2846069400B5C570 /* Resources */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,7 @@
 		250CC17E284495B400D30A51 /* RenderGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderGraph.h; sourceTree = "<group>"; };
 		251F65242845E6CA00B5C570 /* webgpu_cpp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = webgpu_cpp.mm; sourceTree = "<group>"; };
 		251F65262845E9E200B5C570 /* libc++_chrome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libc++_chrome.dylib"; sourceTree = "<group>"; };
+		251F654F2846069400B5C570 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = ../Resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 		250CBF9E283CECFA00D30A51 = {
 			isa = PBXGroup;
 			children = (
+				251F654F2846069400B5C570 /* Resources */,
 				250CC157284495B300D30A51 /* FileSystem */,
 				250CC152284495B300D30A51 /* Graph */,
 				250CC15A284495B300D30A51 /* RenderGraph */,
@@ -454,6 +457,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				251F65502846069400B5C570 /* Resources in Resources */,
 				250CC0D1283F3C0100D30A51 /* LICENSE in Resources */,
 				250CBFBF283DCA4600D30A51 /* Assets.xcassets in Resources */,
 				250CBFC0283DCA4600D30A51 /* MainMenu.xib in Resources */,

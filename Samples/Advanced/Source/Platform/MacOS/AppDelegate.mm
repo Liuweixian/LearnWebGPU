@@ -15,6 +15,8 @@
     CreateGfxDevice([&](GfxDevice*& pDevice){
         pDevice = new MacDawnGfxDevice(self.window);
     });
+    
+    GetGfxDevice()->Initialize();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

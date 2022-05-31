@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include "../../RenderGraph/GfxDevice.h"
 #include "lib/dawn/inc/dawn/native/DawnNative.h"
-#include "lib/dawn/inc/dawn/dawn_proc.h"
 #include "MetalDawnSwapChain.h"
 
 class MacDawnGfxDevice : public GfxDevice

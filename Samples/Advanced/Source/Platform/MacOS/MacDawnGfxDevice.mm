@@ -1,5 +1,7 @@
-#include "MacDawnGfxDevice.h"
 #include "stdio.h"
+#include "MacDawnGfxDevice.h"
+#include "lib/dawn/inc/dawn/native/MetalBackend.h"
+#include "lib/dawn/inc/dawn/dawn_proc.h"
 
 MacDawnGfxDevice::MacDawnGfxDevice(NSWindow* pWindow)
 {
@@ -24,7 +26,8 @@ void MacDawnGfxDevice::InitWebGPU()
 
 void MacDawnGfxDevice::RequestAdapter()
 {
-    m_Instance.DiscoverDefaultAdapters();
+    dawn::native::metal::AdapterDiscoveryOptions options;
+    m_Instance.DiscoverAdapters(&options);
     wgpu::AdapterProperties properties;
     std::vector<dawn_native::Adapter> adapters = m_Instance.GetAdapters();
     for (auto it = adapters.begin(); it != adapters.end(); it++)
@@ -92,12 +95,11 @@ void MacDawnGfxDevice::CreateDawnSwapChainImplementation(NSWindow *pWindow)
 
 void MacDawnGfxDevice::CreateSwapChain()
 {
-    WGPUSwapChainDescriptor swapchainDesc = {};
-    swapchainDesc.implementation = reinterpret_cast<uintptr_t>(&m_pDawnSwapChainImpl);
-    WGPUSwapChain swapchain = wgpuDeviceCreateSwapChain(m_Device.Get(), nullptr, &swapchainDesc);
-    m_SwapChain = wgpu::SwapChain::Acquire(swapchain);
+    wgpu::SwapChainDescriptor swapchainDesc = {};
+    swapchainDesc.implementation = reinterpret_cast<uintptr_t>(m_pDawnSwapChainImpl);
+    m_SwapChain = m_Device.CreateSwapChain(nullptr, &swapchainDesc);
     uint32_t uWidth = 0;
     uint32_t uHeight = 0;
     GetMetalDawnSwapChain()->GetWindowSize(uWidth, uHeight);
-    wgpuSwapChainConfigure(swapchain, WGPUTextureFormat_BGRA8Unorm, WGPUTextureUsage_RenderAttachment, uWidth, uHeight);
+    m_SwapChain.Configure(wgpu::TextureFormat::BGRA8Unorm, wgpu::TextureUsage::RenderAttachment, uWidth, uHeight);
 }

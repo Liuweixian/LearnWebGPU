@@ -10,7 +10,7 @@ fi
 cp $DAWN_PROJ/out/$OUTPUT_FLAG/libdawn_native.dylib ./dawn/bin/mac/$OUTPUT_FLAG/
 cp $DAWN_PROJ/out/$OUTPUT_FLAG/libdawn_platform.dylib ./dawn/bin/mac/$OUTPUT_FLAG/
 cp $DAWN_PROJ/out/$OUTPUT_FLAG/libdawn_proc.dylib ./dawn/bin/mac/$OUTPUT_FLAG/
-#cp $DAWN_PROJ/out/$OUTPUT_FLAG/libc++_chrome.dylib ./dawn/bin/mac/$OUTPUT_FLAG/
+cp $DAWN_PROJ/out/$OUTPUT_FLAG/libc++_chrome.dylib ./dawn/bin/mac/$OUTPUT_FLAG/
 
 cp -rf $DAWN_PROJ/include/ ./dawn/inc/
 

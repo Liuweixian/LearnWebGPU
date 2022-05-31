@@ -12,9 +12,6 @@
 		250CC0CF283F3C0100D30A51 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 250CC09E283F3C0100D30A51 /* main.m */; };
 		250CC0D0283F3C0100D30A51 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC09F283F3C0100D30A51 /* AppDelegate.mm */; };
 		250CC0D1283F3C0100D30A51 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 250CC0C1283F3C0100D30A51 /* LICENSE */; };
-		250CC0D2283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0C5283F3C0100D30A51 /* libdawn_native.dylib */; };
-		250CC0D3283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0C6283F3C0100D30A51 /* libdawn_proc.dylib */; };
-		250CC0D4283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0C7283F3C0100D30A51 /* libdawn_platform.dylib */; };
 		250CC0D5283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */; };
 		250CC0D6283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */; };
 		250CC0D7283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */; };
@@ -74,9 +71,6 @@
 		250CC0BF283F3C0100D30A51 /* EnumClassBitmasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumClassBitmasks.h; sourceTree = "<group>"; };
 		250CC0C0283F3C0100D30A51 /* webgpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webgpu.h; sourceTree = "<group>"; };
 		250CC0C1283F3C0100D30A51 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		250CC0C5283F3C0100D30A51 /* libdawn_native.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_native.dylib; sourceTree = "<group>"; };
-		250CC0C6283F3C0100D30A51 /* libdawn_proc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_proc.dylib; sourceTree = "<group>"; };
-		250CC0C7283F3C0100D30A51 /* libdawn_platform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_platform.dylib; sourceTree = "<group>"; };
 		250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_native.dylib; sourceTree = "<group>"; };
 		250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_proc.dylib; sourceTree = "<group>"; };
 		250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_platform.dylib; sourceTree = "<group>"; };
@@ -131,11 +125,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				250CC0D6283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */,
-				250CC0D4283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */,
 				250CC0D5283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */,
 				250CC0D7283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */,
-				250CC0D3283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */,
-				250CC0D2283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,20 +287,9 @@
 		250CC0C3283F3C0100D30A51 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				250CC0C4283F3C0100D30A51 /* Release */,
 				250CC0C8283F3C0100D30A51 /* Debug */,
 			);
 			path = mac;
-			sourceTree = "<group>";
-		};
-		250CC0C4283F3C0100D30A51 /* Release */ = {
-			isa = PBXGroup;
-			children = (
-				250CC0C5283F3C0100D30A51 /* libdawn_native.dylib */,
-				250CC0C6283F3C0100D30A51 /* libdawn_proc.dylib */,
-				250CC0C7283F3C0100D30A51 /* libdawn_platform.dylib */,
-			);
-			path = Release;
 			sourceTree = "<group>";
 		};
 		250CC0C8283F3C0100D30A51 /* Debug */ = {

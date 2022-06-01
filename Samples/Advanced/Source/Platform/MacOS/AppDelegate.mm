@@ -34,13 +34,13 @@
     float vertexData[15] = {
         -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
          0.8f, -0.8f, 0.0f, 1.0f, 0.0f, // BR
-        -0.0f,  0.8f, 1.0f, 0.0f, 0.0f, // top
+        0.0f,  0.8f, 1.0f, 0.0f, 0.0f, // top
     };
     pRenderVertexBuffer->SetData<float>(15, vertexData);
     // Create IBO for RenderObject
     RenderBuffer *pRenderIndexBuffer = pMesh->CreateIndexBuffer<RenderBuffer>();
-    uint16_t indexData[4] = {0, 1, 2, 0};
-    pRenderIndexBuffer->SetData<uint16_t>(4, indexData);
+    uint16_t indexData[4] = {0, 1, 2};
+    pRenderIndexBuffer->SetData<uint16_t>(3, indexData);
 
     pRDGPlayer->RunGraph<SimpleRenderGraph>();
 }

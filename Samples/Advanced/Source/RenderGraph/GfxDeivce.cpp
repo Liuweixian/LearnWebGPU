@@ -65,11 +65,19 @@ void GfxDevice::EndFrame()
         return;
 
     FinishCurrentRenderPassEncoder();
+    
     wgpu::CommandBuffer commandBuffer = m_CommandEncoder.Finish();
+    m_CommandEncoder.Release();
+    m_CommandEncoder = nullptr;
+    
     wgpu::Queue queue = m_Device.GetQueue();
     queue.OnSubmittedWorkDone(0, QueueWorkDoneCallback, this);
     queue.Submit(1, &commandBuffer);
-    m_CommandEncoder = nullptr;
+    commandBuffer.Release();
+    
+#ifndef __EMSCRIPTEN__
+    m_SwapChain.Present();
+#endif
 }
 
 void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
@@ -96,12 +104,14 @@ void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuf
             // todo: render into texture
         }
 #ifdef __EMSCRIPTEN__
+        colorAttachments[nIndex].storeOp = wgpu::StoreOp::Store;
         colorAttachments[nIndex].loadOp = wgpu::LoadOp::Undefined;
+        colorAttachments[nIndex].clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
 #else
-        colorAttachments[nIndex].storeOp = wgpu::StoreOp::Discard;
+        colorAttachments[nIndex].storeOp = wgpu::StoreOp::Store;
         colorAttachments[nIndex].loadOp = wgpu::LoadOp::Clear;
+        colorAttachments[nIndex].clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
 #endif
-        colorAttachments[nIndex].clearColor = {0.0f, 0.0f, 0.0f, 1.0f}; // clear color, loadop must be Undefiend
         nIndex++;
     }
 
@@ -145,6 +155,7 @@ void GfxDevice::FinishCurrentRenderPassEncoder()
         return;
     // printf("GfxDevice EndRenderPass %d\n", m_unCurrentRenderEncoderIdx);
     m_CurrentRenderPassEncoder.End();
+    m_CurrentRenderPassEncoder.Release();
     m_CurrentRenderPassEncoder = nullptr;
     m_unCurrentRenderEncoderIdx = 0;
 }

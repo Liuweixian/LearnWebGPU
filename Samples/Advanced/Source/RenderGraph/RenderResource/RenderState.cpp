@@ -41,17 +41,20 @@ void RenderState::InitVertexState(RenderObjectShader *pRenderObjectShader)
     m_pVertexShaderDesc = new wgpu::ShaderModuleWGSLDescriptor();
     m_pVertexShaderDesc->source = pVertexProgram->LoadSource();
     // vbo
-    m_pVertexState->bufferCount = (uint32_t)pRenderObjectShader->GetVBOLayoutsCount();
-    wgpu::VertexBufferLayout *layout = new wgpu::VertexBufferLayout[m_pVertexState->bufferCount];
-    std::list<RenderVBOLayout *> vertexStates = pRenderObjectShader->GetVBOLayouts();
+    std::list<RenderVBOLayout *> renderVBOLayouts = pRenderObjectShader->GetVBOLayouts();
+    m_pVertexState->bufferCount = (uint32_t)renderVBOLayouts.size();
+    wgpu::VertexBufferLayout *pVBOLayouts = new wgpu::VertexBufferLayout[m_pVertexState->bufferCount];
+    m_pVertexState->buffers = pVBOLayouts;
+    
     int nIndex = 0;
-    for (auto it = vertexStates.begin(); it != vertexStates.end(); it++)
+    for (auto it = renderVBOLayouts.begin(); it != renderVBOLayouts.end(); it++)
     {
         RenderVBOLayout *pRenderVBOLayout = *it;
-        layout[nIndex] = pRenderVBOLayout->GetLayout();
+        pVBOLayouts[nIndex] = pRenderVBOLayout->GetLayout();
         nIndex++;
     }
-    m_pVertexState->buffers = layout;
+
+    //constants TODO
 }
 
 void RenderState::InitFragmentState(RenderObjectShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers)
@@ -71,6 +74,7 @@ void RenderState::InitFragmentState(RenderObjectShader *pRenderObjectShader, std
     {
         wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(*it);
         pColorTargetStates[nIndex].format = pTextureDesc->format;
+        pColorTargetStates[nIndex].writeMask = wgpu::ColorWriteMask::All;
         nIndex++;
     }
     m_pFragmentState->targets = pColorTargetStates;

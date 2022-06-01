@@ -28,11 +28,6 @@ public:
         return pVBOLayout;
     }
 
-    size_t GetVBOLayoutsCount()
-    {
-        return m_VBOLayouts.size();
-    }
-
     std::list<RenderVBOLayout *> GetVBOLayouts()
     {
         return m_VBOLayouts;

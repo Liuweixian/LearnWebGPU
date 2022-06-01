@@ -8,14 +8,15 @@ RenderVBOLayout::RenderVBOLayout(int nAttributeCount, wgpu::VertexFormat *pVerte
     wgpu::VertexAttribute *pAttributes = new wgpu::VertexAttribute[nAttributeCount];
     m_pLayout->attributes = pAttributes;
 
-    uint64_t ulOffset = 0;
+    uint32_t uOffset = 0;
     for (int i = 0; i < nAttributeCount; i++)
     {
         pAttributes[i].format = pVertexFormats[i];
-        pAttributes[i].offset = ulOffset;
+        pAttributes[i].offset = uOffset;
         pAttributes[i].shaderLocation = i;
-        ulOffset += GetVertexFormatSize(pVertexFormats[i]);
+        uOffset += GetVertexFormatSize(pVertexFormats[i]);
     }
+    m_pLayout->arrayStride = uOffset;
 }
 
 uint32_t RenderVBOLayout::GetVertexFormatSize(wgpu::VertexFormat eVertexFormat)

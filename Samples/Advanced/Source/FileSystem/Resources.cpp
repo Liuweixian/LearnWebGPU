@@ -27,9 +27,10 @@ const char *Resources::Load(std::string szFilePath)
     fseek(pFileHandle, 0, SEEK_END);
     long lFileSize = ftell(pFileHandle);
     rewind(pFileHandle);
-    char *pRetBuffer = (char *)malloc(sizeof(char) * lFileSize);
+    char *pRetBuffer = (char *)malloc(sizeof(char) * (lFileSize + 1));
     size_t ulReadSize = fread(pRetBuffer, 1, lFileSize, pFileHandle);
     fclose(pFileHandle);
+    pRetBuffer[lFileSize] = '\0';
     assert(ulReadSize == lFileSize);
     return pRetBuffer;
 }

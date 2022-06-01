@@ -12,8 +12,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     CVDisplayLinkCreateWithActiveCGDisplays(&self->displayLinkRef);
-    CVDisplayLinkSetOutputCallback(self->displayLinkRef, &displayLinkRepaint, nullptr);
+    CVDisplayLinkSetOutputCallback(self->displayLinkRef, &displayLinkRepaint, (__bridge void*)self);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:NSWindowWillCloseNotification object:nil];
+    CVDisplayLinkStart(self->displayLinkRef);
     
     CreateGfxDevice([&](GfxDevice*& pDevice){
         pDevice = new MacDawnGfxDevice(self.window);
@@ -54,7 +55,6 @@
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
-    CVDisplayLinkStart(self->displayLinkRef);
 }
 
 - (void)applicationDidResignActive:(NSNotification *)notification {
@@ -65,12 +65,17 @@
     [NSApp terminate:self];
 }
 
+- (void)rendering{
+    bool looping = GetRDGPlayer()->RenderLoop();
+    if (!looping)
+        CVDisplayLinkStop(self->displayLinkRef);
+}
+
 @end
 
 static CVReturn displayLinkRepaint(CVDisplayLinkRef dispLink, const CVTimeStamp* inNow, const CVTimeStamp* inOutputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    bool looping = GetRDGPlayer()->RenderLoop();
-    if (looping)
-        return kCVReturnSuccess;
-    return kCVReturnError;
+    AppDelegate* pWindow = (__bridge AppDelegate*)displayLinkContext;
+    [pWindow performSelectorOnMainThread:@selector(rendering) withObject:nil waitUntilDone:YES];
+    return kCVReturnSuccess;
 }

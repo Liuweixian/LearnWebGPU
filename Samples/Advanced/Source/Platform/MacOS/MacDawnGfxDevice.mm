@@ -5,8 +5,10 @@
 
 MacDawnGfxDevice::MacDawnGfxDevice(NSWindow* pWindow)
 {
-    m_pDawnSwapChainImpl = nullptr;
     m_Adapter = nullptr;
+    m_pDawnSwapChainImpl = nullptr;
+    m_bErrorHappened = false;
+    m_bInitialized = false;
     CreateDawnSwapChainImplementation(pWindow);
     printf("Create Dawn GfxDevice for Mac\n");
 }
@@ -102,4 +104,5 @@ void MacDawnGfxDevice::CreateSwapChain()
     uint32_t uHeight = 0;
     GetMetalDawnSwapChain()->GetWindowSize(uWidth, uHeight);
     m_SwapChain.Configure(wgpu::TextureFormat::BGRA8Unorm, wgpu::TextureUsage::RenderAttachment, uWidth, uHeight);
+    printf("Create SwapChain\n");
 }

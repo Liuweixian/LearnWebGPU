@@ -5,6 +5,9 @@
 
 EmccGfxDevice::EmccGfxDevice()
 {
+    m_bInitialized = false;
+    m_bErrorHappened = false;
+    m_Adapter = nullptr;
     printf("Create Emcc GfxDevice\n");
 }
 

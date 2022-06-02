@@ -31,6 +31,6 @@ public:
 protected:
     size_t m_ulDataCount;
     size_t m_ulDataLength;
-    void *m_pData;
+    int8_t *m_pData;
     wgpu::Buffer m_GPUBuffer;
 };

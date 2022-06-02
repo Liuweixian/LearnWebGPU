@@ -17,8 +17,8 @@ RGBuffer::~RGBuffer()
     m_pData = nullptr;
 }
 
-template void RenderBuffer::SetData<float>(size_t ulDataCount, float *pData);
-template void RenderBuffer::SetData<uint16_t>(size_t ulDataCount, uint16_t *pData);
+template void RGBuffer::SetData<float>(size_t ulDataCount, float *pData);
+template void RGBuffer::SetData<uint16_t>(size_t ulDataCount, uint16_t *pData);
 
 template <typename T>
 void RGBuffer::SetData(size_t ulDataCount, T *pData)
@@ -32,6 +32,6 @@ void RGBuffer::SetData(size_t ulDataCount, T *pData)
     else
         m_ulDataLength = ulDataLength;
     assert(m_ulDataLength != 0);
-    m_pData = malloc(m_ulDataLength);
+    m_pData = (int8_t*)malloc(m_ulDataLength);
     memcpy(m_pData, pData, ulDataLength);
 }

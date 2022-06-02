@@ -37,8 +37,8 @@ void SimpleRenderGraph::InitializeScene()
 
 void SimpleRenderGraph::InitializePass()
 {
-    RGResourceHandle *pFrameBuffer = GetRGResources()->GetFrameBuffer();
     DrawObjectPass *pDrawObjectPass = this->AddRenderGraphPass<DrawObjectPass>((RGPassIdx)PassIdx::DrawObjectPass);
+    RGResourceHandle *pFrameBuffer = GetRGResources()->GetFrameBuffer();
     pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }
 

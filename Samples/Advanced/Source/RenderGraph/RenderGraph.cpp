@@ -63,13 +63,13 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
             RenderGraphPass *pPass = *passIt;
-            GraphPassType eType = pPass->GetPassType();
-            if (eType == GraphPassType::Draw)
+            RGPassType ePassType = pPass->GetPassType();
+            if (ePassType == RGPassType::Draw)
             {
                 RenderGraphDrawPass *pDrawPass = reinterpret_cast<RenderGraphDrawPass *>(pPass);
                 pDrawPass->Execute(renderObjects);
             }
-            else if (eType == GraphPassType::Compute)
+            else if (ePassType == RGPassType::Compute)
             {
                 RenderGraphComputePass *pComputePass = reinterpret_cast<RenderGraphComputePass *>(pPass);
                 pComputePass->Execute();

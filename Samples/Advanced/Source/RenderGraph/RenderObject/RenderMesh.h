@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include "RenderMaterial.h"
 #include "../RenderResource/RenderBuffer.h"
-#include "../RenderPass/RenderGraphDefine.h"
+#include "../RGDefine.h"
 
 class RenderMesh
 {

@@ -10,5 +10,9 @@ public:
     SimpleRenderGraph();
     ~SimpleRenderGraph();
     virtual void Initialize() override;
-private:
+    enum class PassIdx : uint16_t
+    {
+        Invalid,
+        DrawObjectPass,
+    };
 };

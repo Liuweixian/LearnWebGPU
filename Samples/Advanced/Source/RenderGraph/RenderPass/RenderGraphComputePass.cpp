@@ -1,7 +1,7 @@
 #include "RenderGraphComputePass.h"
-RenderGraphComputePass::RenderGraphComputePass()
+
+RenderGraphComputePass::RenderGraphComputePass(RGPassIdx uPassIdx) : RenderGraphPass(uPassIdx)
 {
-    m_eType = GraphPassType::Compute;
 }
 
 RenderGraphComputePass::~RenderGraphComputePass()

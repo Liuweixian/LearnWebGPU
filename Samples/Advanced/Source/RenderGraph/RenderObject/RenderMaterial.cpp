@@ -1,8 +1,8 @@
 #include "RenderMaterial.h"
 
-RenderMaterial::RenderMaterial(RenderPassIdx passIdx)
+RenderMaterial::RenderMaterial(RGPassIdx uPassIdx)
 {
-    m_ePassIdx = passIdx;
+    m_uPassIdx = uPassIdx;
 }
 
 RenderMaterial::~RenderMaterial()

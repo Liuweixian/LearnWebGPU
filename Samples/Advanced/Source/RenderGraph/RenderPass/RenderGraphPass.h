@@ -1,23 +1,24 @@
 #pragma once
 #include <list>
-#include "RenderGraphDefine.h"
+#include "../RGDefine.h"
 #include "../RenderResource/RenderShader.h"
 
 class RenderGraphPass
 {
 public:
-    RenderGraphPass();
+    RenderGraphPass(RGPassIdx uPassIdx);
     virtual ~RenderGraphPass();
     virtual bool EnsureSetupFinish();
     virtual void Compile() = 0;
-    GraphPassType GetPassType()
+    RGPassType GetPassType()
     {
-        return m_eType;
+        return m_ePassType;
     }
 protected:
     virtual void SetupShader() = 0;
 
 protected:
     RenderShader *m_pShader;
-    GraphPassType m_eType;
+    RGPassType m_ePassType;
+    RGPassIdx m_uPassIdx;
 };

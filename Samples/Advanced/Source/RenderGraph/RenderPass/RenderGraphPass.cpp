@@ -1,10 +1,11 @@
-#include "RenderGraphPass.h"
 #include <stdio.h>
+#include "RenderGraphPass.h"
 
-RenderGraphPass::RenderGraphPass()
+RenderGraphPass::RenderGraphPass(RGPassIdx uPassIdx)
 {
-    m_eType = GraphPassType::Invalid;
     m_pShader = nullptr;
+    m_ePassType = RGPassType::Invalid;
+    m_uPassIdx = uPassIdx;
 }
 
 RenderGraphPass::~RenderGraphPass()

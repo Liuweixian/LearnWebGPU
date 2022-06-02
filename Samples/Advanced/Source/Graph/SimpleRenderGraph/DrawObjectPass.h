@@ -4,7 +4,7 @@
 class DrawObjectPass : public RenderGraphDrawPass
 {
 public:
-    DrawObjectPass();
+    DrawObjectPass(RGPassIdx uPassIdx);
     virtual ~DrawObjectPass();
 protected:
     virtual void SetupShader() override;

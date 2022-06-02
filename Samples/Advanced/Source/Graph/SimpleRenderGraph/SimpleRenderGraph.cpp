@@ -18,7 +18,7 @@ void SimpleRenderGraph::InitializeScene()
     // Create RenderObject into RenderGraphPlayer
     RenderObject *pRenderObject = pRDGPlayer->AddRenderObject<RenderObject>("Triganle");
     // Create Material for RenderObject
-    pRenderObject->CreateMaterial<RenderMaterial>(RenderPassIdx::DrawObjectPass);
+    pRenderObject->CreateMaterial<RenderMaterial>((RGPassIdx)PassIdx::DrawObjectPass);
     RenderMesh *pMesh = pRenderObject->CreateMesh<RenderMesh>();
     // Create VBO for RenderObject
     RenderBuffer *pRenderVertexBuffer = pMesh->CreateVertexBuffer<RenderBuffer>();
@@ -38,7 +38,7 @@ void SimpleRenderGraph::InitializeScene()
 void SimpleRenderGraph::InitializePass()
 {
     RenderResourceHandle* pFrameBuffer = GetRenderResource()->GetFrameBuffer();
-    DrawObjectPass *pDrawObjectPass = this->AddRenderPass<DrawObjectPass>();
+    DrawObjectPass *pDrawObjectPass = this->AddRenderPass<DrawObjectPass>((RGPassIdx)PassIdx::DrawObjectPass);
     pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }
 

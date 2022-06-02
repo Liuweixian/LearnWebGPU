@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include "RenderGraphPass.h"
-#include "RenderGraphDefine.h"
+#include "../RGDefine.h"
 #include "../RenderResource/RenderResource.h"
 #include "../RenderResource/RenderState.h"
 #include "../RenderObject/RenderObject.h"
@@ -9,7 +9,7 @@
 class RenderGraphDrawPass : public RenderGraphPass
 {
 public:
-    RenderGraphDrawPass();
+    RenderGraphDrawPass(RGPassIdx uPassIdx);
     virtual ~RenderGraphDrawPass();
     virtual bool EnsureSetupFinish() override;
     virtual void Compile() override;
@@ -17,7 +17,6 @@ public:
     void Execute(const std::list<RenderObject *> renderObjects);
 
 protected:
-    RenderPassIdx m_eIdx;
     std::list<RenderResourceHandle *> m_TargetColorBuffers;
     RenderResourceHandle *m_pTargetDepthBuffer;
     RenderState *m_pRenderState;

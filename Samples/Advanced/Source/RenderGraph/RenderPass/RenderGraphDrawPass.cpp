@@ -2,10 +2,9 @@
 #include "../GfxDevice.h"
 #include <cassert>
 
-RenderGraphDrawPass::RenderGraphDrawPass()
+RenderGraphDrawPass::RenderGraphDrawPass(RGPassIdx uPassIdx) : RenderGraphPass(uPassIdx)
 {
-    m_eIdx = RenderPassIdx::Invalid;
-    m_eType = GraphPassType::Draw;
+    m_ePassType = RGPassType::Draw;
     m_TargetColorBuffers.clear();
     m_pTargetDepthBuffer = nullptr;
     m_pRenderState = nullptr;
@@ -51,7 +50,7 @@ void RenderGraphDrawPass::Execute(const std::list<RenderObject *> renderObjects)
     for (auto objIt = renderObjects.begin(); objIt != renderObjects.end(); objIt++)
     {
         RenderObject *pObj = *objIt;
-        RenderMaterial *pMaterial = pObj->GetMaterial(m_eIdx);
+        RenderMaterial *pMaterial = pObj->GetMaterial(m_uPassIdx);
         if (pMaterial == nullptr)
             continue;
         RenderMesh *pMesh = pObj->GetMesh();

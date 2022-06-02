@@ -112,7 +112,7 @@
 		250CC173284495B300D30A51 /* RenderBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderBuffer.cpp; sourceTree = "<group>"; };
 		250CC174284495B300D30A51 /* RenderBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderBuffer.h; sourceTree = "<group>"; };
 		250CC175284495B300D30A51 /* RenderShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderShaderProgram.h; sourceTree = "<group>"; };
-		250CC177284495B300D30A51 /* RenderGraphDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderGraphDefine.h; sourceTree = "<group>"; };
+		250CC177284495B300D30A51 /* RGDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGDefine.h; sourceTree = "<group>"; };
 		250CC178284495B300D30A51 /* RenderGraphPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderGraphPass.cpp; sourceTree = "<group>"; };
 		250CC179284495B300D30A51 /* RenderGraphPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderGraphPass.h; sourceTree = "<group>"; };
 		250CC17A284495B400D30A51 /* RenderGraphDrawPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderGraphDrawPass.cpp; sourceTree = "<group>"; };
@@ -334,15 +334,16 @@
 		250CC15A284495B300D30A51 /* RenderGraph */ = {
 			isa = PBXGroup;
 			children = (
+				250CC177284495B300D30A51 /* RGDefine.h */,
 				250CC15B284495B300D30A51 /* GfxDevice.h */,
 				250CC15E284495B300D30A51 /* GfxDeivce.cpp */,
-				250CC15C284495B300D30A51 /* RenderGraphPlayer.h */,
-				250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */,
 				250CC17E284495B400D30A51 /* RenderGraph.h */,
 				250CC15D284495B300D30A51 /* RenderGraph.cpp */,
+				250CC15C284495B300D30A51 /* RenderGraphPlayer.h */,
+				250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */,
+				250CC176284495B300D30A51 /* RenderPass */,
 				250CC15F284495B300D30A51 /* RenderObject */,
 				250CC167284495B300D30A51 /* RenderResource */,
-				250CC176284495B300D30A51 /* RenderPass */,
 			);
 			name = RenderGraph;
 			path = ../Source/RenderGraph;
@@ -385,13 +386,12 @@
 		250CC176284495B300D30A51 /* RenderPass */ = {
 			isa = PBXGroup;
 			children = (
-				250CC177284495B300D30A51 /* RenderGraphDefine.h */,
 				250CC179284495B300D30A51 /* RenderGraphPass.h */,
 				250CC178284495B300D30A51 /* RenderGraphPass.cpp */,
 				250CC17D284495B400D30A51 /* RenderGraphDrawPass.h */,
 				250CC17A284495B400D30A51 /* RenderGraphDrawPass.cpp */,
-				250CC17B284495B400D30A51 /* RenderGraphComputePass.cpp */,
 				250CC17C284495B400D30A51 /* RenderGraphComputePass.h */,
+				250CC17B284495B400D30A51 /* RenderGraphComputePass.cpp */,
 			);
 			path = RenderPass;
 			sourceTree = "<group>";

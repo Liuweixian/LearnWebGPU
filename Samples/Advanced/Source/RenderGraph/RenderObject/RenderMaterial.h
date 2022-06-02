@@ -3,13 +3,13 @@
 #include <string>
 #include <unordered_map>
 #include "webgpu/webgpu_cpp.h"
-#include "../RenderPass/RenderGraphDefine.h"
+#include "../RGDefine.h"
 
 class RenderMaterial
 {
 public:
-    RenderMaterial(RenderPassIdx passIdx);
+    RenderMaterial(RGPassIdx passIdx);
     virtual ~RenderMaterial();
 private:
-    RenderPassIdx m_ePassIdx;
+    RGPassIdx m_uPassIdx;
 };

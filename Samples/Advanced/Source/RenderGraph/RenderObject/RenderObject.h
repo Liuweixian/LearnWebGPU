@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include "RenderMaterial.h"
 #include "RenderMesh.h"
-#include "../RenderPass/RenderGraphDefine.h"
+#include "../RGDefine.h"
 
 class RenderObject
 {
@@ -17,22 +17,22 @@ public:
     }
 
     template <typename T>
-    T *CreateMaterial(RenderPassIdx ePassIdx)
+    T *CreateMaterial(RGPassIdx uPassIdx)
     {
         static_assert(std::is_base_of<RenderMaterial, T>::value, "T must be a descendant of RenderMaterial");
-        auto found = m_Materials.find(ePassIdx);
+        auto found = m_Materials.find(uPassIdx);
         if (found != m_Materials.end())
         {
-            printf("This render object already had material pass idx %hu\n", ePassIdx);
+            printf("This render object already had material pass idx %hu\n", uPassIdx);
             return found->second;
         }
 
-        T *pMaterial = new T(ePassIdx);
-        m_Materials.insert(std::make_pair(ePassIdx, pMaterial));
+        T *pMaterial = new T(uPassIdx);
+        m_Materials.insert(std::make_pair(uPassIdx, pMaterial));
         return pMaterial;
     }
 
-    RenderMaterial *GetMaterial(RenderPassIdx ePassIdx);
+    RenderMaterial *GetMaterial(RGPassIdx uPassIdx);
 
     template <typename T>
     T *CreateMesh()
@@ -55,5 +55,5 @@ public:
 private:
     std::string m_szName;
     RenderMesh *m_pRenderMesh;
-    std::unordered_map<RenderPassIdx, RenderMaterial *> m_Materials;
+    std::unordered_map<RGPassIdx, RenderMaterial *> m_Materials;
 };

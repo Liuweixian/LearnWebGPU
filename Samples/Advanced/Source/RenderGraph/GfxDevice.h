@@ -1,8 +1,8 @@
 #pragma once
 #include <list>
-#include "RenderResource/RenderResource.h"
+#include "RenderResource/RGResources.h"
 #include "RenderResource/RenderState.h"
-#include "RenderResource/RenderBuffer.h"
+#include "RenderResource/RGBuffer.h"
 
 class GfxDevice
 {
@@ -37,9 +37,9 @@ public:
 
     void BeginFrame();
     void EndFrame();
-    void SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer);
+    void SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
     void SetRenderState(RenderState *pRenderState);
-    void DrawBuffer(std::list<RenderBuffer *> vertexBuffers, RenderBuffer *pIndexBuffer);
+    void DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer);
 
 protected:
     wgpu::Device m_Device;

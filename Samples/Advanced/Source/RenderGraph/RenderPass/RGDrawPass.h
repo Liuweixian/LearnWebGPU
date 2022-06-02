@@ -2,7 +2,7 @@
 #include <list>
 #include "RGPass.h"
 #include "../RGDefine.h"
-#include "../RenderResource/RenderResource.h"
+#include "../RenderResource/RGResources.h"
 #include "../RenderResource/RenderState.h"
 #include "../RenderObject/RenderObject.h"
 
@@ -13,11 +13,11 @@ public:
     virtual ~RGDrawPass();
     virtual bool EnsureSetupFinish() override;
     virtual void Compile() override;
-    void SetRenderTarget(RenderResourceHandle *pTargetColorBuffer);
+    void SetRenderTarget(RGResourceHandle *pTargetColorBuffer);
     void Execute(const std::list<RenderObject *> renderObjects);
 
 protected:
-    std::list<RenderResourceHandle *> m_TargetColorBuffers;
-    RenderResourceHandle *m_pTargetDepthBuffer;
+    std::list<RGResourceHandle *> m_TargetColorBuffers;
+    RGResourceHandle *m_pTargetDepthBuffer;
     RenderState *m_pRenderState;
 };

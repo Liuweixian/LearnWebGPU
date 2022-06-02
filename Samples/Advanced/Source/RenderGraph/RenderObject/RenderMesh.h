@@ -3,7 +3,7 @@
 #include <list>
 #include <unordered_map>
 #include "RenderMaterial.h"
-#include "../RenderResource/RenderBuffer.h"
+#include "../RenderResource/RGBuffer.h"
 #include "../RGDefine.h"
 
 class RenderMesh
@@ -14,7 +14,7 @@ public:
     template <typename T>
     T *CreateVertexBuffer()
     {
-        static_assert(std::is_base_of<RenderBuffer, T>::value, "T must be a descendant of RenderBuffer");
+        static_assert(std::is_base_of<RGBuffer, T>::value, "T must be a descendant of RenderBuffer");
         T *pVertexBuffer = new T();
         m_VertexBuffers.push_back(pVertexBuffer);
         return pVertexBuffer;
@@ -23,7 +23,7 @@ public:
     template <typename T>
     T *CreateIndexBuffer()
     {
-        static_assert(std::is_base_of<RenderBuffer, T>::value, "T must be a descendant of RenderBuffer");
+        static_assert(std::is_base_of<RGBuffer, T>::value, "T must be a descendant of RenderBuffer");
         if (m_pIndexBuffer != nullptr)
         {
             delete m_pIndexBuffer;
@@ -33,17 +33,17 @@ public:
         return m_pIndexBuffer;
     }
 
-    std::list<RenderBuffer *> GetVertexBuffers()
+    std::list<RGBuffer *> GetVertexBuffers()
     {
         return m_VertexBuffers;
     }
 
-    RenderBuffer *GetIndexBuffer()
+    RGBuffer *GetIndexBuffer()
     {
         return m_pIndexBuffer;
     }
 
 private:
-    std::list<RenderBuffer *> m_VertexBuffers;
-    RenderBuffer *m_pIndexBuffer;
+    std::list<RGBuffer *> m_VertexBuffers;
+    RGBuffer *m_pIndexBuffer;
 };

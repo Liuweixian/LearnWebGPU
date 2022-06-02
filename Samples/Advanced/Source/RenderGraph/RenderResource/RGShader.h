@@ -4,11 +4,11 @@
 #include <unordered_map>
 #include "RGShaderProgram.h"
 
-class RenderShader
+class RGShader
 {
 public:
-    RenderShader();
-    virtual ~RenderShader();
+    RGShader();
+    virtual ~RGShader();
 
     template <typename T>
     T *Create(RGShaderProgram::Type eType, std::string szEntryPoint, std::string szFilePath)

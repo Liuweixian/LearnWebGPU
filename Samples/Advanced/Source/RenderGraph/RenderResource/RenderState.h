@@ -3,21 +3,21 @@
 #include <list>
 #include "webgpu/webgpu_cpp.h"
 #include "RGDrawShader.h"
-#include "RenderResource.h"
+#include "RGResources.h"
 
 class RenderState
 {
 public:
     RenderState();
     virtual ~RenderState();
-    void Initialize(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer);
+    void Initialize(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
     void Cleanup();
 
 private:
     void InitVertexState(RGDrawShader *pRenderObjectShader);
-    void InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers);
+    void InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers);
     void InitPrimitiveState();
-    void InitDepthStencilState(RenderResourceHandle *pTargetDepthBuffer);
+    void InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer);
     void InitMultisampleState();
 
 public:

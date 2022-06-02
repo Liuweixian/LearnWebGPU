@@ -1,11 +1,11 @@
-#include "RenderShader.h"
+#include "RGShader.h"
 
-RenderShader::RenderShader()
+RGShader::RGShader()
 {
     m_Programs.empty();
 }
 
-RenderShader::~RenderShader()
+RGShader::~RGShader()
 {
     for (auto it = m_Programs.begin(); it != m_Programs.end(); it++)
     {
@@ -14,7 +14,7 @@ RenderShader::~RenderShader()
     m_Programs.clear();
 }
 
-RGShaderProgram *RenderShader::GetProgram(RGShaderProgram::Type eType)
+RGShaderProgram *RGShader::GetProgram(RGShaderProgram::Type eType)
 {
     auto found = m_Programs.find(eType);
     if (found != m_Programs.end())

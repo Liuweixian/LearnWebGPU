@@ -4,11 +4,11 @@
 #include <typeinfo>
 #include "webgpu/webgpu_cpp.h"
 
-class RenderBuffer
+class RGBuffer
 {
 public:
-    RenderBuffer();
-    virtual ~RenderBuffer();
+    RGBuffer();
+    virtual ~RGBuffer();
     template <typename T>
     void SetData(size_t ulDataCount, T *pData);
     wgpu::Buffer &GetGPUBuffer()

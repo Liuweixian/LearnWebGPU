@@ -2,17 +2,17 @@
 #include <stdio.h>
 #include <list>
 #include <stdarg.h>
-#include "RenderShader.h"
-#include "RenderVBOLayout.h"
+#include "RGShader.h"
+#include "RGVertexLayout.h"
 #include "webgpu/webgpu_cpp.h"
 
-class RGDrawShader : public RenderShader
+class RGDrawShader : public RGShader
 {
 public:
     RGDrawShader();
     virtual ~RGDrawShader();
 
-    RenderVBOLayout *CreateVBOLayout(int nAttributeCount, ...)
+    RGVertexLayout *CreateVertexLayout(int nAttributeCount, ...)
     {
         wgpu::VertexFormat vertexFormats[nAttributeCount];
         va_list ap;
@@ -23,16 +23,16 @@ public:
             vertexFormats[i] = eVertexFormat;
         }
         va_end(ap);
-        RenderVBOLayout *pVBOLayout = new RenderVBOLayout(nAttributeCount, vertexFormats);
-        m_VBOLayouts.push_back(pVBOLayout);
-        return pVBOLayout;
+        RGVertexLayout *pVertexLayout = new RGVertexLayout(nAttributeCount, vertexFormats);
+        m_VertexLayouts.push_back(pVertexLayout);
+        return pVertexLayout;
     }
 
-    std::list<RenderVBOLayout *> GetVBOLayouts()
+    std::list<RGVertexLayout *> GetVertexLayouts()
     {
-        return m_VBOLayouts;
+        return m_VertexLayouts;
     }
 
 protected:
-    std::list<RenderVBOLayout *> m_VBOLayouts;
+    std::list<RGVertexLayout *> m_VertexLayouts;
 };

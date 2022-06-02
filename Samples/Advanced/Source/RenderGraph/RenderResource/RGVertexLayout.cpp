@@ -1,6 +1,6 @@
-#include "RenderVBOLayout.h"
+#include "RGVertexLayout.h"
 
-RenderVBOLayout::RenderVBOLayout(int nAttributeCount, wgpu::VertexFormat *pVertexFormats)
+RGVertexLayout::RGVertexLayout(int nAttributeCount, wgpu::VertexFormat *pVertexFormats)
 {
     m_pLayout = new wgpu::VertexBufferLayout();
     m_pLayout->stepMode = wgpu::VertexStepMode::Vertex;
@@ -19,7 +19,7 @@ RenderVBOLayout::RenderVBOLayout(int nAttributeCount, wgpu::VertexFormat *pVerte
     m_pLayout->arrayStride = uOffset;
 }
 
-uint32_t RenderVBOLayout::GetVertexFormatSize(wgpu::VertexFormat eVertexFormat)
+uint32_t RGVertexLayout::GetVertexFormatSize(wgpu::VertexFormat eVertexFormat)
 {
     uint32_t unRet = 0;
     switch (eVertexFormat)
@@ -34,6 +34,6 @@ uint32_t RenderVBOLayout::GetVertexFormatSize(wgpu::VertexFormat eVertexFormat)
     return unRet;
 }
 
-RenderVBOLayout::~RenderVBOLayout()
+RGVertexLayout::~RGVertexLayout()
 {
 }

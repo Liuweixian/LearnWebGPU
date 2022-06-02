@@ -1,8 +1,8 @@
-#include "RenderBuffer.h"
+#include "RGBuffer.h"
 #include <cassert>
 #include <cstring>
 
-RenderBuffer::RenderBuffer()
+RGBuffer::RGBuffer()
 {
     m_ulDataCount = 0;
     m_ulDataLength = 0;
@@ -10,7 +10,7 @@ RenderBuffer::RenderBuffer()
     m_GPUBuffer = nullptr;
 }
 
-RenderBuffer::~RenderBuffer()
+RGBuffer::~RGBuffer()
 {
     m_ulDataCount = 0;
     m_ulDataLength = 0;
@@ -21,7 +21,7 @@ template void RenderBuffer::SetData<float>(size_t ulDataCount, float *pData);
 template void RenderBuffer::SetData<uint16_t>(size_t ulDataCount, uint16_t *pData);
 
 template <typename T>
-void RenderBuffer::SetData(size_t ulDataCount, T *pData)
+void RGBuffer::SetData(size_t ulDataCount, T *pData)
 {
     m_ulDataCount = ulDataCount;
     size_t ulDataLength = ulDataCount * sizeof(T);

@@ -18,7 +18,7 @@ RenderState::~RenderState()
 {
 }
 
-void RenderState::Initialize(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
+void RenderState::Initialize(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer)
 {
     assert(m_pLayoutDesc == nullptr);
     m_pLayoutDesc = new wgpu::PipelineLayoutDescriptor();
@@ -41,15 +41,15 @@ void RenderState::InitVertexState(RGDrawShader *pRenderObjectShader)
     m_pVertexShaderDesc = new wgpu::ShaderModuleWGSLDescriptor();
     m_pVertexShaderDesc->source = pVertexProgram->LoadSource();
     // vbo
-    std::list<RenderVBOLayout *> renderVBOLayouts = pRenderObjectShader->GetVBOLayouts();
-    m_pVertexState->bufferCount = (uint32_t)renderVBOLayouts.size();
+    std::list<RGVertexLayout *> vertexLayouts = pRenderObjectShader->GetVertexLayouts();
+    m_pVertexState->bufferCount = (uint32_t)vertexLayouts.size();
     wgpu::VertexBufferLayout *pVBOLayouts = new wgpu::VertexBufferLayout[m_pVertexState->bufferCount];
     m_pVertexState->buffers = pVBOLayouts;
 
     int nIndex = 0;
-    for (auto it = renderVBOLayouts.begin(); it != renderVBOLayouts.end(); it++)
+    for (auto it = vertexLayouts.begin(); it != vertexLayouts.end(); it++)
     {
-        RenderVBOLayout *pRenderVBOLayout = *it;
+        RGVertexLayout *pRenderVBOLayout = *it;
         pVBOLayouts[nIndex] = pRenderVBOLayout->GetLayout();
         nIndex++;
     }
@@ -57,7 +57,7 @@ void RenderState::InitVertexState(RGDrawShader *pRenderObjectShader)
     // constants TODO
 }
 
-void RenderState::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers)
+void RenderState::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers)
 {
     assert(m_pFragmentState == nullptr && m_pFragmentShaderDesc == nullptr);
     RGShaderProgram *pFragProgram = pRenderObjectShader->GetProgram(RGShaderProgram::Type::Fragment);
@@ -72,7 +72,7 @@ void RenderState::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list
     int nIndex = 0;
     for (auto it = targetColorBuffers.begin(); it != targetColorBuffers.end(); it++)
     {
-        wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(*it);
+        wgpu::TextureDescriptor *pTextureDesc = GetRGResources()->GetTextureDesc(*it);
         pColorTargetStates[nIndex].format = pTextureDesc->format;
         pColorTargetStates[nIndex].writeMask = wgpu::ColorWriteMask::All;
         nIndex++;
@@ -90,7 +90,7 @@ void RenderState::InitPrimitiveState()
     m_pPrimitiveState->cullMode = wgpu::CullMode::None;
 }
 
-void RenderState::InitDepthStencilState(RenderResourceHandle *pTargetDepthBuffer)
+void RenderState::InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer)
 {
     assert(m_pDepthStencilState == nullptr);
     if (pTargetDepthBuffer == nullptr)
@@ -98,7 +98,7 @@ void RenderState::InitDepthStencilState(RenderResourceHandle *pTargetDepthBuffer
     else
     {
         m_pDepthStencilState = new wgpu::DepthStencilState();
-        wgpu::TextureDescriptor *pTextureDesc = GetRenderResource()->GetTextureDesc(pTargetDepthBuffer);
+        wgpu::TextureDescriptor *pTextureDesc = GetRGResources()->GetTextureDesc(pTargetDepthBuffer);
         m_pDepthStencilState->format = pTextureDesc->format;
     }
 }

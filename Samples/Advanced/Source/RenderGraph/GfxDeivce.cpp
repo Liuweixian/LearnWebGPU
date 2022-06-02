@@ -80,19 +80,19 @@ void GfxDevice::EndFrame()
 #endif
 }
 
-void GfxDevice::SetRenderTarget(std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
+void GfxDevice::SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer)
 {
     uint32_t unEncoderHash = 0;
 
     uint32_t nColorAttachmentCount = (uint32_t)targetColorBuffers.size();
     unEncoderHash = unEncoderHash * 31 + nColorAttachmentCount;
 
-    RenderResourceHandle *pFrameBufferHandle = GetRenderResource()->GetFrameBuffer();
+    RGResourceHandle *pFrameBufferHandle = GetRGResources()->GetFrameBuffer();
     wgpu::RenderPassColorAttachment colorAttachments[nColorAttachmentCount];
     int nIndex = 0;
     for (auto bufferIt = targetColorBuffers.begin(); bufferIt != targetColorBuffers.end(); bufferIt++)
     {
-        RenderResourceHandle *pResHandle = *bufferIt;
+        RGResourceHandle *pResHandle = *bufferIt;
         unEncoderHash = unEncoderHash * 31 + pResHandle->m_unDescIdx;
 
         if (pResHandle->m_unDescIdx == pFrameBufferHandle->m_unDescIdx)
@@ -189,11 +189,11 @@ void GfxDevice::SetRenderState(RenderState *pRenderState)
     m_CurrentRenderPassEncoder.SetPipeline(pRenderState->m_RenderPipeline);
 }
 
-void GfxDevice::DrawBuffer(std::list<RenderBuffer *> vertexBuffers, RenderBuffer *pIndexBuffer)
+void GfxDevice::DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer)
 {
     for (auto it = vertexBuffers.begin(); it != vertexBuffers.end(); it++)
     {
-        RenderBuffer *pRenderBuffer = *it;
+        RGBuffer *pRenderBuffer = *it;
         wgpu::Buffer &gpuBuffer = pRenderBuffer->GetGPUBuffer();
         size_t ulBufferSize = pRenderBuffer->GetDataLength();
         if (gpuBuffer == nullptr)

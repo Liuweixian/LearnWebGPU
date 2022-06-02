@@ -1,17 +1,17 @@
-#include "RenderResource.h"
+#include "RGResources.h"
 
-RenderResource::RenderResource()
+RGResources::RGResources()
 {
     m_AllTextureDescs.clear();
     m_AllResourceHandles.clear();
     m_pFrameBufferHandle = nullptr;
 }
 
-RenderResource::~RenderResource()
+RGResources::~RGResources()
 {
 }
 
-wgpu::TextureDescriptor *RenderResource::GetTextureDesc(RenderResourceHandle *pHandle)
+wgpu::TextureDescriptor *RGResources::GetTextureDesc(RGResourceHandle *pHandle)
 {
     auto found = m_AllTextureDescs.find(pHandle->m_unDescIdx);
     if (found == m_AllTextureDescs.end())
@@ -19,22 +19,22 @@ wgpu::TextureDescriptor *RenderResource::GetTextureDesc(RenderResourceHandle *pH
     return found->second;
 }
 
-RenderResourceHandle *RenderResource::GetFrameBuffer()
+RGResourceHandle *RGResources::GetFrameBuffer()
 {
     if (m_pFrameBufferHandle == nullptr)
         m_pFrameBufferHandle = CreateTexture("FrameBuffer", wgpu::TextureFormat::BGRA8Unorm, 0, 0, 0, 0, 0);
     return m_pFrameBufferHandle;
 }
 
-RenderResourceHandle *RenderResource::CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
+RGResourceHandle *RGResources::CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
 {
     auto it = m_AllResourceHandles.find(szName);
     if (it != m_AllResourceHandles.end())
         return it->second;
 
-    RenderResourceHandle *pHandle = new RenderResourceHandle();
+    RGResourceHandle *pHandle = new RGResourceHandle();
     pHandle->m_szName = szName;
-    pHandle->m_eType = RenderResourceHandle::Type::Texture;
+    pHandle->m_eType = RGResourceHandle::Type::Texture;
     pHandle->m_unDescIdx = GetTextureDescriptorIdx(eTextureFormat, unWidth, unHeight, unDepthOrArrayLayers, unMipLevelCount, unSampleCount);
     m_AllResourceHandles.insert(std::make_pair(szName, pHandle));
     auto found = m_AllTextureDescs.find(pHandle->m_unDescIdx);
@@ -59,7 +59,7 @@ RenderResourceHandle *RenderResource::CreateTexture(std::string szName, wgpu::Te
     return pHandle;
 }
 
-uint32_t RenderResource::GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
+uint32_t RGResources::GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
 {
     uint32_t unHash = 0;
     unHash = unHash * 31 + (uint32_t)eTextureFormat;
@@ -71,10 +71,10 @@ uint32_t RenderResource::GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFor
     return unHash;
 }
 
-static RenderResource *g_pRenderResource = nullptr;
-RenderResource *GetRenderResource()
+static RGResources *g_pRGResources = nullptr;
+RGResources *GetRGResources()
 {
-    if (g_pRenderResource == nullptr)
-        g_pRenderResource = new RenderResource();
-    return g_pRenderResource;
+    if (g_pRGResources == nullptr)
+        g_pRGResources = new RGResources();
+    return g_pRGResources;
 }

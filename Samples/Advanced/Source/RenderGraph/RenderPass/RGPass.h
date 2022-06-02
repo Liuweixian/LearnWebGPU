@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include "../RGDefine.h"
-#include "../RenderResource/RenderShader.h"
+#include "../RenderResource/RGShader.h"
 
 class RGPass
 {
@@ -19,7 +19,7 @@ protected:
     virtual void SetupShader() = 0;
 
 protected:
-    RenderShader *m_pShader;
+    RGShader *m_pShader;
     RGPassType m_ePassType;
     RGPassIdx m_uPassIdx;
 };

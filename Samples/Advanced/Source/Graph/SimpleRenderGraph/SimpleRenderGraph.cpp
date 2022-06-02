@@ -2,7 +2,7 @@
 #include "SimpleRenderGraph.h"
 #include "DrawObjectPass.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
-#include "../../RenderGraph/RenderResource/RenderResource.h"
+#include "../../RenderGraph/RenderResource/RGResources.h"
 
 SimpleRenderGraph::SimpleRenderGraph()
 {
@@ -21,7 +21,7 @@ void SimpleRenderGraph::InitializeScene()
     pRenderObject->CreateMaterial<RenderMaterial>((RGPassIdx)PassIdx::DrawObjectPass);
     RenderMesh *pMesh = pRenderObject->CreateMesh<RenderMesh>();
     // Create VBO for RenderObject
-    RenderBuffer *pRenderVertexBuffer = pMesh->CreateVertexBuffer<RenderBuffer>();
+    RGBuffer *pRenderVertexBuffer = pMesh->CreateVertexBuffer<RGBuffer>();
     //(x,y,r,g,b)
     float vertexData[15] = {
         -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
@@ -30,14 +30,14 @@ void SimpleRenderGraph::InitializeScene()
     };
     pRenderVertexBuffer->SetData<float>(15, vertexData);
     // Create IBO for RenderObject
-    RenderBuffer *pRenderIndexBuffer = pMesh->CreateIndexBuffer<RenderBuffer>();
+    RGBuffer *pRenderIndexBuffer = pMesh->CreateIndexBuffer<RGBuffer>();
     uint16_t indexData[4] = {0, 1, 2};
     pRenderIndexBuffer->SetData<uint16_t>(3, indexData);
 }
 
 void SimpleRenderGraph::InitializePass()
 {
-    RenderResourceHandle *pFrameBuffer = GetRenderResource()->GetFrameBuffer();
+    RGResourceHandle *pFrameBuffer = GetRGResources()->GetFrameBuffer();
     DrawObjectPass *pDrawObjectPass = this->AddRenderGraphPass<DrawObjectPass>((RGPassIdx)PassIdx::DrawObjectPass);
     pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }

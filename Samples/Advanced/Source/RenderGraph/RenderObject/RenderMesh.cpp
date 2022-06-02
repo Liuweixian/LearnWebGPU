@@ -8,5 +8,4 @@ RenderMesh::RenderMesh()
 
 RenderMesh::~RenderMesh()
 {
-
 }

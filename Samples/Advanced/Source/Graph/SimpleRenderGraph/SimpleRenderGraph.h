@@ -6,6 +6,7 @@ class SimpleRenderGraph : public RenderGraph
 private:
     void InitializeScene();
     void InitializePass();
+
 public:
     SimpleRenderGraph();
     ~SimpleRenderGraph();

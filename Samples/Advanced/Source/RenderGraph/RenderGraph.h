@@ -20,10 +20,10 @@ public:
     bool Execute(const std::list<RenderObject *> renderObjects);
 
     template <typename T>
-    T* AddRenderGraphPass(RGPassIdx uPassIdx)
+    T *AddRenderGraphPass(RGPassIdx uPassIdx)
     {
         static_assert(std::is_base_of<RGPass, T>::value, "T must be a descendant of RenderGraphPass");
-        T* pRenderPass = new T(uPassIdx);
+        T *pRenderPass = new T(uPassIdx);
         m_Passes.push_back(pRenderPass);
         return pRenderPass;
     }

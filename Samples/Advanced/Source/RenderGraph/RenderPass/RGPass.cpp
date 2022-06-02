@@ -10,7 +10,6 @@ RGPass::RGPass(RGPassIdx uPassIdx)
 
 RGPass::~RGPass()
 {
-
 }
 
 bool RGPass::EnsureSetupFinish()

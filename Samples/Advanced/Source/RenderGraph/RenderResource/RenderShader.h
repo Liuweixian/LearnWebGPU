@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <unordered_map>
-#include "RenderShaderProgram.h"
+#include "RGShaderProgram.h"
 
 class RenderShader
 {
@@ -11,9 +11,9 @@ public:
     virtual ~RenderShader();
 
     template <typename T>
-    T *Create(RenderShaderProgram::Type eType, std::string szEntryPoint, std::string szFilePath)
+    T *Create(RGShaderProgram::Type eType, std::string szEntryPoint, std::string szFilePath)
     {
-        static_assert(std::is_base_of<RenderShaderProgram, T>::value, "T must be a descendant of RenderShaderProgram");
+        static_assert(std::is_base_of<RGShaderProgram, T>::value, "T must be a descendant of RenderShaderProgram");
         auto found = m_Programs.find(eType);
         if (found != m_Programs.end())
         {
@@ -26,8 +26,8 @@ public:
         return pProgram;
     }
 
-    RenderShaderProgram *GetProgram(RenderShaderProgram::Type eType);
+    RGShaderProgram *GetProgram(RGShaderProgram::Type eType);
 
 protected:
-    std::unordered_map<RenderShaderProgram::Type, RenderShaderProgram *> m_Programs;
+    std::unordered_map<RGShaderProgram::Type, RGShaderProgram *> m_Programs;
 };

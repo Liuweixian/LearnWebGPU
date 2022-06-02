@@ -6,11 +6,11 @@
 #include "RenderVBOLayout.h"
 #include "webgpu/webgpu_cpp.h"
 
-class RenderObjectShader : public RenderShader
+class RGDrawShader : public RenderShader
 {
 public:
-    RenderObjectShader();
-    virtual ~RenderObjectShader();
+    RGDrawShader();
+    virtual ~RGDrawShader();
 
     RenderVBOLayout *CreateVBOLayout(int nAttributeCount, ...)
     {

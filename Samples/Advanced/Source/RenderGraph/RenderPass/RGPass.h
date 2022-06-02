@@ -14,6 +14,7 @@ public:
     {
         return m_ePassType;
     }
+
 protected:
     virtual void SetupShader() = 0;
 

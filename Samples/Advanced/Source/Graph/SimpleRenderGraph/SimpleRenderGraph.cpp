@@ -25,8 +25,8 @@ void SimpleRenderGraph::InitializeScene()
     //(x,y,r,g,b)
     float vertexData[15] = {
         -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
-         0.8f, -0.8f, 0.0f, 1.0f, 0.0f, // BR
-        0.0f,  0.8f, 1.0f, 0.0f, 0.0f, // top
+        0.8f, -0.8f, 0.0f, 1.0f, 0.0f,  // BR
+        0.0f, 0.8f, 1.0f, 0.0f, 0.0f,   // top
     };
     pRenderVertexBuffer->SetData<float>(15, vertexData);
     // Create IBO for RenderObject
@@ -37,7 +37,7 @@ void SimpleRenderGraph::InitializeScene()
 
 void SimpleRenderGraph::InitializePass()
 {
-    RenderResourceHandle* pFrameBuffer = GetRenderResource()->GetFrameBuffer();
+    RenderResourceHandle *pFrameBuffer = GetRenderResource()->GetFrameBuffer();
     DrawObjectPass *pDrawObjectPass = this->AddRenderGraphPass<DrawObjectPass>((RGPassIdx)PassIdx::DrawObjectPass);
     pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }

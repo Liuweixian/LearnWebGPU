@@ -39,7 +39,7 @@ void RGDrawPass::Compile()
 {
     assert(m_pRenderState == nullptr);
     m_pRenderState = new RenderState();
-    m_pRenderState->Initialize((RenderObjectShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
+    m_pRenderState->Initialize((RGDrawShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
 }
 
 void RGDrawPass::Execute(const std::list<RenderObject *> renderObjects)

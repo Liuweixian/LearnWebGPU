@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <list>
 #include "webgpu/webgpu_cpp.h"
-#include "RenderObjectShader.h"
+#include "RGDrawShader.h"
 #include "RenderResource.h"
 
 class RenderState
@@ -10,15 +10,16 @@ class RenderState
 public:
     RenderState();
     virtual ~RenderState();
-    void Initialize(RenderObjectShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer);
+    void Initialize(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer);
     void Cleanup();
 
 private:
-    void InitVertexState(RenderObjectShader *pRenderObjectShader);
-    void InitFragmentState(RenderObjectShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers);
+    void InitVertexState(RGDrawShader *pRenderObjectShader);
+    void InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers);
     void InitPrimitiveState();
     void InitDepthStencilState(RenderResourceHandle *pTargetDepthBuffer);
     void InitMultisampleState();
+
 public:
     wgpu::PipelineLayoutDescriptor *m_pLayoutDesc;
     wgpu::ShaderModuleWGSLDescriptor *m_pVertexShaderDesc;

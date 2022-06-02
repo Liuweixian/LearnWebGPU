@@ -10,6 +10,7 @@ class RenderMaterial
 public:
     RenderMaterial(RGPassIdx passIdx);
     virtual ~RenderMaterial();
+
 private:
     RGPassIdx m_uPassIdx;
 };

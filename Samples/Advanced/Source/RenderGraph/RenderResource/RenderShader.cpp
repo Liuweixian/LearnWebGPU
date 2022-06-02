@@ -14,7 +14,7 @@ RenderShader::~RenderShader()
     m_Programs.clear();
 }
 
-RenderShaderProgram *RenderShader::GetProgram(RenderShaderProgram::Type eType)
+RGShaderProgram *RenderShader::GetProgram(RGShaderProgram::Type eType)
 {
     auto found = m_Programs.find(eType);
     if (found != m_Programs.end())

@@ -42,7 +42,6 @@ void GfxDevice::PrintSupportedLimits()
     printf("maxComputeWorkgroupsPerDimension: %d\n", m_pSupportedLimits->limits.maxComputeWorkgroupsPerDimension);
 }
 
-
 void GfxDevice::BeginFrame()
 {
     if (IsNotInitialized())
@@ -66,16 +65,16 @@ void GfxDevice::EndFrame()
         return;
 
     FinishCurrentRenderPassEncoder();
-    
+
     wgpu::CommandBuffer commandBuffer = m_CommandEncoder.Finish();
     m_CommandEncoder.Release();
     m_CommandEncoder = nullptr;
-    
+
     wgpu::Queue queue = m_Device.GetQueue();
     queue.OnSubmittedWorkDone(0, QueueWorkDoneCallback, this);
     queue.Submit(1, &commandBuffer);
     commandBuffer.Release();
-    
+
 #ifndef __EMSCRIPTEN__
     m_SwapChain.Present();
 #endif

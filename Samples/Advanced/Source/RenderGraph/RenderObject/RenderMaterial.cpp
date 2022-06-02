@@ -7,5 +7,4 @@ RenderMaterial::RenderMaterial(RGPassIdx uPassIdx)
 
 RenderMaterial::~RenderMaterial()
 {
-    
 }

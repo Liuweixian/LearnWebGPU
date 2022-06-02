@@ -18,7 +18,7 @@ RenderState::~RenderState()
 {
 }
 
-void RenderState::Initialize(RenderObjectShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
+void RenderState::Initialize(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers, RenderResourceHandle *pTargetDepthBuffer)
 {
     assert(m_pLayoutDesc == nullptr);
     m_pLayoutDesc = new wgpu::PipelineLayoutDescriptor();
@@ -30,10 +30,10 @@ void RenderState::Initialize(RenderObjectShader *pRenderObjectShader, std::list<
     assert(m_RenderPipeline == nullptr);
 }
 
-void RenderState::InitVertexState(RenderObjectShader *pRenderObjectShader)
+void RenderState::InitVertexState(RGDrawShader *pRenderObjectShader)
 {
     assert(m_pVertexState == nullptr && m_pVertexShaderDesc == nullptr);
-    RenderShaderProgram *pVertexProgram = pRenderObjectShader->GetProgram(RenderShaderProgram::Type::Vertex);
+    RGShaderProgram *pVertexProgram = pRenderObjectShader->GetProgram(RGShaderProgram::Type::Vertex);
 
     m_pVertexState = new wgpu::VertexState();
     m_pVertexState->entryPoint = pVertexProgram->EntryPoint();
@@ -45,7 +45,7 @@ void RenderState::InitVertexState(RenderObjectShader *pRenderObjectShader)
     m_pVertexState->bufferCount = (uint32_t)renderVBOLayouts.size();
     wgpu::VertexBufferLayout *pVBOLayouts = new wgpu::VertexBufferLayout[m_pVertexState->bufferCount];
     m_pVertexState->buffers = pVBOLayouts;
-    
+
     int nIndex = 0;
     for (auto it = renderVBOLayouts.begin(); it != renderVBOLayouts.end(); it++)
     {
@@ -54,13 +54,13 @@ void RenderState::InitVertexState(RenderObjectShader *pRenderObjectShader)
         nIndex++;
     }
 
-    //constants TODO
+    // constants TODO
 }
 
-void RenderState::InitFragmentState(RenderObjectShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers)
+void RenderState::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RenderResourceHandle *> targetColorBuffers)
 {
     assert(m_pFragmentState == nullptr && m_pFragmentShaderDesc == nullptr);
-    RenderShaderProgram *pFragProgram = pRenderObjectShader->GetProgram(RenderShaderProgram::Type::Fragment);
+    RGShaderProgram *pFragProgram = pRenderObjectShader->GetProgram(RGShaderProgram::Type::Fragment);
 
     m_pFragmentState = new wgpu::FragmentState();
     m_pFragmentState->entryPoint = pFragProgram->EntryPoint();

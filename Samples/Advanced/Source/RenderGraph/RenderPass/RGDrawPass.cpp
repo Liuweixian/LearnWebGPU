@@ -1,8 +1,8 @@
-#include "RenderGraphDrawPass.h"
+#include "RGDrawPass.h"
 #include "../GfxDevice.h"
 #include <cassert>
 
-RenderGraphDrawPass::RenderGraphDrawPass(RGPassIdx uPassIdx) : RenderGraphPass(uPassIdx)
+RGDrawPass::RGDrawPass(RGPassIdx uPassIdx) : RGPass(uPassIdx)
 {
     m_ePassType = RGPassType::Draw;
     m_TargetColorBuffers.clear();
@@ -10,13 +10,13 @@ RenderGraphDrawPass::RenderGraphDrawPass(RGPassIdx uPassIdx) : RenderGraphPass(u
     m_pRenderState = nullptr;
 }
 
-RenderGraphDrawPass::~RenderGraphDrawPass()
+RGDrawPass::~RGDrawPass()
 {
 }
 
-bool RenderGraphDrawPass::EnsureSetupFinish()
+bool RGDrawPass::EnsureSetupFinish()
 {
-    bool bRet = RenderGraphPass::EnsureSetupFinish();
+    bool bRet = RGPass::EnsureSetupFinish();
     if (!bRet)
         return bRet;
 
@@ -29,20 +29,20 @@ bool RenderGraphDrawPass::EnsureSetupFinish()
     return true;
 }
 
-void RenderGraphDrawPass::SetRenderTarget(RenderResourceHandle *pTargetColorBuffer)
+void RGDrawPass::SetRenderTarget(RenderResourceHandle *pTargetColorBuffer)
 {
     m_TargetColorBuffers.clear();
     m_TargetColorBuffers.push_back(pTargetColorBuffer);
 }
 
-void RenderGraphDrawPass::Compile()
+void RGDrawPass::Compile()
 {
     assert(m_pRenderState == nullptr);
     m_pRenderState = new RenderState();
     m_pRenderState->Initialize((RenderObjectShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
 }
 
-void RenderGraphDrawPass::Execute(const std::list<RenderObject *> renderObjects)
+void RGDrawPass::Execute(const std::list<RenderObject *> renderObjects)
 {
     GfxDevice *pGfxDevice = GetGfxDevice();
     pGfxDevice->SetRenderTarget(m_TargetColorBuffers, m_pTargetDepthBuffer);

@@ -3,11 +3,11 @@
 #include "../RGDefine.h"
 #include "../RenderResource/RenderShader.h"
 
-class RenderGraphPass
+class RGPass
 {
 public:
-    RenderGraphPass(RGPassIdx uPassIdx);
-    virtual ~RenderGraphPass();
+    RGPass(RGPassIdx uPassIdx);
+    virtual ~RGPass();
     virtual bool EnsureSetupFinish();
     virtual void Compile() = 0;
     RGPassType GetPassType()

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "RenderGraph.h"
 #include "GfxDevice.h"
+#include "RenderPass/RGDrawPass.h"
+#include "RenderPass/RGComputePass.h"
 
 RenderGraph::RenderGraph()
 {
@@ -20,7 +22,7 @@ void RenderGraph::Compile()
 {
     for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
     {
-        RenderGraphPass *pPass = *passIt;
+        RGPass *pPass = *passIt;
         pPass->Compile();
     }
 }
@@ -40,7 +42,7 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
         bool bSetupFinish = true;
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
-            RenderGraphPass *pPass = *passIt;
+            RGPass *pPass = *passIt;
             bool bRet = pPass->EnsureSetupFinish();
             if (!bRet)
             {
@@ -62,16 +64,16 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
         pGfxDevice->BeginFrame();
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
-            RenderGraphPass *pPass = *passIt;
+            RGPass *pPass = *passIt;
             RGPassType ePassType = pPass->GetPassType();
             if (ePassType == RGPassType::Draw)
             {
-                RenderGraphDrawPass *pDrawPass = reinterpret_cast<RenderGraphDrawPass *>(pPass);
+                RGDrawPass *pDrawPass = reinterpret_cast<RGDrawPass *>(pPass);
                 pDrawPass->Execute(renderObjects);
             }
             else if (ePassType == RGPassType::Compute)
             {
-                RenderGraphComputePass *pComputePass = reinterpret_cast<RenderGraphComputePass *>(pPass);
+                RGComputePass *pComputePass = reinterpret_cast<RGComputePass *>(pPass);
                 pComputePass->Execute();
             }
         }

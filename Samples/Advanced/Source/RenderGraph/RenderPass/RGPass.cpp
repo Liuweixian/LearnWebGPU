@@ -1,19 +1,19 @@
 #include <stdio.h>
-#include "RenderGraphPass.h"
+#include "RGPass.h"
 
-RenderGraphPass::RenderGraphPass(RGPassIdx uPassIdx)
+RGPass::RGPass(RGPassIdx uPassIdx)
 {
     m_pShader = nullptr;
     m_ePassType = RGPassType::Invalid;
     m_uPassIdx = uPassIdx;
 }
 
-RenderGraphPass::~RenderGraphPass()
+RGPass::~RGPass()
 {
 
 }
 
-bool RenderGraphPass::EnsureSetupFinish()
+bool RGPass::EnsureSetupFinish()
 {
     if (m_pShader == nullptr)
     {

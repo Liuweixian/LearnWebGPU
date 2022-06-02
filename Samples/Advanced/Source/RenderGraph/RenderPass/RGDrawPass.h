@@ -1,16 +1,16 @@
 #pragma once
 #include <list>
-#include "RenderGraphPass.h"
+#include "RGPass.h"
 #include "../RGDefine.h"
 #include "../RenderResource/RenderResource.h"
 #include "../RenderResource/RenderState.h"
 #include "../RenderObject/RenderObject.h"
 
-class RenderGraphDrawPass : public RenderGraphPass
+class RGDrawPass : public RGPass
 {
 public:
-    RenderGraphDrawPass(RGPassIdx uPassIdx);
-    virtual ~RenderGraphDrawPass();
+    RGDrawPass(RGPassIdx uPassIdx);
+    virtual ~RGDrawPass();
     virtual bool EnsureSetupFinish() override;
     virtual void Compile() override;
     void SetRenderTarget(RenderResourceHandle *pTargetColorBuffer);

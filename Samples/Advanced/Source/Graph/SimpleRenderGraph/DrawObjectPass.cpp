@@ -2,7 +2,7 @@
 #include "../../RenderGraph/RenderResource/RenderObjectShader.h"
 #include "../../RenderGraph/RenderResource/RenderVBOLayout.h"
 
-DrawObjectPass::DrawObjectPass(RGPassIdx uPassIdx) : RenderGraphDrawPass(uPassIdx)
+DrawObjectPass::DrawObjectPass(RGPassIdx uPassIdx) : RGDrawPass(uPassIdx)
 {
 }
 

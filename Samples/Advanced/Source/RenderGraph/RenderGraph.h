@@ -2,9 +2,7 @@
 #include <list>
 #include <string>
 #include "RGDefine.h"
-#include "RenderPass/RenderGraphPass.h"
-#include "RenderPass/RenderGraphDrawPass.h"
-#include "RenderPass/RenderGraphComputePass.h"
+#include "RenderPass/RGPass.h"
 #include "RenderObject/RenderObject.h"
 
 class RenderGraph
@@ -22,9 +20,9 @@ public:
     bool Execute(const std::list<RenderObject *> renderObjects);
 
     template <typename T>
-    T* AddRenderPass(RGPassIdx uPassIdx)
+    T* AddRenderGraphPass(RGPassIdx uPassIdx)
     {
-        static_assert(std::is_base_of<RenderGraphPass, T>::value, "T must be a descendant of RenderGraphPass");
+        static_assert(std::is_base_of<RGPass, T>::value, "T must be a descendant of RenderGraphPass");
         T* pRenderPass = new T(uPassIdx);
         m_Passes.push_back(pRenderPass);
         return pRenderPass;
@@ -38,5 +36,5 @@ protected:
 
 private:
     Status m_eStatus;
-    std::list<RenderGraphPass *> m_Passes;
+    std::list<RGPass *> m_Passes;
 };

@@ -1,7 +1,7 @@
 #pragma once
-#include "../../RenderGraph/RenderPass/RenderGraphDrawPass.h"
+#include "../../RenderGraph/RenderPass/RGDrawPass.h"
 
-class DrawObjectPass : public RenderGraphDrawPass
+class DrawObjectPass : public RGDrawPass
 {
 public:
     DrawObjectPass(RGPassIdx uPassIdx);

@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <list>
 #include "webgpu/webgpu_cpp.h"
-#include "RGDrawShader.h"
-#include "RGResources.h"
+#include "../RenderResource/RGDrawShader.h"
+#include "../RenderResource/RGResources.h"
 
-class RenderState
+class RGPipeline
 {
 public:
-    RenderState();
-    virtual ~RenderState();
+    RGPipeline();
+    virtual ~RGPipeline();
     void Initialize(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
     void Cleanup();
 

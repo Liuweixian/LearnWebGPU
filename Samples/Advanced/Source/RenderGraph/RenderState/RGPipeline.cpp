@@ -1,7 +1,7 @@
-#include "RenderState.h"
+#include "RGPipeline.h"
 #include <cassert>
 
-RenderState::RenderState()
+RGPipeline::RGPipeline()
 {
     m_pLayoutDesc = nullptr;
     m_pVertexShaderDesc = nullptr;
@@ -14,11 +14,11 @@ RenderState::RenderState()
     m_RenderPipeline = nullptr;
 }
 
-RenderState::~RenderState()
+RGPipeline::~RGPipeline()
 {
 }
 
-void RenderState::Initialize(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer)
+void RGPipeline::Initialize(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer)
 {
     assert(m_pLayoutDesc == nullptr);
     m_pLayoutDesc = new wgpu::PipelineLayoutDescriptor();
@@ -30,7 +30,7 @@ void RenderState::Initialize(RGDrawShader *pRenderObjectShader, std::list<RGReso
     assert(m_RenderPipeline == nullptr);
 }
 
-void RenderState::InitVertexState(RGDrawShader *pRenderObjectShader)
+void RGPipeline::InitVertexState(RGDrawShader *pRenderObjectShader)
 {
     assert(m_pVertexState == nullptr && m_pVertexShaderDesc == nullptr);
     RGShaderProgram *pVertexProgram = pRenderObjectShader->GetProgram(RGShaderProgram::Type::Vertex);
@@ -57,7 +57,7 @@ void RenderState::InitVertexState(RGDrawShader *pRenderObjectShader)
     // constants TODO
 }
 
-void RenderState::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers)
+void RGPipeline::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers)
 {
     assert(m_pFragmentState == nullptr && m_pFragmentShaderDesc == nullptr);
     RGShaderProgram *pFragProgram = pRenderObjectShader->GetProgram(RGShaderProgram::Type::Fragment);
@@ -80,7 +80,7 @@ void RenderState::InitFragmentState(RGDrawShader *pRenderObjectShader, std::list
     m_pFragmentState->targets = pColorTargetStates;
 }
 
-void RenderState::InitPrimitiveState()
+void RGPipeline::InitPrimitiveState()
 {
     assert(m_pPrimitiveState == nullptr);
     m_pPrimitiveState = new wgpu::PrimitiveState();
@@ -90,7 +90,7 @@ void RenderState::InitPrimitiveState()
     m_pPrimitiveState->cullMode = wgpu::CullMode::None;
 }
 
-void RenderState::InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer)
+void RGPipeline::InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer)
 {
     assert(m_pDepthStencilState == nullptr);
     if (pTargetDepthBuffer == nullptr)
@@ -103,12 +103,12 @@ void RenderState::InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer)
     }
 }
 
-void RenderState::InitMultisampleState()
+void RGPipeline::InitMultisampleState()
 {
     assert(m_pMultisampleState == nullptr);
     m_pMultisampleState = new wgpu::MultisampleState();
 }
 
-void RenderState::Cleanup()
+void RGPipeline::Cleanup()
 {
 }

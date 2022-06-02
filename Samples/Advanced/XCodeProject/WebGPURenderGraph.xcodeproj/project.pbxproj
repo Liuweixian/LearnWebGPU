@@ -27,7 +27,7 @@
 		250CC186284495B400D30A51 /* RenderMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC163284495B300D30A51 /* RenderMaterial.cpp */; };
 		250CC187284495B400D30A51 /* RenderGraphPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */; };
 		250CC188284495B400D30A51 /* RGShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC168284495B300D30A51 /* RGShaderProgram.cpp */; };
-		250CC189284495B400D30A51 /* RenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC169284495B300D30A51 /* RenderState.cpp */; };
+		250CC189284495B400D30A51 /* RGPipeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC169284495B300D30A51 /* RGPipeline.cpp */; };
 		250CC18A284495B400D30A51 /* RGDrawShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC16A284495B300D30A51 /* RGDrawShader.cpp */; };
 		250CC18B284495B400D30A51 /* RGResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC16B284495B300D30A51 /* RGResources.cpp */; };
 		250CC18C284495B400D30A51 /* RGVertexLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC16E284495B300D30A51 /* RGVertexLayout.cpp */; };
@@ -39,6 +39,7 @@
 		251F65252845E6CA00B5C570 /* webgpu_cpp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251F65242845E6CA00B5C570 /* webgpu_cpp.mm */; };
 		251F65272845E9E200B5C570 /* libc++_chrome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251F65262845E9E200B5C570 /* libc++_chrome.dylib */; };
 		251F65502846069400B5C570 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 251F654F2846069400B5C570 /* Resources */; };
+		25BC3F8F2848A5A4005F0C39 /* RGVertexState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25BC3F8D2848A5A4005F0C39 /* RGVertexState.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,10 +100,10 @@
 		250CC165284495B300D30A51 /* RenderObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderObject.h; sourceTree = "<group>"; };
 		250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderGraphPlayer.cpp; sourceTree = "<group>"; };
 		250CC168284495B300D30A51 /* RGShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGShaderProgram.cpp; sourceTree = "<group>"; };
-		250CC169284495B300D30A51 /* RenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderState.cpp; sourceTree = "<group>"; };
+		250CC169284495B300D30A51 /* RGPipeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGPipeline.cpp; sourceTree = "<group>"; };
 		250CC16A284495B300D30A51 /* RGDrawShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGDrawShader.cpp; sourceTree = "<group>"; };
 		250CC16B284495B300D30A51 /* RGResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGResources.cpp; sourceTree = "<group>"; };
-		250CC16C284495B300D30A51 /* RenderState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderState.h; sourceTree = "<group>"; };
+		250CC16C284495B300D30A51 /* RGPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGPipeline.h; sourceTree = "<group>"; };
 		250CC16D284495B300D30A51 /* RGShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGShader.h; sourceTree = "<group>"; };
 		250CC16E284495B300D30A51 /* RGVertexLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGVertexLayout.cpp; sourceTree = "<group>"; };
 		250CC16F284495B300D30A51 /* RGResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGResources.h; sourceTree = "<group>"; };
@@ -123,6 +124,8 @@
 		251F65242845E6CA00B5C570 /* webgpu_cpp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = webgpu_cpp.mm; sourceTree = "<group>"; };
 		251F65262845E9E200B5C570 /* libc++_chrome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libc++_chrome.dylib"; sourceTree = "<group>"; };
 		251F654F2846069400B5C570 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = ../Resources; sourceTree = "<group>"; };
+		25BC3F8D2848A5A4005F0C39 /* RGVertexState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RGVertexState.cpp; sourceTree = "<group>"; };
+		25BC3F8E2848A5A4005F0C39 /* RGVertexState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGVertexState.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +345,7 @@
 				250CC15C284495B300D30A51 /* RenderGraphPlayer.h */,
 				250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */,
 				250CC176284495B300D30A51 /* RenderPass */,
+				25BC3F8C2848A510005F0C39 /* RenderState */,
 				250CC15F284495B300D30A51 /* RenderObject */,
 				250CC167284495B300D30A51 /* RenderResource */,
 			);
@@ -375,8 +379,6 @@
 				250CC16E284495B300D30A51 /* RGVertexLayout.cpp */,
 				250CC16F284495B300D30A51 /* RGResources.h */,
 				250CC16B284495B300D30A51 /* RGResources.cpp */,
-				250CC16C284495B300D30A51 /* RenderState.h */,
-				250CC169284495B300D30A51 /* RenderState.cpp */,
 				250CC174284495B300D30A51 /* RGBuffer.h */,
 				250CC173284495B300D30A51 /* RGBuffer.cpp */,
 			);
@@ -405,6 +407,17 @@
 				250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */,
 			);
 			path = SimpleRenderGraph;
+			sourceTree = "<group>";
+		};
+		25BC3F8C2848A510005F0C39 /* RenderState */ = {
+			isa = PBXGroup;
+			children = (
+				250CC16C284495B300D30A51 /* RGPipeline.h */,
+				250CC169284495B300D30A51 /* RGPipeline.cpp */,
+				25BC3F8E2848A5A4005F0C39 /* RGVertexState.h */,
+				25BC3F8D2848A5A4005F0C39 /* RGVertexState.cpp */,
+			);
+			path = RenderState;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -499,12 +512,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				250CC189284495B400D30A51 /* RenderState.cpp in Sources */,
+				250CC189284495B400D30A51 /* RGPipeline.cpp in Sources */,
 				250CC191284495B400D30A51 /* RGComputePass.cpp in Sources */,
 				250CC185284495B400D30A51 /* RenderObject.cpp in Sources */,
 				250CC0CF283F3C0100D30A51 /* main.m in Sources */,
 				250CC181284495B400D30A51 /* Resources.cpp in Sources */,
 				250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */,
+				25BC3F8F2848A5A4005F0C39 /* RGVertexState.cpp in Sources */,
 				250CC18C284495B400D30A51 /* RGVertexLayout.cpp in Sources */,
 				250CC18A284495B400D30A51 /* RGDrawShader.cpp in Sources */,
 				250CC182284495B400D30A51 /* RenderGraph.cpp in Sources */,

@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include "RenderResource/RGResources.h"
-#include "RenderResource/RenderState.h"
+#include "RenderState/RGPipeline.h"
 #include "RenderResource/RGBuffer.h"
 
 class GfxDevice
@@ -38,7 +38,7 @@ public:
     void BeginFrame();
     void EndFrame();
     void SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
-    void SetRenderState(RenderState *pRenderState);
+    void SetRenderState(RGPipeline *pPipeline);
     void DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer);
 
 protected:

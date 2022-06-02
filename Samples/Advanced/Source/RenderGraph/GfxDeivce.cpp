@@ -160,7 +160,7 @@ void GfxDevice::FinishCurrentRenderPassEncoder()
     m_unCurrentRenderEncoderIdx = 0;
 }
 
-void GfxDevice::SetRenderState(RenderState *pRenderState)
+void GfxDevice::SetRenderState(RGPipeline *pRenderState)
 {
     if (pRenderState->m_RenderPipeline == nullptr)
     {

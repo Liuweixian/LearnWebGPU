@@ -18,7 +18,6 @@ public:
 
     RenderGraph();
     virtual ~RenderGraph();
-    void Initialize();
     bool Execute(const std::list<RenderObject *> renderObjects);
 
     template <typename T>
@@ -34,7 +33,7 @@ private:
     void Compile();
 
 protected:
-    virtual void InitializeComplete() = 0;
+    virtual void Initialize() = 0;
 
 private:
     Status m_eStatus;

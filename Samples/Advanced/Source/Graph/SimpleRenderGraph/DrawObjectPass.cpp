@@ -1,6 +1,6 @@
 #include "DrawObjectPass.h"
-#include "../RenderGraph/RenderResource/RenderObjectShader.h"
-#include "../RenderGraph/RenderResource/RenderVBOLayout.h"
+#include "../../RenderGraph/RenderResource/RenderObjectShader.h"
+#include "../../RenderGraph/RenderResource/RenderVBOLayout.h"
 
 DrawObjectPass::DrawObjectPass()
 {

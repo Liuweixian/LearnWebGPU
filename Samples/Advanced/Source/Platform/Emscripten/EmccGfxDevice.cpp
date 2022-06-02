@@ -5,7 +5,7 @@
 
 EmccGfxDevice::EmccGfxDevice()
 {
-    m_bInitialized = false;
+    m_eStatus = Status::Invalid;
     m_bErrorHappened = false;
     m_Adapter = nullptr;
     printf("Create Emcc GfxDevice\n");
@@ -100,5 +100,5 @@ void EmccGfxDevice::CreateSwapChain()
     swapchainDesc.presentMode = wgpu::PresentMode::Fifo;
 
     m_SwapChain = m_Device.CreateSwapChain(surface, &swapchainDesc);
-    printf("CreateSwapChain Success\n");
+    m_eStatus = Status::Initialized;
 }

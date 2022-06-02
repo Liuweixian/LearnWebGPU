@@ -176,13 +176,13 @@
 			children = (
 				251F65242845E6CA00B5C570 /* webgpu_cpp.mm */,
 				250CC09A283F3C0100D30A51 /* AppDelegate.h */,
-				250CC09E283F3C0100D30A51 /* main.m */,
 				250CC09F283F3C0100D30A51 /* AppDelegate.mm */,
-				250CC0A0283F3C0100D30A51 /* lib */,
-				250CC1192840702700D30A51 /* MacDawnGfxDevice.mm */,
+				250CC09E283F3C0100D30A51 /* main.m */,
 				250CC11A2840702700D30A51 /* MacDawnGfxDevice.h */,
-				250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */,
+				250CC1192840702700D30A51 /* MacDawnGfxDevice.mm */,
 				250CC11F2840BC3700D30A51 /* MetalDawnSwapChain.h */,
+				250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */,
+				250CC0A0283F3C0100D30A51 /* lib */,
 			);
 			name = MacOS;
 			path = ../Source/Platform/MacOS;
@@ -315,10 +315,7 @@
 		250CC152284495B300D30A51 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
-				250CC153284495B300D30A51 /* DrawObjectPass.h */,
-				250CC154284495B300D30A51 /* SimpleRenderGraph.h */,
-				250CC155284495B300D30A51 /* DrawObjectPass.cpp */,
-				250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */,
+				25BC3F8B28485D8E005F0C39 /* SimpleRenderGraph */,
 			);
 			name = Graph;
 			path = ../Source/Graph;
@@ -338,14 +335,14 @@
 			isa = PBXGroup;
 			children = (
 				250CC15B284495B300D30A51 /* GfxDevice.h */,
-				250CC15C284495B300D30A51 /* RenderGraphPlayer.h */,
-				250CC15D284495B300D30A51 /* RenderGraph.cpp */,
 				250CC15E284495B300D30A51 /* GfxDeivce.cpp */,
-				250CC15F284495B300D30A51 /* RenderObject */,
+				250CC15C284495B300D30A51 /* RenderGraphPlayer.h */,
 				250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */,
+				250CC17E284495B400D30A51 /* RenderGraph.h */,
+				250CC15D284495B300D30A51 /* RenderGraph.cpp */,
+				250CC15F284495B300D30A51 /* RenderObject */,
 				250CC167284495B300D30A51 /* RenderResource */,
 				250CC176284495B300D30A51 /* RenderPass */,
-				250CC17E284495B400D30A51 /* RenderGraph.h */,
 			);
 			name = RenderGraph;
 			path = ../Source/RenderGraph;
@@ -354,12 +351,12 @@
 		250CC15F284495B300D30A51 /* RenderObject */ = {
 			isa = PBXGroup;
 			children = (
-				250CC160284495B300D30A51 /* RenderMesh.cpp */,
 				250CC161284495B300D30A51 /* RenderMaterial.h */,
-				250CC162284495B300D30A51 /* RenderObject.cpp */,
 				250CC163284495B300D30A51 /* RenderMaterial.cpp */,
-				250CC164284495B300D30A51 /* RenderMesh.h */,
 				250CC165284495B300D30A51 /* RenderObject.h */,
+				250CC162284495B300D30A51 /* RenderObject.cpp */,
+				250CC164284495B300D30A51 /* RenderMesh.h */,
+				250CC160284495B300D30A51 /* RenderMesh.cpp */,
 			);
 			path = RenderObject;
 			sourceTree = "<group>";
@@ -367,20 +364,20 @@
 		250CC167284495B300D30A51 /* RenderResource */ = {
 			isa = PBXGroup;
 			children = (
+				250CC175284495B300D30A51 /* RenderShaderProgram.h */,
 				250CC168284495B300D30A51 /* RenderShaderProgram.cpp */,
-				250CC169284495B300D30A51 /* RenderState.cpp */,
+				250CC170284495B300D30A51 /* RenderObjectShader.h */,
 				250CC16A284495B300D30A51 /* RenderObjectShader.cpp */,
+				250CC16F284495B300D30A51 /* RenderResource.h */,
 				250CC16B284495B300D30A51 /* RenderResource.cpp */,
 				250CC16C284495B300D30A51 /* RenderState.h */,
-				250CC16D284495B300D30A51 /* RenderShader.h */,
-				250CC16E284495B300D30A51 /* RenderVBOLayout.cpp */,
-				250CC16F284495B300D30A51 /* RenderResource.h */,
-				250CC170284495B300D30A51 /* RenderObjectShader.h */,
+				250CC169284495B300D30A51 /* RenderState.cpp */,
 				250CC171284495B300D30A51 /* RenderVBOLayout.h */,
+				250CC16E284495B300D30A51 /* RenderVBOLayout.cpp */,
+				250CC16D284495B300D30A51 /* RenderShader.h */,
 				250CC172284495B300D30A51 /* RenderShader.cpp */,
-				250CC173284495B300D30A51 /* RenderBuffer.cpp */,
 				250CC174284495B300D30A51 /* RenderBuffer.h */,
-				250CC175284495B300D30A51 /* RenderShaderProgram.h */,
+				250CC173284495B300D30A51 /* RenderBuffer.cpp */,
 			);
 			path = RenderResource;
 			sourceTree = "<group>";
@@ -389,14 +386,25 @@
 			isa = PBXGroup;
 			children = (
 				250CC177284495B300D30A51 /* RenderGraphDefine.h */,
-				250CC178284495B300D30A51 /* RenderGraphPass.cpp */,
 				250CC179284495B300D30A51 /* RenderGraphPass.h */,
+				250CC178284495B300D30A51 /* RenderGraphPass.cpp */,
+				250CC17D284495B400D30A51 /* RenderGraphDrawPass.h */,
 				250CC17A284495B400D30A51 /* RenderGraphDrawPass.cpp */,
 				250CC17B284495B400D30A51 /* RenderGraphComputePass.cpp */,
 				250CC17C284495B400D30A51 /* RenderGraphComputePass.h */,
-				250CC17D284495B400D30A51 /* RenderGraphDrawPass.h */,
 			);
 			path = RenderPass;
+			sourceTree = "<group>";
+		};
+		25BC3F8B28485D8E005F0C39 /* SimpleRenderGraph */ = {
+			isa = PBXGroup;
+			children = (
+				250CC153284495B300D30A51 /* DrawObjectPass.h */,
+				250CC155284495B300D30A51 /* DrawObjectPass.cpp */,
+				250CC154284495B300D30A51 /* SimpleRenderGraph.h */,
+				250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */,
+			);
+			path = SimpleRenderGraph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

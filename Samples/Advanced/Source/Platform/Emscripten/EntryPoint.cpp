@@ -1,6 +1,6 @@
 #include <emscripten/emscripten.h>
 #include "../../RenderGraph/RenderGraphPlayer.h"
-#include "../../Graph/SimpleRenderGraph.h"
+#include "../../Graph/SimpleRenderGraph/SimpleRenderGraph.h"
 #include "../../RenderGraph/GfxDevice.h"
 #include "EmccGfxDevice.h"
 

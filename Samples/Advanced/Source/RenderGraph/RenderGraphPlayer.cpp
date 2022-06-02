@@ -11,13 +11,12 @@ bool RenderGraphPlayer::RenderLoop()
     if (m_pCurRDG == nullptr)
         return true;
     
-    if (!GetGfxDevice()->IsInitialized())
+    if (GetGfxDevice()->IsNotInitialized())
     {
         GetGfxDevice()->Initialize();
         return true;
     }
-
-    if (GetGfxDevice()->ErrorHappened())
+    else if(GetGfxDevice()->ErrorHappened())
         return false;
 
     return m_pCurRDG->Execute(m_RenderObjects);

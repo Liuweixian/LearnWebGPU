@@ -11,6 +11,12 @@ private:
     void FinishCurrentRenderPassEncoder();
 
 protected:
+    enum Status
+    {
+        Invalid,
+        Initializing,
+        Initialized,
+    };
     virtual void InitWebGPU() = 0;
     void PrintSupportedLimits();
     virtual void RequestAdapter() = 0;
@@ -20,9 +26,9 @@ protected:
 
 public:
     void Initialize();
-    bool IsInitialized()
+    bool IsNotInitialized()
     {
-        return m_bInitialized && m_SwapChain != nullptr;
+        return m_eStatus != Status::Initialized;
     }
     bool ErrorHappened()
     {
@@ -42,7 +48,7 @@ protected:
     wgpu::CommandEncoder m_CommandEncoder;
     uint32_t m_unCurrentRenderEncoderIdx;
     wgpu::RenderPassEncoder m_CurrentRenderPassEncoder;
-    bool m_bInitialized;
+    Status m_eStatus;
     bool m_bErrorHappened;
 };
 

@@ -1,13 +1,14 @@
 #include "GfxDevice.h"
 #include <stdio.h>
 #include <cassert>
+
 void GfxDevice::Initialize()
 {
-    if (m_bInitialized && m_SwapChain == nullptr)
+    if (m_eStatus == Status::Initializing)
         return;
+    m_eStatus = Status::Initializing;
     m_pSupportedLimits = new wgpu::SupportedLimits();
     InitWebGPU();
-    m_bInitialized = true;
 }
 
 void GfxDevice::PrintSupportedLimits()
@@ -44,7 +45,7 @@ void GfxDevice::PrintSupportedLimits()
 
 void GfxDevice::BeginFrame()
 {
-    if (!m_bInitialized)
+    if (IsNotInitialized())
         return;
     assert(m_CommandEncoder == nullptr);
     m_CommandEncoder = m_Device.CreateCommandEncoder(nullptr);
@@ -61,7 +62,7 @@ void GfxDevice::QueueWorkDoneCallback(WGPUQueueWorkDoneStatus eStatus, void *pUs
 
 void GfxDevice::EndFrame()
 {
-    if (!m_bInitialized)
+    if (IsNotInitialized())
         return;
 
     FinishCurrentRenderPassEncoder();

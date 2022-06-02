@@ -33,7 +33,6 @@ bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
     {
         Initialize();
         m_eStatus = Initialized;
-        InitializeComplete();
         return true;
     }
     case Initialized:

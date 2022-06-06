@@ -15,6 +15,7 @@ public:
     RGShaderProgram(Type eType, std::string szEntryPoint, std::string szFilePath);
     virtual ~RGShaderProgram();
     const char *LoadSource();
+    void UnloadSource();
     const char *EntryPoint()
     {
         return m_szEntryPoint.c_str();
@@ -24,4 +25,5 @@ private:
     std::string m_szEntryPoint;
     std::string m_szFilePath;
     RGShaderProgram::Type m_eType;
+    const char *m_pSource;
 };

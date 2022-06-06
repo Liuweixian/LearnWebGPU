@@ -5,12 +5,18 @@
 #include "webgpu/webgpu_cpp.h"
 #include "../RGDefine.h"
 
-class RenderMaterial
+class RGMaterial
 {
 public:
-    RenderMaterial(RGPassIdx passIdx);
-    virtual ~RenderMaterial();
+    RGMaterial(RGPassIdx passIdx);
+    virtual ~RGMaterial();
+    uint32_t GetIdx()
+    {
+        return 0;
+    }
 
 private:
     RGPassIdx m_uPassIdx;
+    //BlendState
+    //ColorMask
 };

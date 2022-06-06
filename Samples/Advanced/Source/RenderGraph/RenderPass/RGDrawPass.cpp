@@ -7,7 +7,7 @@ RGDrawPass::RGDrawPass(RGPassIdx uPassIdx) : RGPass(uPassIdx)
     m_ePassType = RGPassType::Draw;
     m_TargetColorBuffers.clear();
     m_pTargetDepthBuffer = nullptr;
-    m_pPipeline = nullptr;
+    m_pDefaultRenderState = nullptr;
 }
 
 RGDrawPass::~RGDrawPass()
@@ -37,25 +37,26 @@ void RGDrawPass::SetRenderTarget(RGResourceHandle *pTargetColorBuffer)
 
 void RGDrawPass::Compile()
 {
-    assert(m_pPipeline == nullptr);
-    m_pPipeline = new RGPipeline();
-    m_pPipeline->Initialize((RGDrawShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
+    assert(m_pDefaultRenderState == nullptr);
+    m_pDefaultRenderState = new RGRenderState();
+    m_pDefaultRenderState->Initialize((RGDrawShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
 }
 
 void RGDrawPass::Execute(const std::list<RenderObject *> renderObjects)
 {
     GfxDevice *pGfxDevice = GetGfxDevice();
     pGfxDevice->SetRenderTarget(m_TargetColorBuffers, m_pTargetDepthBuffer);
-    pGfxDevice->SetRenderState(m_pPipeline);
     for (auto objIt = renderObjects.begin(); objIt != renderObjects.end(); objIt++)
     {
         RenderObject *pObj = *objIt;
-        RenderMaterial *pMaterial = pObj->GetMaterial(m_uPassIdx);
+        RGMaterial *pMaterial = pObj->GetMaterial(m_uPassIdx);
         if (pMaterial == nullptr)
             continue;
         RenderMesh *pMesh = pObj->GetMesh();
         if (pMesh == nullptr)
             continue;
+        m_pDefaultRenderState->UpdateRenderState(pMaterial);
+        pGfxDevice->SetRenderPipeline(m_pDefaultRenderState);
         pGfxDevice->DrawBuffer(pMesh->GetVertexBuffers(), pMesh->GetIndexBuffer());
     }
 }

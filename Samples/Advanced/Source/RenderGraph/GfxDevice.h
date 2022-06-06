@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include "RenderResource/RGResources.h"
-#include "RenderState/RGPipeline.h"
+#include "RenderState/RGRenderState.h"
 #include "RenderResource/RGBuffer.h"
 
 class GfxDevice
@@ -38,8 +38,11 @@ public:
     void BeginFrame();
     void EndFrame();
     void SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
-    void SetRenderState(RGPipeline *pPipeline);
+    void SetRenderPipeline(RGRenderState *pRenderState);
     void DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer);
+    wgpu::ShaderModule CreateShaderModule(RGShaderProgram *pShaderProgram);
+    wgpu::PipelineLayout CreatePipelineLayout();
+    wgpu::RenderPipeline CreateRenderPipeline(wgpu::RenderPipelineDescriptor *pRenderPipelineDesc);
 
 protected:
     wgpu::Device m_Device;

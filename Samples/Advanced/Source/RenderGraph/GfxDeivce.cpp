@@ -160,35 +160,6 @@ void GfxDevice::FinishCurrentRenderPassEncoder()
     m_unCurrentRenderEncoderIdx = 0;
 }
 
-void GfxDevice::SetRenderState(RGPipeline *pRenderState)
-{
-    if (pRenderState->m_RenderPipeline == nullptr)
-    {
-        assert(pRenderState->m_pLayoutDesc);
-        wgpu::RenderPipelineDescriptor renderPipelineDesc;
-        renderPipelineDesc.layout = m_Device.CreatePipelineLayout(pRenderState->m_pLayoutDesc);
-        wgpu::ShaderModuleDescriptor vertexShaderModuleDesc;
-        assert(pRenderState->m_pVertexShaderDesc != nullptr);
-        vertexShaderModuleDesc.nextInChain = pRenderState->m_pVertexShaderDesc;
-        pRenderState->m_pVertexState->module = m_Device.CreateShaderModule(&vertexShaderModuleDesc);
-        renderPipelineDesc.vertex = *(pRenderState->m_pVertexState);
-        renderPipelineDesc.primitive = *(pRenderState->m_pPrimitiveState);
-        renderPipelineDesc.depthStencil = pRenderState->m_pDepthStencilState;
-        renderPipelineDesc.multisample = *(pRenderState->m_pMultisampleState);
-        wgpu::ShaderModuleDescriptor fragShaderModuleDesc;
-        assert(pRenderState->m_pFragmentShaderDesc != nullptr);
-        fragShaderModuleDesc.nextInChain = pRenderState->m_pFragmentShaderDesc;
-        pRenderState->m_pFragmentState->module = m_Device.CreateShaderModule(&fragShaderModuleDesc);
-        renderPipelineDesc.fragment = pRenderState->m_pFragmentState;
-        pRenderState->m_RenderPipeline = m_Device.CreateRenderPipeline(&renderPipelineDesc);
-    }
-    else
-    {
-        pRenderState->Cleanup();
-    }
-    m_CurrentRenderPassEncoder.SetPipeline(pRenderState->m_RenderPipeline);
-}
-
 void GfxDevice::DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer)
 {
     for (auto it = vertexBuffers.begin(); it != vertexBuffers.end(); it++)
@@ -222,6 +193,37 @@ void GfxDevice::DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndex
     }
     m_CurrentRenderPassEncoder.SetIndexBuffer(gpuBuffer, wgpu::IndexFormat::Uint16, 0, ulBufferSize);
     m_CurrentRenderPassEncoder.DrawIndexed((uint32_t)pIndexBuffer->GetDataCount(), 1, 0, 0, 0);
+}
+
+void GfxDevice::SetRenderPipeline(RGRenderState *pRenderState)
+{
+    m_CurrentRenderPassEncoder.SetPipeline(pRenderState->GetCurrentPipeline());
+}
+
+wgpu::ShaderModule GfxDevice::CreateShaderModule(RGShaderProgram *pShaderProgram)
+{
+    wgpu::ShaderModuleWGSLDescriptor shaderModuleWGSLDesc;
+    shaderModuleWGSLDesc.source = pShaderProgram->LoadSource();
+    wgpu::ShaderModuleDescriptor shaderModuleDesc;
+    shaderModuleDesc.nextInChain = &shaderModuleWGSLDesc;
+    wgpu::ShaderModule shaderModule = m_Device.CreateShaderModule(&shaderModuleDesc);
+    pShaderProgram->UnloadSource();
+    return shaderModule;
+}
+
+wgpu::PipelineLayout GfxDevice::CreatePipelineLayout()
+{
+    wgpu::PipelineLayoutDescriptor layoutDesc;
+    layoutDesc.nextInChain = nullptr;
+    layoutDesc.label = nullptr;
+    layoutDesc.bindGroupLayoutCount = 0;
+    layoutDesc.bindGroupLayouts = nullptr;
+    return m_Device.CreatePipelineLayout(&layoutDesc);
+}
+
+wgpu::RenderPipeline GfxDevice::CreateRenderPipeline(wgpu::RenderPipelineDescriptor *pRenderPipelineDesc)
+{
+    return m_Device.CreateRenderPipeline(pRenderPipelineDesc);
 }
 
 static GfxDevice *g_pGfxDevice = nullptr;

@@ -2,7 +2,7 @@
 #include <string>
 #include <list>
 #include <unordered_map>
-#include "RenderMaterial.h"
+#include "RGMaterial.h"
 #include "../RenderResource/RGBuffer.h"
 #include "../RGDefine.h"
 

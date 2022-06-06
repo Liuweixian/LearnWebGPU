@@ -3,7 +3,7 @@
 #include "RGPass.h"
 #include "../RGDefine.h"
 #include "../RenderResource/RGResources.h"
-#include "../RenderState/RGPipeline.h"
+#include "../RenderState/RGRenderState.h"
 #include "../RenderObject/RenderObject.h"
 
 class RGDrawPass : public RGPass
@@ -19,5 +19,5 @@ public:
 protected:
     std::list<RGResourceHandle *> m_TargetColorBuffers;
     RGResourceHandle *m_pTargetDepthBuffer;
-    RGPipeline *m_pPipeline;
+    RGRenderState *m_pDefaultRenderState;
 };

@@ -14,14 +14,14 @@ RGPass::~RGPass()
 
 bool RGPass::EnsureSetupFinish()
 {
+    if (m_pShader != nullptr)
+        return true;
+        
+    SetupShader();
     if (m_pShader == nullptr)
     {
-        SetupShader();
-        if (m_pShader == nullptr)
-        {
-            printf("Shader is null!!\n");
-            return false;
-        }
+        printf("Shader is null!!\n");
+        return false;
     }
     return true;
 }

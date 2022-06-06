@@ -22,7 +22,7 @@ RenderObject::~RenderObject()
     m_Materials.clear();
 }
 
-RenderMaterial *RenderObject::GetMaterial(RGPassIdx uPassIdx)
+RGMaterial *RenderObject::GetMaterial(RGPassIdx uPassIdx)
 {
     auto found = m_Materials.find(uPassIdx);
     if (found != m_Materials.end())

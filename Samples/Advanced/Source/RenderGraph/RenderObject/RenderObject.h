@@ -2,7 +2,7 @@
 #include <string>
 #include <list>
 #include <unordered_map>
-#include "RenderMaterial.h"
+#include "RGMaterial.h"
 #include "RenderMesh.h"
 #include "../RGDefine.h"
 
@@ -19,7 +19,7 @@ public:
     template <typename T>
     T *CreateMaterial(RGPassIdx uPassIdx)
     {
-        static_assert(std::is_base_of<RenderMaterial, T>::value, "T must be a descendant of RenderMaterial");
+        static_assert(std::is_base_of<RGMaterial, T>::value, "T must be a descendant of RenderMaterial");
         auto found = m_Materials.find(uPassIdx);
         if (found != m_Materials.end())
         {
@@ -32,7 +32,7 @@ public:
         return pMaterial;
     }
 
-    RenderMaterial *GetMaterial(RGPassIdx uPassIdx);
+    RGMaterial *GetMaterial(RGPassIdx uPassIdx);
 
     template <typename T>
     T *CreateMesh()
@@ -55,5 +55,5 @@ public:
 private:
     std::string m_szName;
     RenderMesh *m_pRenderMesh;
-    std::unordered_map<RGPassIdx, RenderMaterial *> m_Materials;
+    std::unordered_map<RGPassIdx, RGMaterial *> m_Materials;
 };

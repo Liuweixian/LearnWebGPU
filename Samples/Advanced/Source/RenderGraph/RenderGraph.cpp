@@ -27,7 +27,7 @@ void RenderGraph::Compile()
     }
 }
 
-bool RenderGraph::Execute(const std::list<RenderObject *> renderObjects)
+bool RenderGraph::Execute(const std::list<RGObject *> renderObjects)
 {
     switch (m_eStatus)
     {

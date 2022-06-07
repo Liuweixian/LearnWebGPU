@@ -3,14 +3,14 @@
 #include <list>
 #include <unordered_map>
 #include "RGMaterial.h"
-#include "RenderMesh.h"
+#include "RGMesh.h"
 #include "../RGDefine.h"
 
-class RenderObject
+class RGObject
 {
 public:
-    RenderObject(std::string szName);
-    virtual ~RenderObject();
+    RGObject(std::string szName);
+    virtual ~RGObject();
     std::string GetName()
     {
         return m_szName;
@@ -37,23 +37,23 @@ public:
     template <typename T>
     T *CreateMesh()
     {
-        static_assert(std::is_base_of<RenderMesh, T>::value, "T must be a descendant of RenderMesh");
-        if (m_pRenderMesh != nullptr)
+        static_assert(std::is_base_of<RGMesh, T>::value, "T must be a descendant of RenderMesh");
+        if (m_pMesh != nullptr)
         {
-            delete m_pRenderMesh;
-            m_pRenderMesh = nullptr;
+            delete m_pMesh;
+            m_pMesh = nullptr;
         }
-        m_pRenderMesh = new T();
-        return m_pRenderMesh;
+        m_pMesh = new T();
+        return m_pMesh;
     }
 
-    RenderMesh *GetMesh()
+    RGMesh *GetMesh()
     {
-        return m_pRenderMesh;
+        return m_pMesh;
     }
 
 private:
     std::string m_szName;
-    RenderMesh *m_pRenderMesh;
+    RGMesh *m_pMesh;
     std::unordered_map<RGPassIdx, RGMaterial *> m_Materials;
 };

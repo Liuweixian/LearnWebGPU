@@ -22,8 +22,8 @@
 		250CC181284495B400D30A51 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC159284495B300D30A51 /* Resources.cpp */; };
 		250CC182284495B400D30A51 /* RenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC15D284495B300D30A51 /* RenderGraph.cpp */; };
 		250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC15E284495B300D30A51 /* GfxDeivce.cpp */; };
-		250CC184284495B400D30A51 /* RenderMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC160284495B300D30A51 /* RenderMesh.cpp */; };
-		250CC185284495B400D30A51 /* RenderObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC162284495B300D30A51 /* RenderObject.cpp */; };
+		250CC184284495B400D30A51 /* RGMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC160284495B300D30A51 /* RGMesh.cpp */; };
+		250CC185284495B400D30A51 /* RGObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC162284495B300D30A51 /* RGObject.cpp */; };
 		250CC186284495B400D30A51 /* RGMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC163284495B300D30A51 /* RGMaterial.cpp */; };
 		250CC187284495B400D30A51 /* RenderGraphPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */; };
 		250CC188284495B400D30A51 /* RGShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC168284495B300D30A51 /* RGShaderProgram.cpp */; };
@@ -91,12 +91,12 @@
 		250CC15C284495B300D30A51 /* RenderGraphPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderGraphPlayer.h; sourceTree = "<group>"; };
 		250CC15D284495B300D30A51 /* RenderGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderGraph.cpp; sourceTree = "<group>"; };
 		250CC15E284495B300D30A51 /* GfxDeivce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GfxDeivce.cpp; sourceTree = "<group>"; };
-		250CC160284495B300D30A51 /* RenderMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderMesh.cpp; sourceTree = "<group>"; };
+		250CC160284495B300D30A51 /* RGMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGMesh.cpp; sourceTree = "<group>"; };
 		250CC161284495B300D30A51 /* RGMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMaterial.h; sourceTree = "<group>"; };
-		250CC162284495B300D30A51 /* RenderObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderObject.cpp; sourceTree = "<group>"; };
+		250CC162284495B300D30A51 /* RGObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGObject.cpp; sourceTree = "<group>"; };
 		250CC163284495B300D30A51 /* RGMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGMaterial.cpp; sourceTree = "<group>"; };
-		250CC164284495B300D30A51 /* RenderMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderMesh.h; sourceTree = "<group>"; };
-		250CC165284495B300D30A51 /* RenderObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderObject.h; sourceTree = "<group>"; };
+		250CC164284495B300D30A51 /* RGMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGMesh.h; sourceTree = "<group>"; };
+		250CC165284495B300D30A51 /* RGObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGObject.h; sourceTree = "<group>"; };
 		250CC166284495B300D30A51 /* RenderGraphPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderGraphPlayer.cpp; sourceTree = "<group>"; };
 		250CC168284495B300D30A51 /* RGShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGShaderProgram.cpp; sourceTree = "<group>"; };
 		250CC169284495B300D30A51 /* RGRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGRenderState.cpp; sourceTree = "<group>"; };
@@ -355,10 +355,10 @@
 			children = (
 				250CC161284495B300D30A51 /* RGMaterial.h */,
 				250CC163284495B300D30A51 /* RGMaterial.cpp */,
-				250CC165284495B300D30A51 /* RenderObject.h */,
-				250CC162284495B300D30A51 /* RenderObject.cpp */,
-				250CC164284495B300D30A51 /* RenderMesh.h */,
-				250CC160284495B300D30A51 /* RenderMesh.cpp */,
+				250CC165284495B300D30A51 /* RGObject.h */,
+				250CC162284495B300D30A51 /* RGObject.cpp */,
+				250CC164284495B300D30A51 /* RGMesh.h */,
+				250CC160284495B300D30A51 /* RGMesh.cpp */,
 			);
 			path = RenderObject;
 			sourceTree = "<group>";
@@ -509,7 +509,7 @@
 			files = (
 				250CC189284495B400D30A51 /* RGRenderState.cpp in Sources */,
 				250CC191284495B400D30A51 /* RGComputePass.cpp in Sources */,
-				250CC185284495B400D30A51 /* RenderObject.cpp in Sources */,
+				250CC185284495B400D30A51 /* RGObject.cpp in Sources */,
 				250CC0CF283F3C0100D30A51 /* main.m in Sources */,
 				250CC181284495B400D30A51 /* Resources.cpp in Sources */,
 				250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */,
@@ -527,7 +527,7 @@
 				250CC18D284495B400D30A51 /* RGShader.cpp in Sources */,
 				250CC11B2840702700D30A51 /* MacDawnGfxDevice.mm in Sources */,
 				250CC180284495B400D30A51 /* SimpleRenderGraph.cpp in Sources */,
-				250CC184284495B400D30A51 /* RenderMesh.cpp in Sources */,
+				250CC184284495B400D30A51 /* RGMesh.cpp in Sources */,
 				250CC18F284495B400D30A51 /* RGPass.cpp in Sources */,
 				250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */,
 				250CC190284495B400D30A51 /* RGDrawPass.cpp in Sources */,

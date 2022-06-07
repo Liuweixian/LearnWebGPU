@@ -6,11 +6,11 @@
 #include "../RenderResource/RGBuffer.h"
 #include "../RGDefine.h"
 
-class RenderMesh
+class RGMesh
 {
 public:
-    RenderMesh();
-    virtual ~RenderMesh();
+    RGMesh();
+    virtual ~RGMesh();
     template <typename T>
     T *CreateVertexBuffer()
     {

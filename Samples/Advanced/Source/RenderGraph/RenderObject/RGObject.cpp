@@ -1,18 +1,18 @@
-#include "RenderObject.h"
+#include "RGObject.h"
 
-RenderObject::RenderObject(std::string szName)
+RGObject::RGObject(std::string szName)
 {
     m_szName = szName;
-    m_pRenderMesh = nullptr;
+    m_pMesh = nullptr;
     m_Materials.clear();
 }
 
-RenderObject::~RenderObject()
+RGObject::~RGObject()
 {
-    if (m_pRenderMesh != nullptr)
+    if (m_pMesh != nullptr)
     {
-        delete m_pRenderMesh;
-        m_pRenderMesh = nullptr;
+        delete m_pMesh;
+        m_pMesh = nullptr;
     }
 
     for (auto it = m_Materials.begin(); it != m_Materials.end(); it++)
@@ -22,7 +22,7 @@ RenderObject::~RenderObject()
     m_Materials.clear();
 }
 
-RGMaterial *RenderObject::GetMaterial(RGPassIdx uPassIdx)
+RGMaterial *RGObject::GetMaterial(RGPassIdx uPassIdx)
 {
     auto found = m_Materials.find(uPassIdx);
     if (found != m_Materials.end())

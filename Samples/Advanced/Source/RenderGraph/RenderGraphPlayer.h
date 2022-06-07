@@ -25,7 +25,7 @@ public:
     template <typename T>
     T *AddRenderObject(std::string szName)
     {
-        static_assert(std::is_base_of<RenderObject, T>::value, "T must be a descendant of RenderObject");
+        static_assert(std::is_base_of<RGObject, T>::value, "T must be a descendant of RenderObject");
         T *pRenderObject = new T(szName);
         m_RenderObjects.push_back(pRenderObject);
         return pRenderObject;
@@ -33,7 +33,7 @@ public:
 
 private:
     RenderGraph *m_pCurRDG;
-    std::list<RenderObject *> m_RenderObjects;
+    std::list<RGObject *> m_RenderObjects;
 };
 
 RenderGraphPlayer *GetRDGPlayer();

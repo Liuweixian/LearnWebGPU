@@ -3,7 +3,7 @@
 #include <string>
 #include "RGDefine.h"
 #include "RenderPass/RGPass.h"
-#include "RenderObject/RenderObject.h"
+#include "RenderObject/RGObject.h"
 
 class RenderGraph
 {
@@ -17,7 +17,7 @@ public:
 
     RenderGraph();
     virtual ~RenderGraph();
-    bool Execute(const std::list<RenderObject *> renderObjects);
+    bool Execute(const std::list<RGObject *> renderObjects);
 
     template <typename T>
     T *AddRenderGraphPass(RGPassIdx uPassIdx)

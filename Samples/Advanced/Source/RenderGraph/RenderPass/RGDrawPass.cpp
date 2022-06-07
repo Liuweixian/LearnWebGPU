@@ -42,17 +42,17 @@ void RGDrawPass::Compile()
     m_pDefaultRenderState->Initialize((RGDrawShader *)m_pShader, m_TargetColorBuffers, m_pTargetDepthBuffer);
 }
 
-void RGDrawPass::Execute(const std::list<RenderObject *> renderObjects)
+void RGDrawPass::Execute(const std::list<RGObject *> renderObjects)
 {
     GfxDevice *pGfxDevice = GetGfxDevice();
     pGfxDevice->SetRenderTarget(m_TargetColorBuffers, m_pTargetDepthBuffer);
     for (auto objIt = renderObjects.begin(); objIt != renderObjects.end(); objIt++)
     {
-        RenderObject *pObj = *objIt;
+        RGObject *pObj = *objIt;
         RGMaterial *pMaterial = pObj->GetMaterial(m_uPassIdx);
         if (pMaterial == nullptr)
             continue;
-        RenderMesh *pMesh = pObj->GetMesh();
+        RGMesh *pMesh = pObj->GetMesh();
         if (pMesh == nullptr)
             continue;
         m_pDefaultRenderState->UpdateRenderState(pMaterial);

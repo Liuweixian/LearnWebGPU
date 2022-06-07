@@ -16,10 +16,10 @@ void SimpleRenderGraph::InitializeScene()
 {
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
     // Create RenderObject into RenderGraphPlayer
-    RenderObject *pRenderObject = pRDGPlayer->AddRenderObject<RenderObject>("Triganle");
+    RGObject *pRenderObject = pRDGPlayer->AddRenderObject<RGObject>("Triganle");
     // Create Material for RenderObject
     pRenderObject->CreateMaterial<RGMaterial>((RGPassIdx)PassIdx::DrawObjectPass);
-    RenderMesh *pMesh = pRenderObject->CreateMesh<RenderMesh>();
+    RGMesh *pMesh = pRenderObject->CreateMesh<RGMesh>();
     // Create VBO for RenderObject
     RGBuffer *pRenderVertexBuffer = pMesh->CreateVertexBuffer<RGBuffer>();
     //(x,y,r,g,b)

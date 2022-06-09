@@ -65,6 +65,7 @@ bool RenderGraph::Execute(const std::list<RGObject *> renderObjects)
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)
         {
             RGPass *pPass = *passIt;
+            pPass->Update();
             RGPassType ePassType = pPass->GetPassType();
             if (ePassType == RGPassType::Draw)
             {

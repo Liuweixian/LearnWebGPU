@@ -26,6 +26,11 @@ RGResourceHandle *RGResources::GetFrameBuffer()
     return m_pFrameBufferHandle;
 }
 
+bool RGResources::IsFrameBuffer(RGResourceHandle *pHandle)
+{
+    return pHandle->m_unDescIdx == m_pFrameBufferHandle->m_unDescIdx;
+}
+
 RGResourceHandle *RGResources::CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
 {
     auto it = m_AllResourceHandles.find(szName);

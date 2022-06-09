@@ -10,6 +10,7 @@ public:
     virtual ~RGPass();
     virtual bool EnsureSetupFinish();
     virtual void Compile() = 0;
+    virtual void Update() = 0;
     RGPassType GetPassType()
     {
         return m_ePassType;

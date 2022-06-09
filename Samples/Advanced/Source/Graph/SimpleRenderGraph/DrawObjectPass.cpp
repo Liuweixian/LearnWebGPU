@@ -19,3 +19,8 @@ void DrawObjectPass::SetupShader()
     m_pShader = pDrawShader;
     printf("DrawObjectPass::SetupShader\n");
 }
+
+void DrawObjectPass::Update()
+{
+    
+}

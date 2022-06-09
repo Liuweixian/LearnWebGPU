@@ -2,16 +2,16 @@
 #include <stdio.h>
 #include <string>
 
-class Resources
+class FileSystem
 {
 public:
-    Resources();
-    virtual ~Resources();
-    const char *Load(std::string szFilePath);
+    FileSystem();
+    virtual ~FileSystem();
+    const char *ReadFile(std::string szFilePath);
     void SetRootDirectory(std::string szRootDirPath);
 
 private:
     std::string m_szRootDirPath;
 };
 
-Resources *GetResources();
+FileSystem *GetFileSystem();

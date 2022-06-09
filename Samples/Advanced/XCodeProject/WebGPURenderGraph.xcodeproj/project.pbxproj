@@ -19,7 +19,7 @@
 		250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */; };
 		250CC17F284495B400D30A51 /* DrawObjectPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC155284495B300D30A51 /* DrawObjectPass.cpp */; };
 		250CC180284495B400D30A51 /* SimpleRenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */; };
-		250CC181284495B400D30A51 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC159284495B300D30A51 /* Resources.cpp */; };
+		250CC181284495B400D30A51 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC159284495B300D30A51 /* FileSystem.cpp */; };
 		250CC182284495B400D30A51 /* RenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC15D284495B300D30A51 /* RenderGraph.cpp */; };
 		250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC15E284495B300D30A51 /* GfxDeivce.cpp */; };
 		250CC184284495B400D30A51 /* RGMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC160284495B300D30A51 /* RGMesh.cpp */; };
@@ -85,8 +85,8 @@
 		250CC154284495B300D30A51 /* SimpleRenderGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleRenderGraph.h; sourceTree = "<group>"; };
 		250CC155284495B300D30A51 /* DrawObjectPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawObjectPass.cpp; sourceTree = "<group>"; };
 		250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleRenderGraph.cpp; sourceTree = "<group>"; };
-		250CC158284495B300D30A51 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
-		250CC159284495B300D30A51 /* Resources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Resources.cpp; sourceTree = "<group>"; };
+		250CC158284495B300D30A51 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
+		250CC159284495B300D30A51 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
 		250CC15B284495B300D30A51 /* GfxDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfxDevice.h; sourceTree = "<group>"; };
 		250CC15C284495B300D30A51 /* RenderGraphPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderGraphPlayer.h; sourceTree = "<group>"; };
 		250CC15D284495B300D30A51 /* RenderGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderGraph.cpp; sourceTree = "<group>"; };
@@ -124,6 +124,7 @@
 		251F65262845E9E200B5C570 /* libc++_chrome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libc++_chrome.dylib"; sourceTree = "<group>"; };
 		251F654F2846069400B5C570 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = ../Resources; sourceTree = "<group>"; };
 		25BC3F9B284F48BA005F0C39 /* RGResourceHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGResourceHandle.h; sourceTree = "<group>"; };
+		25DC7C642851F8F500592CF5 /* RGTextureResHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGTextureResHandle.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,8 +326,8 @@
 		250CC157284495B300D30A51 /* FileSystem */ = {
 			isa = PBXGroup;
 			children = (
-				250CC158284495B300D30A51 /* Resources.h */,
-				250CC159284495B300D30A51 /* Resources.cpp */,
+				250CC158284495B300D30A51 /* FileSystem.h */,
+				250CC159284495B300D30A51 /* FileSystem.cpp */,
 			);
 			name = FileSystem;
 			path = ../Source/FileSystem;
@@ -378,6 +379,7 @@
 				250CC16F284495B300D30A51 /* RGResources.h */,
 				250CC16B284495B300D30A51 /* RGResources.cpp */,
 				25BC3F9B284F48BA005F0C39 /* RGResourceHandle.h */,
+				25DC7C642851F8F500592CF5 /* RGTextureResHandle.h */,
 				250CC174284495B300D30A51 /* RGBuffer.h */,
 				250CC173284495B300D30A51 /* RGBuffer.cpp */,
 			);
@@ -513,7 +515,7 @@
 				250CC191284495B400D30A51 /* RGComputePass.cpp in Sources */,
 				250CC185284495B400D30A51 /* RGObject.cpp in Sources */,
 				250CC0CF283F3C0100D30A51 /* main.m in Sources */,
-				250CC181284495B400D30A51 /* Resources.cpp in Sources */,
+				250CC181284495B400D30A51 /* FileSystem.cpp in Sources */,
 				250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */,
 				250CC18C284495B400D30A51 /* RGVertexLayout.cpp in Sources */,
 				250CC18A284495B400D30A51 /* RGDrawShader.cpp in Sources */,

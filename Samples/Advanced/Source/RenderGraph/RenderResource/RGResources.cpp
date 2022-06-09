@@ -77,7 +77,7 @@ uint32_t RGResources::GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFormat
 }
 
 static RGResources *g_pRGResources = nullptr;
-RGResources *GetRGResources()
+RGResources *GetResources()
 {
     if (g_pRGResources == nullptr)
         g_pRGResources = new RGResources();

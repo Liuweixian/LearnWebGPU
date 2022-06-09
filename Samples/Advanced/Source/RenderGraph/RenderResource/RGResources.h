@@ -25,4 +25,4 @@ private:
     std::unordered_map<uint32_t, wgpu::TextureDescriptor *> m_AllTextureDescs;
 };
 
-RGResources *GetRGResources();
+RGResources *GetResources();

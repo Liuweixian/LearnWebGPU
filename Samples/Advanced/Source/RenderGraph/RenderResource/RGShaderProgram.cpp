@@ -1,5 +1,5 @@
 #include "RGShaderProgram.h"
-#include "../../FileSystem/Resources.h"
+#include "../../FileSystem/FileSystem.h"
 
 RGShaderProgram::RGShaderProgram(Type eType, std::string szEntryPoint, std::string szFilePath)
 {
@@ -17,7 +17,7 @@ RGShaderProgram::~RGShaderProgram()
 const char *RGShaderProgram::LoadSource()
 {
     UnloadSource();
-    m_pSource = GetResources()->Load(m_szFilePath);
+    m_pSource = GetFileSystem()->ReadFile(m_szFilePath);
     return m_pSource;
 }
 

@@ -1,21 +1,21 @@
-#include "Resources.h"
+#include "FileSystem.h"
 #include <assert.h>
 
-Resources::Resources()
+FileSystem::FileSystem()
 {
     m_szRootDirPath = "";
 }
 
-Resources::~Resources()
+FileSystem::~FileSystem()
 {
 }
 
-void Resources::SetRootDirectory(std::string szRootDirPath)
+void FileSystem::SetRootDirectory(std::string szRootDirPath)
 {
     m_szRootDirPath = szRootDirPath;
 }
 
-const char *Resources::Load(std::string szFilePath)
+const char *FileSystem::ReadFile(std::string szFilePath)
 {
     std::string szFullPath = m_szRootDirPath + "/Resources/" + szFilePath;
     FILE *pFileHandle = fopen(szFullPath.c_str(), "r");
@@ -35,10 +35,10 @@ const char *Resources::Load(std::string szFilePath)
     return pRetBuffer;
 }
 
-static Resources *g_pResources = nullptr;
-Resources *GetResources()
+static FileSystem *g_pFileSystem = nullptr;
+FileSystem *GetFileSystem()
 {
-    if (g_pResources == nullptr)
-        g_pResources = new Resources();
-    return g_pResources;
+    if (g_pFileSystem == nullptr)
+        g_pFileSystem = new FileSystem();
+    return g_pFileSystem;
 }

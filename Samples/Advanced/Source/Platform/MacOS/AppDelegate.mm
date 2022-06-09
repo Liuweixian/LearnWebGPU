@@ -5,7 +5,7 @@
 #include "../../RenderGraph/GfxDevice.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
 #include "../../Graph/SimpleRenderGraph/SimpleRenderGraph.h"
-#include "../../FileSystem/Resources.h"
+#include "../../FileSystem/FileSystem.h"
 
 @implementation AppDelegate
 
@@ -20,7 +20,7 @@
         pDevice = new MacDawnGfxDevice(self.window);
     });
     
-    GetResources()->SetRootDirectory([[[NSBundle mainBundle] resourcePath] UTF8String]);
+    GetFileSystem()->SetRootDirectory([[[NSBundle mainBundle] resourcePath] UTF8String]);
     
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
     pRDGPlayer->RunGraph<SimpleRenderGraph>();

@@ -54,7 +54,7 @@ void RGRenderState::InitFragmentState(RGDrawShader *pDrawShader, std::list<RGRes
     int nIndex = 0;
     for (auto it = targetColorBuffers.begin(); it != targetColorBuffers.end(); it++)
     {
-        wgpu::TextureDescriptor *pTextureDesc = GetRGResources()->GetTextureDesc(*it);
+        wgpu::TextureDescriptor *pTextureDesc = GetResources()->GetTextureDesc(*it);
         pColorTargetStates[nIndex].format = pTextureDesc->format;
         pColorTargetStates[nIndex].writeMask = wgpu::ColorWriteMask::All;
         nIndex++;

@@ -87,7 +87,7 @@ void GfxDevice::SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers
     uint32_t nColorAttachmentCount = (uint32_t)targetColorBuffers.size();
     unEncoderHash = unEncoderHash * 31 + nColorAttachmentCount;
 
-    RGResourceHandle *pFrameBufferHandle = GetRGResources()->GetFrameBuffer();
+    RGResourceHandle *pFrameBufferHandle = GetResources()->GetFrameBuffer();
     wgpu::RenderPassColorAttachment colorAttachments[nColorAttachmentCount];
     int nIndex = 0;
     for (auto bufferIt = targetColorBuffers.begin(); bufferIt != targetColorBuffers.end(); bufferIt++)

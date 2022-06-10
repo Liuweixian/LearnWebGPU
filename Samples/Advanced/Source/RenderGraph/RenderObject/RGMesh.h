@@ -3,47 +3,27 @@
 #include <list>
 #include <unordered_map>
 #include "RGMaterial.h"
-#include "../RenderResource/RGBuffer.h"
+#include "../RenderResource/RGResources.h"
 #include "../RGDefine.h"
 
 class RGMesh
 {
 public:
-    RGMesh();
+    RGMesh(std::string szName);
     virtual ~RGMesh();
-    template <typename T>
-    T *CreateVertexBuffer()
-    {
-        static_assert(std::is_base_of<RGBuffer, T>::value, "T must be a descendant of RenderBuffer");
-        T *pVertexBuffer = new T();
-        m_VertexBuffers.push_back(pVertexBuffer);
-        return pVertexBuffer;
-    }
-
-    template <typename T>
-    T *CreateIndexBuffer()
-    {
-        static_assert(std::is_base_of<RGBuffer, T>::value, "T must be a descendant of RenderBuffer");
-        if (m_pIndexBuffer != nullptr)
-        {
-            delete m_pIndexBuffer;
-            m_pIndexBuffer = nullptr;
-        }
-        m_pIndexBuffer = new T();
-        return m_pIndexBuffer;
-    }
-
-    std::list<RGBuffer *> GetVertexBuffers()
+    RGBufferResHandle *CreateVertexBuffer();
+    RGBufferResHandle *CreateIndexBuffer();
+    std::list<RGBufferResHandle *> GetVertexBuffers()
     {
         return m_VertexBuffers;
     }
-
-    RGBuffer *GetIndexBuffer()
+    RGBufferResHandle *GetIndexBuffer()
     {
         return m_pIndexBuffer;
     }
 
 private:
-    std::list<RGBuffer *> m_VertexBuffers;
-    RGBuffer *m_pIndexBuffer;
+    std::list<RGBufferResHandle *> m_VertexBuffers;
+    RGBufferResHandle *m_pIndexBuffer;
+    std::string m_szName;
 };

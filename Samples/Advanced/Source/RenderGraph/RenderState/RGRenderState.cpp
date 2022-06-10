@@ -10,7 +10,7 @@ RGRenderState::~RGRenderState()
 {
 }
 
-void RGRenderState::Initialize(RGDrawShader *pDrawShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer)
+void RGRenderState::Initialize(RGDrawShader *pDrawShader, std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer)
 {
     InitBindBufferState();
     InitVertexState(pDrawShader);
@@ -41,7 +41,7 @@ void RGRenderState::InitVertexState(RGDrawShader *pDrawShader)
     }
 }
 
-void RGRenderState::InitFragmentState(RGDrawShader *pDrawShader, std::list<RGResourceHandle *> targetColorBuffers)
+void RGRenderState::InitFragmentState(RGDrawShader *pDrawShader, std::list<RGTextureResHandle *> targetColorBuffers)
 {
     RGShaderProgram *pFragProgram = pDrawShader->GetProgram(RGShaderProgram::Type::Fragment);
     m_FragmentState.nextInChain = nullptr;
@@ -75,7 +75,7 @@ void RGRenderState::InitPrimitiveState()
     m_PrimitiveState.cullMode = wgpu::CullMode::None;
 }
 
-void RGRenderState::InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer)
+void RGRenderState::InitDepthStencilState(RGTextureResHandle *pTargetDepthBuffer)
 {
     if (pTargetDepthBuffer == nullptr)
     {

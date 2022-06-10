@@ -35,7 +35,7 @@ public:
     RGMaterial *GetMaterial(RGPassIdx uPassIdx);
 
     template <typename T>
-    T *CreateMesh()
+    T *CreateMesh(std::string szName)
     {
         static_assert(std::is_base_of<RGMesh, T>::value, "T must be a descendant of RenderMesh");
         if (m_pMesh != nullptr)
@@ -43,7 +43,7 @@ public:
             delete m_pMesh;
             m_pMesh = nullptr;
         }
-        m_pMesh = new T();
+        m_pMesh = new T(szName);
         return m_pMesh;
     }
 

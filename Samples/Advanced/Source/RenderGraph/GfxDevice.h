@@ -2,7 +2,6 @@
 #include <list>
 #include "RenderResource/RGResources.h"
 #include "RenderState/RGRenderState.h"
-#include "RenderResource/RGBuffer.h"
 
 class GfxDevice
 {
@@ -37,12 +36,15 @@ public:
 
     void BeginFrame();
     void EndFrame();
-    void SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
+    void SetRenderTarget(std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer);
     void SetRenderPipeline(RGRenderState *pRenderState);
-    void DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer);
+    void DrawBuffer(std::list<RGBufferResHandle *> vertexBuffers, RGBufferResHandle *pIndexBuffer);
     wgpu::ShaderModule CreateShaderModule(RGShaderProgram *pShaderProgram);
     wgpu::PipelineLayout CreatePipelineLayout();
     wgpu::RenderPipeline CreateRenderPipeline(wgpu::RenderPipelineDescriptor *pRenderPipelineDesc);
+    
+private:
+    void EnsurceBufferUploaded(RGBufferResHandle *pBufferHandle);
 
 protected:
     wgpu::Device m_Device;

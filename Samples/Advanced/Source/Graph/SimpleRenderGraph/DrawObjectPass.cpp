@@ -4,6 +4,8 @@
 
 DrawObjectPass::DrawObjectPass(RGPassIdx uPassIdx) : RGDrawPass(uPassIdx)
 {
+    m_fRotation = 0;
+    m_pRotationBufferHandle = GetResources()->CreateBuffer("RotationUniform", wgpu::BufferUsage::Uniform);
 }
 
 DrawObjectPass::~DrawObjectPass()
@@ -22,5 +24,6 @@ void DrawObjectPass::SetupShader()
 
 void DrawObjectPass::Update()
 {
-    
+    m_fRotation += 0.1f;
+    m_pRotationBufferHandle->SetData<float>(1, &m_fRotation);
 }

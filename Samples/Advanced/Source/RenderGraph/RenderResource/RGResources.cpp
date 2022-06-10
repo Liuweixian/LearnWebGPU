@@ -11,38 +11,38 @@ RGResources::~RGResources()
 {
 }
 
-wgpu::TextureDescriptor *RGResources::GetTextureDesc(RGResourceHandle *pHandle)
+wgpu::TextureDescriptor *RGResources::GetTextureDesc(RGTextureResHandle *pTexHandle)
 {
-    auto found = m_AllTextureDescs.find(pHandle->m_unDescIdx);
+    auto found = m_AllTextureDescs.find(pTexHandle->m_unDescIdx);
     if (found == m_AllTextureDescs.end())
         return nullptr;
     return found->second;
 }
 
-RGResourceHandle *RGResources::GetFrameBuffer()
+RGTextureResHandle *RGResources::GetFrameBuffer()
 {
     if (m_pFrameBufferHandle == nullptr)
-        m_pFrameBufferHandle = CreateTexture("FrameBuffer", wgpu::TextureFormat::BGRA8Unorm, 0, 0, 0, 0, 0);
+        m_pFrameBufferHandle = CreateTexture("FrameBuffer_Tex", wgpu::TextureFormat::BGRA8Unorm, 0, 0, 0, 0, 0);
     return m_pFrameBufferHandle;
 }
 
-bool RGResources::IsFrameBuffer(RGResourceHandle *pHandle)
+bool RGResources::IsFrameBuffer(RGTextureResHandle *pTexHandle)
 {
-    return pHandle->m_unDescIdx == m_pFrameBufferHandle->m_unDescIdx;
+    return pTexHandle->m_unDescIdx == m_pFrameBufferHandle->m_unDescIdx;
 }
 
-RGResourceHandle *RGResources::CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
+RGTextureResHandle *RGResources::CreateTexture(std::string szName, wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
 {
     auto it = m_AllResourceHandles.find(szName);
     if (it != m_AllResourceHandles.end())
-        return it->second;
+        return reinterpret_cast<RGTextureResHandle*>(it->second);
 
-    RGResourceHandle *pHandle = new RGResourceHandle();
-    pHandle->m_szName = szName;
-    pHandle->m_eType = RGResourceHandle::Type::Texture;
-    pHandle->m_unDescIdx = GetTextureDescriptorIdx(eTextureFormat, unWidth, unHeight, unDepthOrArrayLayers, unMipLevelCount, unSampleCount);
-    m_AllResourceHandles.insert(std::make_pair(szName, pHandle));
-    auto found = m_AllTextureDescs.find(pHandle->m_unDescIdx);
+    RGTextureResHandle *pTexHandle = new RGTextureResHandle();
+    pTexHandle->m_szName = szName;
+    pTexHandle->m_eType = RGResourceHandle::Type::Texture;
+    pTexHandle->m_unDescIdx = GetTextureDescriptorIdx(eTextureFormat, unWidth, unHeight, unDepthOrArrayLayers, unMipLevelCount, unSampleCount);
+    m_AllResourceHandles.insert(std::make_pair(szName, pTexHandle));
+    auto found = m_AllTextureDescs.find(pTexHandle->m_unDescIdx);
     if (found == m_AllTextureDescs.end())
     {
         wgpu::TextureDescriptor *pTextureDesc = new wgpu::TextureDescriptor();
@@ -59,9 +59,9 @@ RGResourceHandle *RGResources::CreateTexture(std::string szName, wgpu::TextureFo
         pTextureDesc->format = eTextureFormat;
         pTextureDesc->mipLevelCount = unMipLevelCount;
         pTextureDesc->sampleCount = unSampleCount;
-        m_AllTextureDescs.insert(std::make_pair(pHandle->m_unDescIdx, pTextureDesc));
+        m_AllTextureDescs.insert(std::make_pair(pTexHandle->m_unDescIdx, pTextureDesc));
     }
-    return pHandle;
+    return pTexHandle;
 }
 
 uint32_t RGResources::GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFormat, uint32_t unWidth, uint32_t unHeight, uint32_t unDepthOrArrayLayers, uint32_t unMipLevelCount, uint32_t unSampleCount)
@@ -74,6 +74,27 @@ uint32_t RGResources::GetTextureDescriptorIdx(wgpu::TextureFormat eTextureFormat
     unHash = unHash * 31 + unMipLevelCount;
     unHash = unHash * 31 + unSampleCount;
     return unHash;
+}
+
+RGBufferResHandle *RGResources::CreateBuffer(std::string szName, wgpu::BufferUsage eBufferUsage)
+{
+    RGBufferResHandle *pBufferHandle = GetBuffer(szName);
+    if (pBufferHandle != nullptr)
+        return pBufferHandle;
+    
+    pBufferHandle = new RGBufferResHandle(eBufferUsage);
+    pBufferHandle->m_szName = szName;
+    pBufferHandle->m_eType = RGResourceHandle::Type::Buffer;
+    m_AllResourceHandles.insert(std::make_pair(szName, pBufferHandle));
+    return pBufferHandle;
+}
+
+RGBufferResHandle *RGResources::GetBuffer(std::string szName)
+{
+    auto it = m_AllResourceHandles.find(szName);
+    if (it != m_AllResourceHandles.end())
+        return reinterpret_cast<RGBufferResHandle*>(it->second);
+    return nullptr;
 }
 
 static RGResources *g_pRGResources = nullptr;

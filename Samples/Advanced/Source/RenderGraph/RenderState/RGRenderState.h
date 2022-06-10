@@ -11,7 +11,7 @@ class RGRenderState
 public:
     RGRenderState();
     virtual ~RGRenderState();
-    void Initialize(RGDrawShader *pDrawShader, std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer);
+    void Initialize(RGDrawShader *pDrawShader, std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer);
     void UpdateRenderState(RGMaterial *pMaterial);
     wgpu::RenderPipeline& GetCurrentPipeline()
     {
@@ -20,10 +20,10 @@ public:
 
 private:
     void InitVertexState(RGDrawShader *pDrawShader);
-    void InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RGResourceHandle *> targetColorBuffers);
+    void InitFragmentState(RGDrawShader *pRenderObjectShader, std::list<RGTextureResHandle *> targetColorBuffers);
     void InitBindBufferState();
     void InitPrimitiveState();
-    void InitDepthStencilState(RGResourceHandle *pTargetDepthBuffer);
+    void InitDepthStencilState(RGTextureResHandle *pTargetDepthBuffer);
     void InitMultisampleState();
 
 private:

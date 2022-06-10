@@ -29,7 +29,7 @@ bool RGDrawPass::EnsureSetupFinish()
     return true;
 }
 
-void RGDrawPass::SetRenderTarget(RGResourceHandle *pTargetColorBuffer)
+void RGDrawPass::SetRenderTarget(RGTextureResHandle *pTargetColorBuffer)
 {
     m_TargetColorBuffers.clear();
     m_TargetColorBuffers.push_back(pTargetColorBuffer);

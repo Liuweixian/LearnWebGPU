@@ -13,11 +13,11 @@ public:
     virtual ~RGDrawPass();
     virtual bool EnsureSetupFinish() override;
     virtual void Compile() override;
-    void SetRenderTarget(RGResourceHandle *pTargetColorBuffer);
+    void SetRenderTarget(RGTextureResHandle *pTargetColorBuffer);
     void Execute(const std::list<RGObject *> renderObjects);
 
 protected:
-    std::list<RGResourceHandle *> m_TargetColorBuffers;
-    RGResourceHandle *m_pTargetDepthBuffer;
+    std::list<RGTextureResHandle *> m_TargetColorBuffers;
+    RGTextureResHandle *m_pTargetDepthBuffer;
     RGRenderState *m_pDefaultRenderState;
 };

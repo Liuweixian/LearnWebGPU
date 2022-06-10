@@ -19,9 +19,9 @@ void SimpleRenderGraph::InitializeScene()
     RGObject *pRenderObject = pRDGPlayer->AddRenderObject<RGObject>("Triganle");
     // Create Material for RenderObject
     pRenderObject->CreateMaterial<RGMaterial>((RGPassIdx)PassIdx::DrawObjectPass);
-    RGMesh *pMesh = pRenderObject->CreateMesh<RGMesh>();
+    RGMesh *pMesh = pRenderObject->CreateMesh<RGMesh>("Triganle");
     // Create VBO for RenderObject
-    RGBuffer *pRenderVertexBuffer = pMesh->CreateVertexBuffer<RGBuffer>();
+    RGBufferResHandle *pRenderVertexBuffer = pMesh->CreateVertexBuffer();
     //(x,y,r,g,b)
     float vertexData[15] = {
         -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
@@ -30,15 +30,15 @@ void SimpleRenderGraph::InitializeScene()
     };
     pRenderVertexBuffer->SetData<float>(15, vertexData);
     // Create IBO for RenderObject
-    RGBuffer *pRenderIndexBuffer = pMesh->CreateIndexBuffer<RGBuffer>();
-    uint16_t indexData[4] = {0, 1, 2};
+    RGBufferResHandle *pRenderIndexBuffer = pMesh->CreateIndexBuffer();
+    uint16_t indexData[3] = {0, 1, 2};
     pRenderIndexBuffer->SetData<uint16_t>(3, indexData);
 }
 
 void SimpleRenderGraph::InitializePass()
 {
     DrawObjectPass *pDrawObjectPass = this->AddRenderGraphPass<DrawObjectPass>((RGPassIdx)PassIdx::DrawObjectPass);
-    RGResourceHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
+    RGTextureResHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
     pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }
 

@@ -80,19 +80,19 @@ void GfxDevice::EndFrame()
 #endif
 }
 
-void GfxDevice::SetRenderTarget(std::list<RGResourceHandle *> targetColorBuffers, RGResourceHandle *pTargetDepthBuffer)
+void GfxDevice::SetRenderTarget(std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer)
 {
     uint32_t unEncoderHash = 0;
 
     uint32_t nColorAttachmentCount = (uint32_t)targetColorBuffers.size();
     unEncoderHash = unEncoderHash * 31 + nColorAttachmentCount;
 
-    RGResourceHandle *pFrameBufferHandle = GetResources()->GetFrameBuffer();
+    RGTextureResHandle *pFrameBufferHandle = GetResources()->GetFrameBuffer();
     wgpu::RenderPassColorAttachment colorAttachments[nColorAttachmentCount];
     int nIndex = 0;
     for (auto bufferIt = targetColorBuffers.begin(); bufferIt != targetColorBuffers.end(); bufferIt++)
     {
-        RGResourceHandle *pResHandle = *bufferIt;
+        RGTextureResHandle *pResHandle = *bufferIt;
         unEncoderHash = unEncoderHash * 31 + pResHandle->m_unDescIdx;
 
         if (pResHandle->m_unDescIdx == pFrameBufferHandle->m_unDescIdx)
@@ -160,38 +160,37 @@ void GfxDevice::FinishCurrentRenderPassEncoder()
     m_unCurrentRenderEncoderIdx = 0;
 }
 
-void GfxDevice::DrawBuffer(std::list<RGBuffer *> vertexBuffers, RGBuffer *pIndexBuffer)
+void GfxDevice::EnsurceBufferUploaded(RGBufferResHandle *pBufferHandle)
 {
-    for (auto it = vertexBuffers.begin(); it != vertexBuffers.end(); it++)
-    {
-        RGBuffer *pRenderBuffer = *it;
-        wgpu::Buffer &gpuBuffer = pRenderBuffer->GetGPUBuffer();
-        size_t ulBufferSize = pRenderBuffer->GetDataLength();
-        if (gpuBuffer == nullptr)
-        {
-            wgpu::BufferDescriptor bufferDesc;
-            bufferDesc.usage = wgpu::BufferUsage::Vertex | wgpu::BufferUsage::CopyDst;
-            bufferDesc.size = ulBufferSize;
-            gpuBuffer = m_Device.CreateBuffer(&bufferDesc);
-            wgpu::Queue queue = m_Device.GetQueue();
-            queue.WriteBuffer(gpuBuffer, 0, pRenderBuffer->GetData(), ulBufferSize);
-        }
-        m_CurrentRenderPassEncoder.SetVertexBuffer(0, gpuBuffer, 0, ulBufferSize);
-    }
-
-    assert(pIndexBuffer != nullptr);
-    wgpu::Buffer &gpuBuffer = pIndexBuffer->GetGPUBuffer();
-    size_t ulBufferSize = pIndexBuffer->GetDataLength();
+    wgpu::Buffer &gpuBuffer = pBufferHandle->GetGPUBuffer();
     if (gpuBuffer == nullptr)
     {
         wgpu::BufferDescriptor bufferDesc;
-        bufferDesc.usage = wgpu::BufferUsage::Index | wgpu::BufferUsage::CopyDst;
-        bufferDesc.size = ulBufferSize;
+        bufferDesc.usage = wgpu::BufferUsage::CopyDst | pBufferHandle->GetBufferUsage();
+        bufferDesc.size = pBufferHandle->GetDataLength();
         gpuBuffer = m_Device.CreateBuffer(&bufferDesc);
-        wgpu::Queue queue = m_Device.GetQueue();
-        queue.WriteBuffer(gpuBuffer, 0, pIndexBuffer->GetData(), ulBufferSize);
     }
-    m_CurrentRenderPassEncoder.SetIndexBuffer(gpuBuffer, wgpu::IndexFormat::Uint16, 0, ulBufferSize);
+    
+    if (pBufferHandle->IsDirty())
+    {
+        wgpu::Queue queue = m_Device.GetQueue();
+        queue.WriteBuffer(gpuBuffer, 0, pBufferHandle->GetData(), pBufferHandle->GetDataLength());
+        pBufferHandle->SetNotDirty();
+    }
+}
+
+void GfxDevice::DrawBuffer(std::list<RGBufferResHandle *> vertexBuffers, RGBufferResHandle *pIndexBuffer)
+{
+    for (auto it = vertexBuffers.begin(); it != vertexBuffers.end(); it++)
+    {
+        RGBufferResHandle *pBufferHandle = *it;
+        EnsurceBufferUploaded(pBufferHandle);
+        m_CurrentRenderPassEncoder.SetVertexBuffer(0, pBufferHandle->GetGPUBuffer(), 0, pBufferHandle->GetDataLength());
+    }
+
+    assert(pIndexBuffer != nullptr);
+    EnsurceBufferUploaded(pIndexBuffer);
+    m_CurrentRenderPassEncoder.SetIndexBuffer(pIndexBuffer->GetGPUBuffer(), wgpu::IndexFormat::Uint16, 0, pIndexBuffer->GetDataLength());
     m_CurrentRenderPassEncoder.DrawIndexed((uint32_t)pIndexBuffer->GetDataCount(), 1, 0, 0, 0);
 }
 

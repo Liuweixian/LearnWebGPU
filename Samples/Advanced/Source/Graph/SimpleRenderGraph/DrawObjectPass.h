@@ -11,4 +11,8 @@ public:
 
 protected:
     virtual void SetupShader() override;
+    
+private:
+    float m_fRotation;
+    RGBufferResHandle * m_pRotationBufferHandle;
 };

@@ -39,6 +39,8 @@
 		251F65272845E9E200B5C570 /* libc++_chrome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251F65262845E9E200B5C570 /* libc++_chrome.dylib */; };
 		251F65502846069400B5C570 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 251F654F2846069400B5C570 /* Resources */; };
 		25DC7C672852F43D00592CF5 /* RGBufferResHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25DC7C662852F33E00592CF5 /* RGBufferResHandle.cpp */; };
+		25DC7F0F28573C0300592CF5 /* RGBindEntryGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25DC7F0D28573C0200592CF5 /* RGBindEntryGroup.cpp */; };
+		25DC7F1228573D0600592CF5 /* RGBindEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25DC7F1028573D0600592CF5 /* RGBindEntry.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +127,10 @@
 		25DC7C642851F8F500592CF5 /* RGTextureResHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGTextureResHandle.h; sourceTree = "<group>"; };
 		25DC7C652851FE1E00592CF5 /* RGBufferResHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGBufferResHandle.h; sourceTree = "<group>"; };
 		25DC7C662852F33E00592CF5 /* RGBufferResHandle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RGBufferResHandle.cpp; sourceTree = "<group>"; };
+		25DC7F0D28573C0200592CF5 /* RGBindEntryGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RGBindEntryGroup.cpp; sourceTree = "<group>"; };
+		25DC7F0E28573C0200592CF5 /* RGBindEntryGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGBindEntryGroup.h; sourceTree = "<group>"; };
+		25DC7F1028573D0600592CF5 /* RGBindEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RGBindEntry.cpp; sourceTree = "<group>"; };
+		25DC7F1128573D0600592CF5 /* RGBindEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGBindEntry.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,6 +421,10 @@
 			children = (
 				250CC16C284495B300D30A51 /* RGRenderState.h */,
 				250CC169284495B300D30A51 /* RGRenderState.cpp */,
+				25DC7F1128573D0600592CF5 /* RGBindEntry.h */,
+				25DC7F1028573D0600592CF5 /* RGBindEntry.cpp */,
+				25DC7F0E28573C0200592CF5 /* RGBindEntryGroup.h */,
+				25DC7F0D28573C0200592CF5 /* RGBindEntryGroup.cpp */,
 			);
 			path = RenderState;
 			sourceTree = "<group>";
@@ -517,11 +527,13 @@
 				250CC185284495B400D30A51 /* RGObject.cpp in Sources */,
 				250CC0CF283F3C0100D30A51 /* main.m in Sources */,
 				250CC181284495B400D30A51 /* FileSystem.cpp in Sources */,
+				25DC7F1228573D0600592CF5 /* RGBindEntry.cpp in Sources */,
 				250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */,
 				250CC18C284495B400D30A51 /* RGVertexLayout.cpp in Sources */,
 				250CC18A284495B400D30A51 /* RGDrawShader.cpp in Sources */,
 				250CC182284495B400D30A51 /* RenderGraph.cpp in Sources */,
 				251F65252845E6CA00B5C570 /* webgpu_cpp.mm in Sources */,
+				25DC7F0F28573C0300592CF5 /* RGBindEntryGroup.cpp in Sources */,
 				250CC188284495B400D30A51 /* RGShaderProgram.cpp in Sources */,
 				250CC18B284495B400D30A51 /* RGResources.cpp in Sources */,
 				250CC0D0283F3C0100D30A51 /* AppDelegate.mm in Sources */,

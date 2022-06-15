@@ -20,6 +20,7 @@ void DrawObjectPass::SetupShader()
     pDrawShader->CreateVertexLayout(2, wgpu::VertexFormat::Float32x2, wgpu::VertexFormat::Float32x3);
     m_pShader = pDrawShader;
     printf("DrawObjectPass::SetupShader\n");
+    Bind(wgpu::ShaderStage::Vertex, 0, 0, m_pRotationBufferHandle);
 }
 
 void DrawObjectPass::Update()

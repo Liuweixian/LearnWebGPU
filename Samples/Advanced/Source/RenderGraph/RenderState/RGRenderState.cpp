@@ -10,9 +10,10 @@ RGRenderState::~RGRenderState()
 {
 }
 
-void RGRenderState::Initialize(RGDrawShader *pDrawShader, std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer)
+void RGRenderState::Initialize(RGDrawShader *pDrawShader, std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer,
+                               std::vector<RGBindEntryGroup> *pBindEntryGroups)
 {
-    InitBindBufferState();
+    InitBindEntriesState(pBindEntryGroups);
     InitVertexState(pDrawShader);
     InitFragmentState(pDrawShader, targetColorBuffers);
     InitPrimitiveState();
@@ -62,9 +63,15 @@ void RGRenderState::InitFragmentState(RGDrawShader *pDrawShader, std::list<RGTex
     m_FragmentState.targets = pColorTargetStates;
 }
 
-void RGRenderState::InitBindBufferState()
+void RGRenderState::InitBindEntriesState(std::vector<RGBindEntryGroup> *pBindEntryGroups)
 {
-    m_PipelineLayout = GetGfxDevice()->CreatePipelineLayout();
+    uint32_t uBindGroupLayoutCount = (uint32_t)(*pBindEntryGroups).size();
+    wgpu::BindGroupLayout bindGroupLayouts[uBindGroupLayoutCount];
+    for (int i = 0; i < uBindGroupLayoutCount; i++)
+    {
+        bindGroupLayouts[i] = (*pBindEntryGroups)[i].GetBindGroupLayout();
+    }
+    m_PipelineLayout = GetGfxDevice()->CreatePipelineLayout(uBindGroupLayoutCount, bindGroupLayouts);
 }
 
 void RGRenderState::InitPrimitiveState()

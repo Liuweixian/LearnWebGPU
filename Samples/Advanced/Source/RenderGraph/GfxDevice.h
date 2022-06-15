@@ -2,6 +2,7 @@
 #include <list>
 #include "RenderResource/RGResources.h"
 #include "RenderState/RGRenderState.h"
+#include "RenderState/RGBindEntryGroup.h"
 
 class GfxDevice
 {
@@ -38,13 +39,14 @@ public:
     void EndFrame();
     void SetRenderTarget(std::list<RGTextureResHandle *> targetColorBuffers, RGTextureResHandle *pTargetDepthBuffer);
     void SetRenderPipeline(RGRenderState *pRenderState);
+    void SetBindGroup(uint32_t uGroupIndex, RGBindEntryGroup *pBindEntryGroup);
+    void EnsurceBufferUploaded(RGBufferResHandle *pBufferHandle);
     void DrawBuffer(std::list<RGBufferResHandle *> vertexBuffers, RGBufferResHandle *pIndexBuffer);
     wgpu::ShaderModule CreateShaderModule(RGShaderProgram *pShaderProgram);
-    wgpu::PipelineLayout CreatePipelineLayout();
+    wgpu::BindGroupLayout CreateBindGroupLayout(uint32_t uEntryCount, wgpu::BindGroupLayoutEntry const *pBindGroupLayoutEntries);
+    wgpu::PipelineLayout CreatePipelineLayout(uint32_t uBindGroupLayoutCount, wgpu::BindGroupLayout const *pBindGroupLayouts);
     wgpu::RenderPipeline CreateRenderPipeline(wgpu::RenderPipelineDescriptor *pRenderPipelineDesc);
-    
-private:
-    void EnsurceBufferUploaded(RGBufferResHandle *pBufferHandle);
+    wgpu::BindGroup CreateBindGroup(wgpu::BindGroupLayout &bindGroupLayout, uint32_t uEntryCount, wgpu::BindGroupEntry const *pEntries);
 
 protected:
     wgpu::Device m_Device;

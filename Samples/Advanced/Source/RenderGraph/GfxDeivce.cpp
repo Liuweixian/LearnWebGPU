@@ -199,6 +199,11 @@ void GfxDevice::SetRenderPipeline(RGRenderState *pRenderState)
     m_CurrentRenderPassEncoder.SetPipeline(pRenderState->GetCurrentPipeline());
 }
 
+void GfxDevice::SetBindGroup(uint32_t uGroupIndex, RGBindEntryGroup *pBindEntryGroup)
+{
+    m_CurrentRenderPassEncoder.SetBindGroup(uGroupIndex, pBindEntryGroup->GetBindGroup());
+}
+
 wgpu::ShaderModule GfxDevice::CreateShaderModule(RGShaderProgram *pShaderProgram)
 {
     wgpu::ShaderModuleWGSLDescriptor shaderModuleWGSLDesc;
@@ -210,19 +215,41 @@ wgpu::ShaderModule GfxDevice::CreateShaderModule(RGShaderProgram *pShaderProgram
     return shaderModule;
 }
 
-wgpu::PipelineLayout GfxDevice::CreatePipelineLayout()
+wgpu::BindGroupLayout GfxDevice::CreateBindGroupLayout(uint32_t uEntryCount, const wgpu::BindGroupLayoutEntry *pBindGroupLayoutEntries)
+{
+    wgpu::BindGroupLayoutDescriptor layoutDesc;
+    layoutDesc.nextInChain = nullptr;
+    layoutDesc.label = nullptr;
+    layoutDesc.entryCount = uEntryCount;
+    layoutDesc.entries = pBindGroupLayoutEntries;
+    return m_Device.CreateBindGroupLayout(&layoutDesc);
+    
+}
+
+wgpu::PipelineLayout GfxDevice::CreatePipelineLayout(uint32_t uBindGroupLayoutCount, wgpu::BindGroupLayout const * pBindGroupLayouts)
 {
     wgpu::PipelineLayoutDescriptor layoutDesc;
     layoutDesc.nextInChain = nullptr;
     layoutDesc.label = nullptr;
-    layoutDesc.bindGroupLayoutCount = 0;
-    layoutDesc.bindGroupLayouts = nullptr;
+    layoutDesc.bindGroupLayoutCount = uBindGroupLayoutCount;
+    layoutDesc.bindGroupLayouts = pBindGroupLayouts;
     return m_Device.CreatePipelineLayout(&layoutDesc);
 }
 
 wgpu::RenderPipeline GfxDevice::CreateRenderPipeline(wgpu::RenderPipelineDescriptor *pRenderPipelineDesc)
 {
     return m_Device.CreateRenderPipeline(pRenderPipelineDesc);
+}
+
+wgpu::BindGroup GfxDevice::CreateBindGroup(wgpu::BindGroupLayout &bindGroupLayout, uint32_t uEntryCount, wgpu::BindGroupEntry const *pEntries)
+{
+    wgpu::BindGroupDescriptor bindGroupDesc;
+    bindGroupDesc.nextInChain = nullptr;
+    bindGroupDesc.label = nullptr;
+    bindGroupDesc.layout = bindGroupLayout;
+    bindGroupDesc.entryCount = uEntryCount;
+    bindGroupDesc.entries = pEntries;
+    return m_Device.CreateBindGroup(&bindGroupDesc);
 }
 
 static GfxDevice *g_pGfxDevice = nullptr;

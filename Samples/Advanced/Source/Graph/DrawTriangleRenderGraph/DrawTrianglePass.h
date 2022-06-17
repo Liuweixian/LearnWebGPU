@@ -1,11 +1,11 @@
 #pragma once
 #include "../../RenderGraph/RenderPass/RGDrawPass.h"
 
-class DrawObjectPass : public RGDrawPass
+class DrawTrianglePass : public RGDrawPass
 {
 public:
-    DrawObjectPass(RGPassIdx uPassIdx);
-    virtual ~DrawObjectPass();
+    DrawTrianglePass(RGPassIdx uPassIdx);
+    virtual ~DrawTrianglePass();
     virtual void Update() override;
 
 

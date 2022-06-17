@@ -17,8 +17,8 @@
 		250CC0D7283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */; };
 		250CC11B2840702700D30A51 /* MacDawnGfxDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC1192840702700D30A51 /* MacDawnGfxDevice.mm */; };
 		250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */; };
-		250CC17F284495B400D30A51 /* DrawObjectPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC155284495B300D30A51 /* DrawObjectPass.cpp */; };
-		250CC180284495B400D30A51 /* SimpleRenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */; };
+		250CC17F284495B400D30A51 /* DrawTrianglePass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC155284495B300D30A51 /* DrawTrianglePass.cpp */; };
+		250CC180284495B400D30A51 /* DrawTriangleRenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC156284495B300D30A51 /* DrawTriangleRenderGraph.cpp */; };
 		250CC181284495B400D30A51 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC159284495B300D30A51 /* FileSystem.cpp */; };
 		250CC182284495B400D30A51 /* RenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC15D284495B300D30A51 /* RenderGraph.cpp */; };
 		250CC183284495B400D30A51 /* GfxDeivce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 250CC15E284495B300D30A51 /* GfxDeivce.cpp */; };
@@ -83,10 +83,10 @@
 		250CC11A2840702700D30A51 /* MacDawnGfxDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacDawnGfxDevice.h; sourceTree = "<group>"; };
 		250CC11E2840BC3700D30A51 /* MetalDawnSwapChain.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalDawnSwapChain.mm; sourceTree = "<group>"; };
 		250CC11F2840BC3700D30A51 /* MetalDawnSwapChain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalDawnSwapChain.h; sourceTree = "<group>"; };
-		250CC153284495B300D30A51 /* DrawObjectPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawObjectPass.h; sourceTree = "<group>"; };
-		250CC154284495B300D30A51 /* SimpleRenderGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleRenderGraph.h; sourceTree = "<group>"; };
-		250CC155284495B300D30A51 /* DrawObjectPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawObjectPass.cpp; sourceTree = "<group>"; };
-		250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleRenderGraph.cpp; sourceTree = "<group>"; };
+		250CC153284495B300D30A51 /* DrawTrianglePass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawTrianglePass.h; sourceTree = "<group>"; };
+		250CC154284495B300D30A51 /* DrawTriangleRenderGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawTriangleRenderGraph.h; sourceTree = "<group>"; };
+		250CC155284495B300D30A51 /* DrawTrianglePass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawTrianglePass.cpp; sourceTree = "<group>"; };
+		250CC156284495B300D30A51 /* DrawTriangleRenderGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawTriangleRenderGraph.cpp; sourceTree = "<group>"; };
 		250CC158284495B300D30A51 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
 		250CC159284495B300D30A51 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
 		250CC15B284495B300D30A51 /* GfxDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GfxDevice.h; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 		250CC152284495B300D30A51 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
-				25BC3F8B28485D8E005F0C39 /* SimpleRenderGraph */,
+				25BC3F8B28485D8E005F0C39 /* DrawTriangleRenderGraph */,
 			);
 			name = Graph;
 			path = ../Source/Graph;
@@ -405,15 +405,15 @@
 			path = RenderPass;
 			sourceTree = "<group>";
 		};
-		25BC3F8B28485D8E005F0C39 /* SimpleRenderGraph */ = {
+		25BC3F8B28485D8E005F0C39 /* DrawTriangleRenderGraph */ = {
 			isa = PBXGroup;
 			children = (
-				250CC153284495B300D30A51 /* DrawObjectPass.h */,
-				250CC155284495B300D30A51 /* DrawObjectPass.cpp */,
-				250CC154284495B300D30A51 /* SimpleRenderGraph.h */,
-				250CC156284495B300D30A51 /* SimpleRenderGraph.cpp */,
+				250CC153284495B300D30A51 /* DrawTrianglePass.h */,
+				250CC155284495B300D30A51 /* DrawTrianglePass.cpp */,
+				250CC154284495B300D30A51 /* DrawTriangleRenderGraph.h */,
+				250CC156284495B300D30A51 /* DrawTriangleRenderGraph.cpp */,
 			);
-			path = SimpleRenderGraph;
+			path = DrawTriangleRenderGraph;
 			sourceTree = "<group>";
 		};
 		25BC3F8C2848A510005F0C39 /* RenderState */ = {
@@ -539,10 +539,10 @@
 				250CC0D0283F3C0100D30A51 /* AppDelegate.mm in Sources */,
 				250CC186284495B400D30A51 /* RGMaterial.cpp in Sources */,
 				250CC187284495B400D30A51 /* RenderGraphPlayer.cpp in Sources */,
-				250CC17F284495B400D30A51 /* DrawObjectPass.cpp in Sources */,
+				250CC17F284495B400D30A51 /* DrawTrianglePass.cpp in Sources */,
 				250CC18D284495B400D30A51 /* RGShader.cpp in Sources */,
 				250CC11B2840702700D30A51 /* MacDawnGfxDevice.mm in Sources */,
-				250CC180284495B400D30A51 /* SimpleRenderGraph.cpp in Sources */,
+				250CC180284495B400D30A51 /* DrawTriangleRenderGraph.cpp in Sources */,
 				250CC184284495B400D30A51 /* RGMesh.cpp in Sources */,
 				250CC18F284495B400D30A51 /* RGPass.cpp in Sources */,
 				250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */,

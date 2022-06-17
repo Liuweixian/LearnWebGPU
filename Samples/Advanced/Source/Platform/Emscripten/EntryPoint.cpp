@@ -1,6 +1,6 @@
 #include <emscripten/emscripten.h>
 #include "../../RenderGraph/RenderGraphPlayer.h"
-#include "../../Graph/SimpleRenderGraph/SimpleRenderGraph.h"
+#include "../../Graph/DrawTriangleRenderGraph/DrawTriangleRenderGraph.h"
 #include "../../RenderGraph/GfxDevice.h"
 #include "EmccGfxDevice.h"
 
@@ -22,6 +22,6 @@ int main(int argc, char **argv)
 
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
 
-    pRDGPlayer->RunGraph<SimpleRenderGraph>();
+    pRDGPlayer->RunGraph<DrawTriangleRenderGraph>();
     return 0;
 }

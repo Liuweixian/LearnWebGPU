@@ -1,7 +1,7 @@
 #pragma once
 #include "../../RenderGraph/RenderGraph.h"
 
-class SimpleRenderGraph : public RenderGraph
+class DrawTriangleRenderGraph : public RenderGraph
 {
 public:
     enum class PassIdx : uint16_t
@@ -10,8 +10,8 @@ public:
         DrawObjectPass,
     };
     
-    SimpleRenderGraph();
-    ~SimpleRenderGraph();
+    DrawTriangleRenderGraph();
+    ~DrawTriangleRenderGraph();
     virtual void Initialize() override;
     
 private:

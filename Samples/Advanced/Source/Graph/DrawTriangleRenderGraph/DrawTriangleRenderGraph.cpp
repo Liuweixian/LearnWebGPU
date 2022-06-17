@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include "SimpleRenderGraph.h"
-#include "DrawObjectPass.h"
+#include "DrawTriangleRenderGraph.h"
+#include "DrawTrianglePass.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
 #include "../../RenderGraph/RenderResource/RGResources.h"
 
-SimpleRenderGraph::SimpleRenderGraph()
+DrawTriangleRenderGraph::DrawTriangleRenderGraph()
 {
 }
 
-SimpleRenderGraph::~SimpleRenderGraph()
+DrawTriangleRenderGraph::~DrawTriangleRenderGraph()
 {
 }
 
-void SimpleRenderGraph::InitializeScene()
+void DrawTriangleRenderGraph::InitializeScene()
 {
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
     // Create RenderObject into RenderGraphPlayer
@@ -35,14 +35,14 @@ void SimpleRenderGraph::InitializeScene()
     pRenderIndexBuffer->SetData<uint16_t>(3, indexData);
 }
 
-void SimpleRenderGraph::InitializePass()
+void DrawTriangleRenderGraph::InitializePass()
 {
-    DrawObjectPass *pDrawObjectPass = this->AddPass<DrawObjectPass>((RGPassIdx)PassIdx::DrawObjectPass);
+    DrawTrianglePass *pDrawObjectPass = this->AddPass<DrawTrianglePass>((RGPassIdx)PassIdx::DrawObjectPass);
     RGTextureResHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
     pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }
 
-void SimpleRenderGraph::Initialize()
+void DrawTriangleRenderGraph::Initialize()
 {
     InitializeScene();
     InitializePass();

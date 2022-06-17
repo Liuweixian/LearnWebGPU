@@ -10,7 +10,7 @@ public:
 
 
 protected:
-    virtual void SetupShader() override;
+    virtual RGShader *SetupShader() override;
     
 private:
     float m_fRotation;

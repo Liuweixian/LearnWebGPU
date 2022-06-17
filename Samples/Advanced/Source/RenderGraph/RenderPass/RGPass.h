@@ -8,7 +8,7 @@ class RGPass
 public:
     RGPass(RGPassIdx uPassIdx);
     virtual ~RGPass();
-    virtual bool EnsureSetupFinish();
+    virtual bool Setup();
     virtual void Compile() = 0;
     virtual void Update() = 0;
     RGPassType GetPassType()
@@ -17,7 +17,7 @@ public:
     }
 
 protected:
-    virtual void SetupShader() = 0;
+    virtual RGShader *SetupShader() = 0;
 
 protected:
     RGShader *m_pShader;

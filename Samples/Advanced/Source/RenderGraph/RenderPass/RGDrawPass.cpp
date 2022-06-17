@@ -14,15 +14,15 @@ RGDrawPass::~RGDrawPass()
 {
 }
 
-bool RGDrawPass::EnsureSetupFinish()
+bool RGDrawPass::Setup()
 {
-    bool bRet = RGPass::EnsureSetupFinish();
+    bool bRet = RGPass::Setup();
     if (!bRet)
         return bRet;
 
     if (m_TargetColorBuffers.size() == 0)
     {
-        printf("Render Pass dont have render target!!\n");
+        printf("DrawPass dont have render target!!\n");
         return false;
     }
 

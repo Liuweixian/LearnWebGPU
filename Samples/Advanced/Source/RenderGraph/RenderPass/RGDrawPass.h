@@ -13,7 +13,7 @@ class RGDrawPass : public RGPass
 public:
     RGDrawPass(RGPassIdx uPassIdx);
     virtual ~RGDrawPass();
-    virtual bool EnsureSetupFinish() override;
+    virtual bool Setup() override;
     virtual void Compile() override;
     void SetRenderTarget(RGTextureResHandle *pTargetColorBuffer);
     void Execute(const std::list<RGObject *> renderObjects);

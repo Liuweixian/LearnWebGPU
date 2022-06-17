@@ -9,24 +9,8 @@
 class RGDrawShader : public RGShader
 {
 public:
-    RGDrawShader();
+    RGDrawShader(int nAttributeCount, ...);
     virtual ~RGDrawShader();
-
-    RGVertexLayout *CreateVertexLayout(int nAttributeCount, ...)
-    {
-        wgpu::VertexFormat vertexFormats[nAttributeCount];
-        va_list ap;
-        va_start(ap, nAttributeCount);
-        for (int i = 0; i < nAttributeCount; i++)
-        {
-            wgpu::VertexFormat eVertexFormat = va_arg(ap, wgpu::VertexFormat);
-            vertexFormats[i] = eVertexFormat;
-        }
-        va_end(ap);
-        RGVertexLayout *pVertexLayout = new RGVertexLayout(nAttributeCount, vertexFormats);
-        m_VertexLayouts.push_back(pVertexLayout);
-        return pVertexLayout;
-    }
 
     std::list<RGVertexLayout *> GetVertexLayouts()
     {

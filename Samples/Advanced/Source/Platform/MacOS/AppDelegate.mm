@@ -4,7 +4,7 @@
 #include "MacDawnGfxDevice.h"
 #include "../../RenderGraph/GfxDevice.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
-#include "../../Graph/DrawTriangleRenderGraph/DrawTriangleRenderGraph.h"
+#include "../../Graph/DrawCubeRenderGraph/DrawCubeRenderGraph.h"
 #include "../../FileSystem/FileSystem.h"
 
 @implementation AppDelegate
@@ -23,7 +23,7 @@
     GetFileSystem()->SetRootDirectory([[[NSBundle mainBundle] resourcePath] UTF8String]);
     
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
-    pRDGPlayer->RunGraph<DrawTriangleRenderGraph>();
+    pRDGPlayer->RunGraph<DrawCubeRenderGraph>();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

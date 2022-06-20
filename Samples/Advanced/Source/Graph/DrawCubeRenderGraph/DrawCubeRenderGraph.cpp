@@ -1,24 +1,23 @@
 #include <stdio.h>
-#include "DrawTriangleRenderGraph.h"
-#include "DrawTrianglePass.h"
+#include "DrawCubeRenderGraph.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
 #include "../../RenderGraph/RenderResource/RGResources.h"
 
-DrawTriangleRenderGraph::DrawTriangleRenderGraph()
+DrawCubeRenderGraph::DrawCubeRenderGraph()
 {
 }
 
-DrawTriangleRenderGraph::~DrawTriangleRenderGraph()
+DrawCubeRenderGraph::~DrawCubeRenderGraph()
 {
 }
 
-void DrawTriangleRenderGraph::InitializeScene()
+void DrawCubeRenderGraph::InitializeScene()
 {
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
     // Create RenderObject into RenderGraphPlayer
     RGObject *pRenderObject = pRDGPlayer->AddRenderObject<RGObject>("Triganle");
     // Create Material for RenderObject
-    pRenderObject->CreateMaterial<RGMaterial>((RGPassIdx)PassIdx::DrawTrianglePass);
+    pRenderObject->CreateMaterial<RGMaterial>((RGPassIdx)PassIdx::DrawCubePass);
     RGMesh *pMesh = pRenderObject->CreateMesh<RGMesh>("Triganle");
     // Create VBO for RenderObject
     RGBufferResHandle *pRenderVertexBuffer = pMesh->CreateVertexBuffer();
@@ -35,14 +34,14 @@ void DrawTriangleRenderGraph::InitializeScene()
     pRenderIndexBuffer->SetData<uint16_t>(3, indexData);
 }
 
-void DrawTriangleRenderGraph::InitializePass()
+void DrawCubeRenderGraph::InitializePass()
 {
-    DrawTrianglePass *pDrawObjectPass = this->AddPass<DrawTrianglePass>((RGPassIdx)PassIdx::DrawTrianglePass);
-    RGTextureResHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
-    pDrawObjectPass->SetRenderTarget(pFrameBuffer);
+    //DrawTrianglePass *pDrawObjectPass = this->AddPass<DrawTrianglePass>((RGPassIdx)PassIdx::DrawObjectPass);
+    //RGTextureResHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
+    //pDrawObjectPass->SetRenderTarget(pFrameBuffer);
 }
 
-void DrawTriangleRenderGraph::Initialize()
+void DrawCubeRenderGraph::Initialize()
 {
     InitializeScene();
     InitializePass();

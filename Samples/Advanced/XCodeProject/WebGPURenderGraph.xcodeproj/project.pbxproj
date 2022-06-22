@@ -39,6 +39,8 @@
 		251F65272845E9E200B5C570 /* libc++_chrome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251F65262845E9E200B5C570 /* libc++_chrome.dylib */; };
 		251F65502846069400B5C570 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 251F654F2846069400B5C570 /* Resources */; };
 		2527ED53285C64790090CE95 /* DrawCubeRenderGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2527ED51285C64790090CE95 /* DrawCubeRenderGraph.cpp */; };
+		2527ED5628617DF80090CE95 /* DrawCubePass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2527ED5428617DF80090CE95 /* DrawCubePass.cpp */; };
+		2527ED7F28618ABE0090CE95 /* Math in Resources */ = {isa = PBXBuildFile; fileRef = 2527ED7E28618ABE0090CE95 /* Math */; };
 		25DC7C672852F43D00592CF5 /* RGBufferResHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25DC7C662852F33E00592CF5 /* RGBufferResHandle.cpp */; };
 		25DC7F0F28573C0300592CF5 /* RGBindEntryGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25DC7F0D28573C0200592CF5 /* RGBindEntryGroup.cpp */; };
 		25DC7F1228573D0600592CF5 /* RGBindEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25DC7F1028573D0600592CF5 /* RGBindEntry.cpp */; };
@@ -126,6 +128,9 @@
 		251F654F2846069400B5C570 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = ../Resources; sourceTree = "<group>"; };
 		2527ED51285C64790090CE95 /* DrawCubeRenderGraph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DrawCubeRenderGraph.cpp; sourceTree = "<group>"; };
 		2527ED52285C64790090CE95 /* DrawCubeRenderGraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawCubeRenderGraph.h; sourceTree = "<group>"; };
+		2527ED5428617DF80090CE95 /* DrawCubePass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DrawCubePass.cpp; sourceTree = "<group>"; };
+		2527ED5528617DF80090CE95 /* DrawCubePass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawCubePass.h; sourceTree = "<group>"; };
+		2527ED7E28618ABE0090CE95 /* Math */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Math; path = ../Source/Math; sourceTree = "<group>"; };
 		25BC3F9B284F48BA005F0C39 /* RGResourceHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGResourceHandle.h; sourceTree = "<group>"; };
 		25DC7C642851F8F500592CF5 /* RGTextureResHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGTextureResHandle.h; sourceTree = "<group>"; };
 		25DC7C652851FE1E00592CF5 /* RGBufferResHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RGBufferResHandle.h; sourceTree = "<group>"; };
@@ -155,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				251F654F2846069400B5C570 /* Resources */,
+				2527ED7E28618ABE0090CE95 /* Math */,
 				250CC157284495B300D30A51 /* FileSystem */,
 				250CC152284495B300D30A51 /* Graph */,
 				250CC15A284495B300D30A51 /* RenderGraph */,
@@ -414,6 +420,8 @@
 			children = (
 				2527ED51285C64790090CE95 /* DrawCubeRenderGraph.cpp */,
 				2527ED52285C64790090CE95 /* DrawCubeRenderGraph.h */,
+				2527ED5428617DF80090CE95 /* DrawCubePass.cpp */,
+				2527ED5528617DF80090CE95 /* DrawCubePass.h */,
 			);
 			path = DrawCubeRenderGraph;
 			sourceTree = "<group>";
@@ -500,6 +508,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2527ED7F28618ABE0090CE95 /* Math in Resources */,
 				251F65502846069400B5C570 /* Resources in Resources */,
 				250CC0D1283F3C0100D30A51 /* LICENSE in Resources */,
 				250CBFBF283DCA4600D30A51 /* Assets.xcassets in Resources */,
@@ -559,6 +568,7 @@
 				250CC180284495B400D30A51 /* DrawTriangleRenderGraph.cpp in Sources */,
 				250CC184284495B400D30A51 /* RGMesh.cpp in Sources */,
 				250CC18F284495B400D30A51 /* RGPass.cpp in Sources */,
+				2527ED5628617DF80090CE95 /* DrawCubePass.cpp in Sources */,
 				250CC1202840BC3700D30A51 /* MetalDawnSwapChain.mm in Sources */,
 				250CC190284495B400D30A51 /* RGDrawPass.cpp in Sources */,
 			);

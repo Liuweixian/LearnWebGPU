@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "DrawCubeRenderGraph.h"
+#include "DrawCubePass.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
 #include "../../RenderGraph/RenderResource/RGResources.h"
 
@@ -14,31 +15,49 @@ DrawCubeRenderGraph::~DrawCubeRenderGraph()
 void DrawCubeRenderGraph::InitializeScene()
 {
     RenderGraphPlayer *pRDGPlayer = GetRDGPlayer();
-    // Create RenderObject into RenderGraphPlayer
-    RGObject *pRenderObject = pRDGPlayer->AddRenderObject<RGObject>("Triganle");
-    // Create Material for RenderObject
+    RGObject *pRenderObject = pRDGPlayer->AddRenderObject<RGObject>("Cube");
     pRenderObject->CreateMaterial<RGMaterial>((RGPassIdx)PassIdx::DrawCubePass);
-    RGMesh *pMesh = pRenderObject->CreateMesh<RGMesh>("Triganle");
-    // Create VBO for RenderObject
+    RGMesh *pMesh = pRenderObject->CreateMesh<RGMesh>("Cube");
     RGBufferResHandle *pRenderVertexBuffer = pMesh->CreateVertexBuffer();
-    //(x,y,r,g,b)
-    float vertexData[15] = {
-        -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
-        0.8f, -0.8f, 0.0f, 1.0f, 0.0f,  // BR
-        0.0f, 0.8f, 1.0f, 0.0f, 0.0f,   // top
+    //(x,y,z,uv)
+    float vertexData[24 * 5] = {
+        0.5f, -0.5f, 0.5f, 0, 0,
+        -0.5f, -0.5f, 0.5f, 1, 0,
+        0.5f, 0.5f, 0.5f, 0, 1,
+        -0.5f, 0.5f, 0.5f, 1, 1,
+        0.5f, 0.5f, -0.5f, 0, 1,
+        -0.5f, 0.5f, -0.5f, 1, 1,
+        0.5f, -0.5f, -0.5f, 0, 1,
+        -0.5f, -0.5f, -0.5f, 1, 1,
+        0.5f, 0.5f, 0.5f, 0, 0,
+        -0.5f, 0.5f, 0.5f, 1, 0,
+        0.5f, 0.5f, -0.5f, 0, 0,
+        -0.5f, 0.5f, -0.5f, 1, 0,
+        0.5f, -0.5f, -0.5f, 0, 0,
+        0.5f, -0.5f, 0.5f, 0, 1,
+        -0.5f, -0.5f, 0.5f, 1, 1,
+        -0.5f, -0.5f, -0.5f, 1, 0,
+        -0.5f, -0.5f, 0.5f, 0, 0,
+        -0.5f, 0.5f, 0.5f, 0, 1,
+        -0.5f, 0.5f, -0.5f, 1, 1,
+        -0.5f, -0.5f, -0.5f, 1, 0,
+        0.5f, -0.5f, -0.5f, 0, 0,
+        0.5f, 0.5f, -0.5f, 0, 1,
+        0.5f, 0.5f, 0.5f, 1, 1,
+        0.5f, -0.5f, 0.5f, 1, 0
     };
-    pRenderVertexBuffer->SetData<float>(15, vertexData);
+    pRenderVertexBuffer->SetData<float>(24 * 5, vertexData);
     // Create IBO for RenderObject
     RGBufferResHandle *pRenderIndexBuffer = pMesh->CreateIndexBuffer();
-    uint16_t indexData[3] = {0, 1, 2};
-    pRenderIndexBuffer->SetData<uint16_t>(3, indexData);
+    uint16_t indexData[36] = {0,2,3,0,3,1,8,4,5,8,5,9,10,6,7,10,7,11,12,13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23};
+    pRenderIndexBuffer->SetData<uint16_t>(36, indexData);
 }
 
 void DrawCubeRenderGraph::InitializePass()
 {
-    //DrawTrianglePass *pDrawObjectPass = this->AddPass<DrawTrianglePass>((RGPassIdx)PassIdx::DrawObjectPass);
-    //RGTextureResHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
-    //pDrawObjectPass->SetRenderTarget(pFrameBuffer);
+    DrawCubePass *pDrawCubePass = this->AddPass<DrawCubePass>((RGPassIdx)PassIdx::DrawCubePass);
+    RGTextureResHandle *pFrameBuffer = GetResources()->GetFrameBuffer();
+    pDrawCubePass->SetRenderTarget(pFrameBuffer);
 }
 
 void DrawCubeRenderGraph::Initialize()

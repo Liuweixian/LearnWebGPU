@@ -60,6 +60,9 @@ bool RenderGraph::Execute(const std::list<RGObject *> renderObjects)
     }
     case Compiled:
     {
+        if (m_Passes.size() == 0)
+            return true;
+        
         GfxDevice *pGfxDevice = GetGfxDevice();
         pGfxDevice->BeginFrame();
         for (auto passIt = m_Passes.begin(); passIt != m_Passes.end(); passIt++)

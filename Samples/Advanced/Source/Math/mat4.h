@@ -224,6 +224,8 @@ public:
             E m10, F m11, G m12, H m13,
             I m20, J m21, K m22, L m23,
             M m30, N m31, O m32, P m33) noexcept;
+            
+    void Printf2Debug();
 
 
     struct row_major_init {
@@ -468,6 +470,16 @@ constexpr TMat44<T>::TMat44(const TMat33<U>& m, const TVec4<V>& v) noexcept
         col_type(m[2][0], m[2][1], m[2][2], 0),
         col_type(v[0], v[1], v[2], v[3]) }  // NOLINT
 {
+}
+
+template<typename T>
+void TMat44<T>::Printf2Debug()
+{
+    printf("-----------------------------------------------\n");
+    for (int i = 0; i < 4; i++)
+    {
+        printf("%f\t%f\t%f\t%f\n", m_value[0][i], m_value[1][i], m_value[2][i], m_value[3][i]);
+    }
 }
 
 

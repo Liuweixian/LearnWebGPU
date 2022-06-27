@@ -1,5 +1,6 @@
 #pragma once
 #include "../../RenderGraph/RenderPass/RGDrawPass.h"
+#include "../../RenderGraph/RenderResource/RGBufferResHandle.h"
 
 class DrawCubePass : public RGDrawPass
 {
@@ -13,5 +14,6 @@ protected:
     virtual RGShader *SetupShader() override;
     
 private:
-    RGBufferResHandle * m_pMVPMatrixBufferHandle;
+    RGBufferResHandle *m_pVPMatrixBufferHandle;
+    RGBufferResHandle *m_pObject2WorldBufferHandle;
 };

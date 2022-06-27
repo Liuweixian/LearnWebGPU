@@ -7,7 +7,7 @@ class RGBufferResHandle : public RGResourceHandle
 public:
     RGBufferResHandle(wgpu::BufferUsage eBufferUsage);
     template <typename T>
-    void SetData(size_t ulDataCount, T *pData);
+    void SetData(size_t ulDataCount, const T *pData);
     void SetShaderStage(wgpu::ShaderStage eShaderStage);
     
     wgpu::Buffer &GetGPUBuffer()

@@ -5,6 +5,7 @@
 #include "../../RenderGraph/GfxDevice.h"
 #include "../../RenderGraph/RenderGraphPlayer.h"
 #include "../../Graph/DrawCubeRenderGraph/DrawCubeRenderGraph.h"
+#include "../../Graph/DrawTriangleRenderGraph/DrawTriangleRenderGraph.h"
 #include "../../FileSystem/FileSystem.h"
 
 @implementation AppDelegate

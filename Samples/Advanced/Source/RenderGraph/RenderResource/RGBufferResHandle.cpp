@@ -10,11 +10,11 @@ RGBufferResHandle::RGBufferResHandle(wgpu::BufferUsage eBufferUsage) : RGResourc
     m_eBufferUsage = eBufferUsage;
 }
 
-template void RGBufferResHandle::SetData<float>(size_t ulDataCount, float *pData);
-template void RGBufferResHandle::SetData<uint16_t>(size_t ulDataCount, uint16_t *pData);
+template void RGBufferResHandle::SetData<float>(size_t ulDataCount, const float *pData);
+template void RGBufferResHandle::SetData<uint16_t>(size_t ulDataCount, const uint16_t *pData);
 
 template <typename T>
-void RGBufferResHandle::SetData(size_t ulDataCount, T *pData)
+void RGBufferResHandle::SetData(size_t ulDataCount, const T *pData)
 {
     if (ulDataCount == 0)
         return;

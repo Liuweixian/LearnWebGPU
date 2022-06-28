@@ -16,6 +16,8 @@
 		250CC0D5283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */; };
 		250CC0D6283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */; };
 		250CC0D7283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */; };
+		254ACE3E286A7E37005F87FA /* libc++_chrome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 254ACE3D286A7E37005F87FA /* libc++_chrome.dylib */; };
+		254ACE42286A7ECF005F87FA /* libc++_chrome.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 254ACE41286A7ECF005F87FA /* libc++_chrome.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libdawn_platform.dylib; sourceTree = "<group>"; };
 		250CC0CC283F3C0100D30A51 /* webgpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webgpu.h; sourceTree = "<group>"; };
 		250CC0D8283F3C4100D30A51 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		254ACE3D286A7E37005F87FA /* libc++_chrome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++_chrome.dylib"; path = "../Source/Platform/MacOS/lib/dawn/bin/mac/Debug/libc++_chrome.dylib"; sourceTree = "<group>"; };
+		254ACE41286A7ECF005F87FA /* libc++_chrome.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libc++_chrome.dylib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 				250CC0D6283F3C0200D30A51 /* libdawn_proc.dylib in Frameworks */,
 				250CC0D5283F3C0200D30A51 /* libdawn_native.dylib in Frameworks */,
 				250CC0D7283F3C0200D30A51 /* libdawn_platform.dylib in Frameworks */,
+				254ACE3E286A7E37005F87FA /* libc++_chrome.dylib in Frameworks */,
+				254ACE42286A7ECF005F87FA /* libc++_chrome.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +85,7 @@
 				250CC099283F3C0100D30A51 /* MacOS */,
 				250CBFBA283DCA4600D30A51 /* Resources */,
 				250CBFA8283CECFA00D30A51 /* Products */,
+				254ACE3C286A7E37005F87FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -231,11 +238,20 @@
 		250CC0C8283F3C0100D30A51 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				254ACE41286A7ECF005F87FA /* libc++_chrome.dylib */,
 				250CC0C9283F3C0100D30A51 /* libdawn_native.dylib */,
 				250CC0CA283F3C0100D30A51 /* libdawn_proc.dylib */,
 				250CC0CB283F3C0100D30A51 /* libdawn_platform.dylib */,
 			);
 			path = Debug;
+			sourceTree = "<group>";
+		};
+		254ACE3C286A7E37005F87FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				254ACE3D286A7E37005F87FA /* libc++_chrome.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

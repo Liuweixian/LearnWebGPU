@@ -166,6 +166,7 @@ void GfxDevice::EnsurceBufferUploaded(RGBufferResHandle *pBufferHandle)
     if (gpuBuffer == nullptr)
     {
         wgpu::BufferDescriptor bufferDesc;
+        bufferDesc.label = pBufferHandle->m_szName.c_str();
         bufferDesc.usage = wgpu::BufferUsage::CopyDst | pBufferHandle->GetBufferUsage();
         bufferDesc.size = pBufferHandle->GetDataLength();
         gpuBuffer = m_Device.CreateBuffer(&bufferDesc);

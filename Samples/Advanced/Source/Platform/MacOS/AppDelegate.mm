@@ -27,37 +27,32 @@ WGPUBuffer uRotBuf; // uniform buffer (containing the rotation angle)
 WGPUBindGroup bindGroup;
 
 static char const triangle_vert_wgsl[] = R"(
-    struct VertexIn {
-        @location(0) aPos : vec2<f32>;
-        @location(1) aCol : vec3<f32>;
+    struct VertexIn
+    {
+        @location(0) aPos : vec3<f32>,
+        @location(1) aUV : vec2<f32>,
     };
-    struct VertexOut {
-        @location(0) vCol : vec3<f32>;
-        @builtin(position) Position : vec4<f32>;
+    struct VertexOut
+    {
+        @location(0) vCol : vec3<f32>,
+        @builtin(position) Position : vec4<f32>,
     };
-    struct Rotation {
-        @location(0) degs : f32;
-    };
-    @group(0) @binding(0) var<uniform> uRot : Rotation;
     @stage(vertex)
-    fn main(input : VertexIn) -> VertexOut {
-        var rads : f32 = radians(uRot.degs);
-        var cosA : f32 = cos(rads);
-        var sinA : f32 = sin(rads);
-        var rot : mat3x3<f32> = mat3x3<f32>(
-            vec3<f32>( cosA, sinA, 0.0),
-            vec3<f32>(-sinA, cosA, 0.0),
-            vec3<f32>( 0.0,  0.0,  1.0));
+    fn main(input : VertexIn) -> VertexOut
+    {
+        let vp = mat4x4<f32>(1.29904, 0.0, 0.0, 0.0, 0.0, 1.675969, 0.00008, -0.25241, 0.0, 0.43718, -0.00029, 0.96762, 0.0, -0.51451, 0.29941, 2.26843);
+        let o2w = mat4x4<f32>(1.414213, 0.0, -1.41421, 0.0, -0.18301, 0.965926, -0.18301, 0.0, 0.68301, 0.25882, 0.68301, 0.0, -0.3, 0.06, 0.36, 1.0);
         var output : VertexOut;
-        output.Position = vec4<f32>(rot * vec3<f32>(input.aPos, 1.0), 1.0);
-        output.vCol = input.aCol;
+        output.Position = vp * (o2w * vec4<f32>(input.aPos, 1.0));
+        output.vCol = vec3<f32>(1.0f, 0.0f, 0.0f);
         return output;
     }
 )";
 
 static char const triangle_frag_wgsl[] = R"(
     @stage(fragment)
-    fn main(@location(0) vCol : vec3<f32>) -> @location(0) vec4<f32> {
+    fn main(@location(0) vCol : vec3<f32>) -> @location(0) vec4<f32>
+    {
         return vec4<f32>(vCol, 1.0);
     }
 )";
@@ -166,11 +161,11 @@ static void createPipelineAndBuffers() {
 
     // describe buffer layouts
     WGPUVertexAttribute vertAttrs[2] = {};
-    vertAttrs[0].format = WGPUVertexFormat_Float32x2;
+    vertAttrs[0].format = WGPUVertexFormat_Float32x3;
     vertAttrs[0].offset = 0;
     vertAttrs[0].shaderLocation = 0;
-    vertAttrs[1].format = WGPUVertexFormat_Float32x3;
-    vertAttrs[1].offset = 2 * sizeof(float);
+    vertAttrs[1].format = WGPUVertexFormat_Float32x2;
+    vertAttrs[1].offset = 3 * sizeof(float);
     vertAttrs[1].shaderLocation = 1;
     WGPUVertexBufferLayout vertexBufferLayout = {};
     vertexBufferLayout.arrayStride = 5 * sizeof(float);
@@ -228,13 +223,33 @@ static void createPipelineAndBuffers() {
 
     // create the buffers (x, y, r, g, b)
     float const vertData[] = {
-        -0.8f, -0.8f, 0.0f, 0.0f, 1.0f, // BL
-         0.8f, -0.8f, 0.0f, 1.0f, 0.0f, // BR
-        -0.0f,  0.8f, 1.0f, 0.0f, 0.0f, // top
+        0.5f, -0.5f, 0.5f, 0, 0,
+          -0.5f, -0.5f, 0.5f, 1, 0,
+          0.5f, 0.5f, 0.5f, 0, 1,
+          -0.5f, 0.5f, 0.5f, 1, 1,
+          0.5f, 0.5f, -0.5f, 0, 1,
+          -0.5f, 0.5f, -0.5f, 1, 1,
+          0.5f, -0.5f, -0.5f, 0, 1,
+          -0.5f, -0.5f, -0.5f, 1, 1,
+          0.5f, 0.5f, 0.5f, 0, 0,
+          -0.5f, 0.5f, 0.5f, 1, 0,
+          0.5f, 0.5f, -0.5f, 0, 0,
+          -0.5f, 0.5f, -0.5f, 1, 0,
+          0.5f, -0.5f, -0.5f, 0, 0,
+          0.5f, -0.5f, 0.5f, 0, 1,
+          -0.5f, -0.5f, 0.5f, 1, 1,
+          -0.5f, -0.5f, -0.5f, 1, 0,
+          -0.5f, -0.5f, 0.5f, 0, 0,
+          -0.5f, 0.5f, 0.5f, 0, 1,
+          -0.5f, 0.5f, -0.5f, 1, 1,
+          -0.5f, -0.5f, -0.5f, 1, 0,
+          0.5f, -0.5f, -0.5f, 0, 0,
+          0.5f, 0.5f, -0.5f, 0, 1,
+          0.5f, 0.5f, 0.5f, 1, 1,
+          0.5f, -0.5f, 0.5f, 1, 0
     };
     uint16_t const indxData[] = {
-        0, 1, 2,
-        0 // padding (better way of doing this?)
+        0,2,3,0,3,1,8,4,5,8,5,9,10,6,7,10,7,11,12,13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23
     };
     vertBuf = createBuffer(vertData, sizeof(vertData), WGPUBufferUsage_Vertex);
     indxBuf = createBuffer(indxData, sizeof(indxData), WGPUBufferUsage_Index);
@@ -287,7 +302,7 @@ void redraw() {
     WGPURenderPassEncoder pass = wgpuCommandEncoderBeginRenderPass(encoder, &renderPass);    // create pass
 
     // update the rotation
-    rotDeg += 0.1f;
+    //rotDeg += 0.1f;
     wgpuQueueWriteBuffer(ms_gpuQueue, uRotBuf, 0, &rotDeg, sizeof(rotDeg));
 
     // draw the triangle (comment these five lines to simply clear the screen)
@@ -295,7 +310,7 @@ void redraw() {
     wgpuRenderPassEncoderSetBindGroup(pass, 0, bindGroup, 0, 0);
     wgpuRenderPassEncoderSetVertexBuffer(pass, 0, vertBuf, 0, WGPU_WHOLE_SIZE);
     wgpuRenderPassEncoderSetIndexBuffer(pass, indxBuf, WGPUIndexFormat_Uint16, 0, WGPU_WHOLE_SIZE);
-    wgpuRenderPassEncoderDrawIndexed(pass, 3, 1, 0, 0, 0);
+    wgpuRenderPassEncoderDrawIndexed(pass, 36, 1, 0, 0, 0);
 
     wgpuRenderPassEncoderEnd(pass);
     wgpuRenderPassEncoderRelease(pass);                                                        // release pass

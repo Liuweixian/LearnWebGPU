@@ -58,6 +58,14 @@ void RGRenderState::InitFragmentState(RGDrawShader *pDrawShader, std::list<RGTex
         wgpu::TextureDescriptor *pTextureDesc = GetResources()->GetTextureDesc(*it);
         pColorTargetStates[nIndex].format = pTextureDesc->format;
         pColorTargetStates[nIndex].writeMask = wgpu::ColorWriteMask::All;
+        wgpu::BlendState *pBlendState = new wgpu::BlendState();
+        pBlendState->color.operation = wgpu::BlendOperation::Add;
+        pBlendState->color.srcFactor = wgpu::BlendFactor::One;
+        pBlendState->color.dstFactor = wgpu::BlendFactor::One;
+        pBlendState->alpha.operation = wgpu::BlendOperation::Add;
+        pBlendState->alpha.srcFactor = wgpu::BlendFactor::One;
+        pBlendState->alpha.dstFactor = wgpu::BlendFactor::One;
+        pColorTargetStates[nIndex].blend = pBlendState;
         nIndex++;
     }
     m_FragmentState.targets = pColorTargetStates;

@@ -74,7 +74,7 @@ DrawCubePass::~DrawCubePass()
 
 RGShader *DrawCubePass::SetupShader()
 {
-    RGDrawShader *pDrawShader = new RGDrawShader(2, wgpu::VertexFormat::Float32x2, wgpu::VertexFormat::Float32x3);
+    RGDrawShader *pDrawShader = new RGDrawShader(2, wgpu::VertexFormat::Float32x3, wgpu::VertexFormat::Float32x2);
     pDrawShader->Create<RGShaderProgram>(RGShaderProgram::Type::Vertex, "vs_main", "DrawCubeRenderGraph/Shaders/DrawCubePassVS.wgsl");
     pDrawShader->Create<RGShaderProgram>(RGShaderProgram::Type::Fragment, "fs_main", "DrawCubeRenderGraph/Shaders/DrawCubePassFS.wgsl");
     return pDrawShader;
